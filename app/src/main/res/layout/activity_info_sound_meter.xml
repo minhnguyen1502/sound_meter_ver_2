@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_bg">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pro_500"
+        android:gravity="center"
+        android:text="Info"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/iv_back"
+        app:layout_constraintEnd_toStartOf="@id/gone"
+        app:layout_constraintStart_toEndOf="@id/iv_back"
+        app:layout_constraintTop_toTopOf="@id/iv_back" />
+
+    <ImageView
+        android:id="@+id/gone"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:padding="12dp"
+        android:src="@drawable/ic_arrow_left"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Fireworks"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_140"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/img_140" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="140 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_140"
+        app:layout_constraintEnd_toStartOf="@id/img_140" />
+
+    <ImageView
+        android:id="@+id/img_140"
+        android:layout_width="76dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="33dp"
+        android:src="@drawable/img_140"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_back" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_140"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/img_140"
+        app:layout_constraintTop_toBottomOf="@id/img_140" />
+
+
+    <TextView
+        android:id="@+id/tv_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Jet takeoff, shotgun firing"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_130"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/img_130" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="130 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_130"
+        app:layout_constraintEnd_toStartOf="@id/img_140" />
+
+    <ImageView
+        android:id="@+id/img_130"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_130"
+        app:layout_constraintStart_toStartOf="@id/img_140"
+        app:layout_constraintTop_toBottomOf="@id/img_140" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_130"
+
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/img_130"
+        app:layout_constraintTop_toBottomOf="@id/img_130" />
+
+    <ImageView
+        android:id="@+id/iv_120"
+        android:layout_width="68dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_120"
+        app:layout_constraintStart_toStartOf="@id/img_130"
+        app:layout_constraintTop_toBottomOf="@id/img_130" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="120 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_120"
+        app:layout_constraintEnd_toStartOf="@id/iv_120" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Police siren, Boom box"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_120"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_120" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_120"
+
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_120"
+        app:layout_constraintTop_toBottomOf="@id/iv_120" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Trombone"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_110"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_110" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="110 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_110"
+        app:layout_constraintEnd_toStartOf="@id/iv_110" />
+
+    <ImageView
+        android:id="@+id/iv_110"
+        android:layout_width="62dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_110"
+        app:layout_constraintStart_toStartOf="@id/iv_120"
+        app:layout_constraintTop_toBottomOf="@id/iv_120" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_110"
+
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_110"
+        app:layout_constraintTop_toBottomOf="@id/iv_110" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Helicopter, Train"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_100" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="100 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_100"
+        app:layout_constraintEnd_toStartOf="@id/iv_100" />
+
+    <ImageView
+        android:id="@+id/iv_100"
+        android:layout_width="58dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_100"
+        app:layout_constraintStart_toStartOf="@id/iv_110"
+        app:layout_constraintTop_toBottomOf="@id/iv_110" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_100"
+
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_100"
+        app:layout_constraintTop_toBottomOf="@id/iv_100" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="90 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_90"
+        app:layout_constraintEnd_toStartOf="@id/iv_90" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Hairdryer, Lawnmower"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_90" />
+
+    <ImageView
+        android:id="@+id/iv_90"
+        android:layout_width="54dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_90"
+        app:layout_constraintStart_toStartOf="@id/iv_100"
+        app:layout_constraintTop_toBottomOf="@id/iv_100" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_90"
+
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_90"
+        app:layout_constraintTop_toBottomOf="@id/iv_90" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="80 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_80"
+        app:layout_constraintEnd_toStartOf="@id/iv_80" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Truck, City traffic noise"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_80" />
+
+    <ImageView
+        android:id="@+id/iv_80"
+        android:layout_width="50dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_80"
+        app:layout_constraintStart_toStartOf="@id/iv_90"
+        app:layout_constraintTop_toBottomOf="@id/iv_90" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_80"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_80"
+        app:layout_constraintTop_toBottomOf="@id/iv_80" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="70 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_70"
+        app:layout_constraintEnd_toStartOf="@id/iv_70" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Car, City traffic"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_70"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_70" />
+
+    <ImageView
+        android:id="@+id/iv_70"
+        android:layout_width="46dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_70"
+        app:layout_constraintStart_toStartOf="@id/iv_80"
+        app:layout_constraintTop_toBottomOf="@id/iv_80" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_70"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_70"
+        app:layout_constraintTop_toBottomOf="@id/iv_70" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="60 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_60"
+        app:layout_constraintEnd_toStartOf="@id/iv_60" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Conversation, Quite office"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_60" />
+
+    <ImageView
+        android:id="@+id/iv_60"
+        android:layout_width="44dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_60"
+        app:layout_constraintStart_toStartOf="@id/iv_70"
+        app:layout_constraintTop_toBottomOf="@id/iv_70" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_60"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_60"
+        app:layout_constraintTop_toBottomOf="@id/iv_60" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="50 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_50"
+        app:layout_constraintEnd_toStartOf="@id/iv_50" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Refrigerator"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_50" />
+
+    <ImageView
+        android:id="@+id/iv_50"
+        android:layout_width="40dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_50"
+        app:layout_constraintStart_toStartOf="@id/iv_60"
+        app:layout_constraintTop_toBottomOf="@id/iv_60" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_50"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_50"
+        app:layout_constraintTop_toBottomOf="@id/iv_50" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="40 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_40"
+        app:layout_constraintEnd_toStartOf="@id/iv_40" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Moderate, Stream"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_40" />
+
+    <ImageView
+        android:id="@+id/iv_40"
+        android:layout_width="36dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_40"
+        app:layout_constraintStart_toStartOf="@id/iv_50"
+        app:layout_constraintTop_toBottomOf="@id/iv_50" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:layout_marginStart="2dp"
+        android:src="@drawable/img_line_40"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_40"
+        app:layout_constraintTop_toBottomOf="@id/iv_40" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="30 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_30"
+        app:layout_constraintEnd_toStartOf="@id/iv_30" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Whisper, rustling leaves"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_30" />
+
+    <ImageView
+        android:id="@+id/iv_30"
+        android:layout_width="32dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="1dp"
+        android:src="@drawable/img_30"
+        app:layout_constraintStart_toStartOf="@id/iv_40"
+        app:layout_constraintTop_toBottomOf="@id/iv_40" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_30"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_30"
+        app:layout_constraintTop_toBottomOf="@id/iv_30" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="20 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_20"
+        app:layout_constraintEnd_toStartOf="@id/iv_20" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Rustling leaves, Mosquito"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_20" />
+
+    <ImageView
+        android:id="@+id/iv_20"
+        android:layout_width="28dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_20"
+        app:layout_constraintStart_toStartOf="@id/iv_30"
+        app:layout_constraintTop_toBottomOf="@id/iv_30" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_20"
+        android:layout_marginStart="2dp"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_20"
+        app:layout_constraintTop_toBottomOf="@id/iv_20" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/pro_500"
+        android:text="0 dB"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_0"
+        app:layout_constraintEnd_toStartOf="@id/iv_0" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/pro_500"
+        android:text="Normal breathing"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_0" />
+
+    <ImageView
+        android:id="@+id/iv_0"
+        android:layout_width="27dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_0"
+        app:layout_constraintStart_toStartOf="@id/iv_20"
+        app:layout_constraintTop_toBottomOf="@id/iv_20" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="-3dp"
+        android:src="@drawable/img_line_0"
+        app:layout_constraintEnd_toEndOf="@id/tv_2"
+        app:layout_constraintStart_toStartOf="@id/iv_0"
+        app:layout_constraintTop_toBottomOf="@id/iv_0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

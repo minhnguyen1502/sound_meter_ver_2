@@ -1,0 +1,91 @@
+<resources>
+    <string name="app_name">exe01</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="english" translatable="false">English</string>
+    <string name="french" translatable="false">French</string>
+    <string name="portuguese" translatable="false">Portuguese</string>
+    <string name="spanish" translatable="false">Spanish</string>
+    <string name="german" translatable="false">German</string>
+    <string name="hindi" translatable="false">Hindi</string>
+    <string name="indonesia" translatable="false">Indonesia</string>
+    <string name="china" translatable="false">China</string>
+
+    <string name="Send_Email">Send Email</string>
+    <string name="There_is_no">There is no</string>
+    <string name="thank_you">Thank you</string>
+    <string name="rate_us">Rate us</string>
+    <string name="not_now">Not now</string>
+    <string name="this_action_may_contain_advertising">This action may contain advertising</string>
+    <string name="your_opinion_matter_to_us">Your opinion matter to us</string>
+    <string name="if_you_enjoy_this_know_your_device_would_you_mind_rating_us_on_the_google_play_then">If you enjoy this BaseProduct, would \nyou mind rating us on the Google Play, then?</string>
+
+    <string name="language">Language</string>
+    <string name="rate">Rate</string>
+    <string name="share">Share</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="report_bugs_and_tell_us_what_to_improve">Report bugs and tell us what to improve</string>
+    <string name="share_with_friends">Share with friends</string>
+    <string name="privacy_policy">Privacy Policy.</string>
+    <string name="request">Request or feedback</string>
+    <string name="send_email">Send by email&#8230;</string>
+    <string name="email_clients_not_found">Not found any Email client</string>
+    <string name="version">Version</string>
+    <string name="next">Next</string>
+    <string name="quit">Quit</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_intro_01">Title 01</string>
+    <string name="title_intro_02">Title 02</string>
+    <string name="title_intro_03">Title 03</string>
+    <string name="content_intro_01">Content 01</string>
+    <string name="content_intro_02">Content 02</string>
+    <string name="content_intro_03">Content 03</string>
+    <string name="continue_">Continue</string>
+    <string name="are_you_sure_want_to_quit_app">Are you sure want to quit app?</string>
+    <string name="no_internet_connection">No Internet Connection!</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+
+</resources>
