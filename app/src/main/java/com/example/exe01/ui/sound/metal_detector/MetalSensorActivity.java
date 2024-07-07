@@ -5,12 +5,16 @@ import static java.lang.Math.sqrt;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +23,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+
 import com.example.exe01.R;
 import com.example.exe01.base.BaseActivity;
 import com.example.exe01.databinding.ActivityMetalSensorBinding;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
@@ -59,65 +76,70 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         if (magnetometer == null) {
-            Log.e("MetalSensorActivity", "No Magnetometer found!");
             Toast.makeText(this, "No Magnetometer found on this device!", Toast.LENGTH_SHORT).show();
             finish();
         } else {
             sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
-            setupRotationRunnable();
-            handler.post(rotationRunnable);
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (!values.isEmpty()) {
+                        binding.metalView.refresh();
+                    }
+                    handler.postDelayed(this, 100);
+                }
+            };
+            handler.post(runnable);
         }
+        typeface = ResourcesCompat.getFont(this, R.font.pro__400);
+
+        initChart();
+
+//        mediaPlayer = MediaPlayer.create(this, R.raw.alert_sound);
+//        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
 
     private Handler handler = new Handler();
-    private Runnable rotationRunnable;
-
-    private void setupRotationRunnable() {
-        rotationRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (!magneticFieldValues.isEmpty()) {
-                    binding.metalView.refresh();
-                }
-                handler.postDelayed(this, 100); // Update every 100 milliseconds
-            }
-        };
-    }
+    private Runnable runnable;
 
     @Override
     public void bindView() {
 
     }
-
-
     @Override
     public void onBack() {
         finish();
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
-
+        startTime = System.currentTimeMillis();
+        SharedPreferences preferences = getSharedPreferences("metal_prefs", Context.MODE_PRIVATE);
+        threshold = preferences.getFloat("threshold", 50.0f);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
+
     private SensorManager sensorManager;
     private Sensor magnetometer;
     private float[] gravity = new float[3];
-    private ArrayList<Double> magneticFieldValues = new ArrayList<>();
+    private ArrayList<Double> values = new ArrayList<>();
 
 
     @Override
@@ -125,6 +147,8 @@ sensorManager.unregisterListener(this);
         // Không cần xử lý thay đổi độ chính xác
     }
 
+    private MediaPlayer mediaPlayer;
+    private boolean isPlaying = false;
     @Override
     public void onSensorChanged(SensorEvent event) {
         float[] filteredValues = lowPassFilter(event.values.clone(), gravity);
@@ -132,22 +156,39 @@ sensorManager.unregisterListener(this);
         float y = filteredValues[1];
         float z = filteredValues[2];
         double magnitude = sqrt(x * x + y * y + z * z);
-        magneticFieldValues.add(magnitude);
+        values.add(magnitude);
 
         binding.metalView.setMetalValue((float) magnitude);
 
         String value = String.format("%.0f", magnitude);
         binding.tvValue.setText(value + "");
-//        binding.metalView.refresh();
         binding.tvX.setText(String.format("%.2f", x));
         binding.tvY.setText(String.format("%.2f", y));
         binding.tvZ.setText(String.format("%.2f", z));
 
         updateStats();
-    }
+        updateData((float) magnitude);
 
+//        if (magnitude > threshold && !isPlaying) {
+//            turnOn();
+//        } else if (magnitude <= threshold && isPlaying) {
+//            turnOff();
+//        }
+    }
+//    private void turnOn(float value) {
+//        if (value > threshold && !mediaPlayer.isPlaying()) {
+//            mediaPlayer.start();
+//        }
+//    }
+//
+//    private void turnOff() {
+//        if (mediaPlayer.isPlaying()) {
+//            mediaPlayer.pause();
+//            mediaPlayer.seekTo(0);
+//        }
+//    }
     private void updateStats() {
-        if (magneticFieldValues.isEmpty()) {
+        if (values.isEmpty()) {
             return;
         }
 
@@ -155,7 +196,7 @@ sensorManager.unregisterListener(this);
         double min = Double.MAX_VALUE;
         double sum = 0;
 
-        for (double value : magneticFieldValues) {
+        for (double value : values) {
             if (value > max) {
                 max = value;
             }
@@ -165,12 +206,13 @@ sensorManager.unregisterListener(this);
             sum += value;
         }
 
-        double avg = sum / magneticFieldValues.size();
+        double avg = sum / values.size();
 
         binding.tvMax.setText(String.format("%.0f", max));
         binding.tvMin.setText(String.format("%.0f", min));
         binding.tvAvg.setText(String.format("%.0f", avg));
     }
+
     private static final float ALPHA = 0.25f;
 
     private float[] lowPassFilter(float[] input, float[] output) {
@@ -180,8 +222,10 @@ sensorManager.unregisterListener(this);
         }
         return output;
     }
+
     private boolean isShow = false;
     private float threshold = 50.0f;
+
     private void openDialog() {
         isShow = true;
         Dialog dialog = new Dialog(this);
@@ -196,8 +240,6 @@ sensorManager.unregisterListener(this);
         TextView ok = dialog.findViewById(R.id.btn_ok);
         TextView cancel = dialog.findViewById(R.id.btn_cancel);
 
-//        input.setFilters(new InputFilter[]{new InputThreshold(3, 1)});
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,43 +249,162 @@ sensorManager.unregisterListener(this);
             }
         });
 
-//        input.setText("" + threshold);
-//        ok.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String numberStr = input.getText().toString();
-//
-//                if (numberStr.isEmpty()) {
-//                    Toast.makeText(MetalSensorActivity.this, "input cannot be empty", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                try {
-//                    float number = Float.parseFloat(numberStr);
-//
-//                    if (number < 0 || number > 140) {
-//
-//                        Toast.makeText(MetalSensorActivity.this, "R.string.toast_0_140", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//
-//                    threshold = number;
-//
-//                    SharedPreferences preferences = getSharedPreferences("sound_meter_prefs", Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = preferences.edit();
-//                    editor.putFloat("threshold", threshold);
-//                    editor.apply();
-//
-//                    Toast.makeText(MetalSensorActivity.this, "getString(R.string.threshold_set_to)" + threshold, Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
-//                    isShow = false;
-//                } catch (NumberFormatException e) {
-//                    Toast.makeText(MetalSensorActivity.this, "getString(R.string.invalid_input)", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        input.setText("" + threshold);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String numberStr = input.getText().toString();
+
+                if (numberStr.isEmpty()) {
+                    Toast.makeText(MetalSensorActivity.this, "input cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    float number = Float.parseFloat(numberStr);
+
+                    if (number < 0 || number > 6000) {
+
+                        Toast.makeText(MetalSensorActivity.this, "from 0 to 6000", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    threshold = number;
+
+                    SharedPreferences preferences = getSharedPreferences("metal_prefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putFloat("threshold", threshold);
+                    editor.apply();
+
+                    Toast.makeText(MetalSensorActivity.this, "threshold set to)" + threshold, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    isShow = false;
+                } catch (NumberFormatException e) {
+                    Toast.makeText(MetalSensorActivity.this, "invalid input)", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
         dialog.show();
     }
 
+    public int dpToPx(float dp, Context context) {
+        return Math.round(dp * context.getResources().getDisplayMetrics().density);
+    }
+
+    private LineChart mChart;
+    private Typeface typeface;
+    private ArrayList<Entry> yVals;
+    private long startTime;
+
+
+    private void initChart() {
+
+        mChart = findViewById(R.id.chart);
+        mChart.setViewPortOffsets(dpToPx(38, this), dpToPx(10, this), 0, dpToPx(18, this));
+        mChart.setTouchEnabled(false);
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(false);
+        mChart.setPinchZoom(false);
+        mChart.setDrawGridBackground(false);
+        mChart.getDescription().setEnabled(false);
+        // Thiết lập trục X
+        XAxis x = mChart.getXAxis();
+        x.setEnabled(true);
+        x.setTypeface(typeface);
+        x.setTextSize(10f);
+        x.enableGridDashedLine(10f, 10f, 0f); // Set dashed lines
+        x.setGridColor(Color.parseColor("#E4D342")); // Set grid line color
+        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        x.setDrawGridLines(true);
+        x.setTextColor(Color.parseColor("#E4D342"));
+        x.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format("%.0f s", value + 1);
+            }
+        });
+
+//      Thiết lập trục Y
+        YAxis y = mChart.getAxisLeft();
+        y.setLabelCount(6, false);
+        y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        y.setDrawGridLines(true);
+        y.setTextColor(Color.parseColor("#E4D342"));
+        y.setTypeface(typeface);
+        y.enableGridDashedLine(10f, 10f, 0f); // Set dashed lines
+        y.setGridColor(Color.parseColor("#E4D342")); // Set grid line color
+        y.setTextSize(10f);
+        y.setAxisMinimum(1000);
+        y.setAxisMaximum(6000);
+        y.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format("%.0f", value).replace(",", "");
+            }
+        });
+
+        mChart.getAxisRight().setEnabled(false);
+
+        // Thiết lập dữ liệu cho biểu đồ
+        yVals = new ArrayList<>();
+        LineDataSet set1 = new LineDataSet(yVals, "Metal");
+        set1.setMode(LineDataSet.Mode.LINEAR);
+        set1.setCubicIntensity(0.2f);
+        set1.setDrawFilled(true);
+        set1.setDrawCircles(false);
+        set1.setHighlightEnabled(false);
+        set1.setColor(Color.parseColor("#FFE400"));
+        set1.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.bg_chart));
+        set1.setDrawHorizontalHighlightIndicator(false);
+        set1.setFillFormatter(new IFillFormatter() {
+            @Override
+            public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+                return -10;
+            }
+        });
+
+        LineData data = new LineData(set1);
+        data.setValueTextSize(9f);
+        data.setDrawValues(false);
+
+        mChart.setData(data);
+        mChart.getLegend().setEnabled(false);
+        mChart.invalidate();
+    }
+
+    private void updateData(float value) {
+        long elapsedTime = System.currentTimeMillis() - startTime;
+
+        LineData data = mChart.getData();
+        if (data != null) {
+            ILineDataSet set = data.getDataSetByIndex(0);
+            if (set == null) {
+                set = createSet();
+                data.addDataSet(set);
+            }
+            data.addEntry(new Entry(elapsedTime * 0.001f, value), 0);
+            data.notifyDataChanged();
+
+            mChart.notifyDataSetChanged();
+            mChart.moveViewToX(data.getEntryCount());
+        }
+    }
+
+    private LineDataSet createSet() {
+        LineDataSet set = new LineDataSet(null, "Metal");
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set.setCubicIntensity(0.2f);
+        set.setDrawFilled(true);
+        set.setDrawCircles(false);
+        set.setHighlightEnabled(false);
+        set.setDrawHorizontalHighlightIndicator(false);
+        set.setFillFormatter(new IFillFormatter() {
+            @Override
+            public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+                return -10;
+            }
+        });
+        return set;
+    }
 }

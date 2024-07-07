@@ -1,12 +1,15 @@
 package com.example.exe01.base;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -35,7 +38,9 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
     public abstract void initView();
 
     public abstract void bindView();
+
     public abstract void onBack();
+
     Animation animation;
 
     @Override
@@ -47,41 +52,73 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
         if (Utils.getScreenAllwaysOn()) {
             binding.getRoot().setKeepScreenOn(true);
         }
+
+
+        int flags = 0;
+        if (Utils.getScreenAllwaysOn()) {
+            flags = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+        } else {
+            flags = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+        }
+        getWindow().getDecorView().setSystemUiVisibility(flags);
+
+        int paddingTop = binding.getRoot().getPaddingTop() + getStatusBarHeight();
+        binding.getRoot().setPadding(
+                binding.getRoot().getPaddingLeft(),
+                paddingTop,
+                binding.getRoot().getPaddingRight(),
+                binding.getRoot().getPaddingBottom()
+        );
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        //make fully Android Transparent Status bar
+        setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+        // Thiết lập màu trong suốt cho thanh điều hướng
+        getWindow().setNavigationBarColor(Color.TRANSPARENT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+            } else {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        }
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        getWindow().setNavigationBarColor(Color.TRANSPARENT);
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+
         setContentView(binding.getRoot());
         animation = AnimationUtils.loadAnimation(this, R.anim.onclick);
         initView();
         bindView();
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                onBack();
+            }
+        });
         hideNavigation();
 
-//        int flags = 0;
-//
-//        if (Utils.getScreenAllwaysOn()) {
-//            flags = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-//        } else {
-//            flags = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-//        }
-//        getWindow().getDecorView().setSystemUiVisibility(flags);
-//
-//        int paddingTop = binding.getRoot().getPaddingTop() + getStatusBarHeight();
-//        binding.getRoot().setPadding(
-//                binding.getRoot().getPaddingLeft(),
-//                paddingTop,
-//                binding.getRoot().getPaddingRight(),
-//                binding.getRoot().getPaddingBottom()
-//        );
-//        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                onBack();
-//            }
-//        });
-//
-//        hideNavigation();
+    }
 
+    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
+        Window win = activity.getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
     private int getStatusBarHeight() {
