@@ -49,7 +49,8 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     public ActivityMetalSensorBinding getBinding() {
         return ActivityMetalSensorBinding.inflate(getLayoutInflater());
     }
-
+    private boolean isPause = false;
+    private boolean isSpeak = false;
     @Override
     public void initView() {
         binding.ivInfo.setOnClickListener(new View.OnClickListener() {
@@ -94,9 +95,82 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         typeface = ResourcesCompat.getFont(this, R.font.pro__400);
 
         initChart();
+        binding.ivPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPause = !isPause;
+                if (isPause) {
+                    pauseSensor();
+                    binding.ivPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_resume, null));
+                } else {
+                    resumeSensor();
+                    binding.ivPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause, null));
 
-//        mediaPlayer = MediaPlayer.create(this, R.raw.alert_sound);
-//        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                }
+            }
+        });
+        binding.ivSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playSound();
+                
+            }
+        });
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        binding.ivReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPause = false;
+                isSpeak = false;
+                binding.ivSound.setImageDrawable(getResources().getDrawable(R.drawable.ic_off_sound));
+                binding.ivPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
+                if (handler != null) {
+                    sensorManager.registerListener(MetalSensorActivity.this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
+                    handler.post(runnable);
+                }
+                resetSensor();
+            }
+        });
+
+    }
+    private void resetSensor() {
+        values.clear();
+        binding.tvValue.setText("0");
+        binding.tvX.setText("0.00");
+        binding.tvY.setText("0.00");
+        binding.tvZ.setText("0.00");
+        binding.tvMax.setText("0");
+        binding.tvMin.setText("0");
+        binding.tvAvg.setText("0");
+        mChart.clear();
+        mChart.invalidate();
+        initChart();
+        startTime = System.currentTimeMillis();
+    }
+    private void playSound() {
+        isSpeak = !isSpeak;
+        binding.ivSound.setImageResource(isSpeak ? R.drawable.ic_on_sound : R.drawable.ic_off_sound);
+        if (!isSpeak && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            mediaPlayer.seekTo(0);
+        }
+    }
+
+    private void resumeSensor() {
+        startTime += (System.currentTimeMillis() - pauseTime);
+
+        sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
+        handler.post(runnable);
+    }
+
+    private void pauseSensor() {
+        pauseTime = System.currentTimeMillis();
+
+        sensorManager.unregisterListener(this);
+        handler.removeCallbacks(runnable);
     }
 
     private Handler handler = new Handler();
@@ -115,7 +189,12 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
+        if (!isPause) {
+            if (handler != null) {
+                sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
+                handler.post(runnable);
+            }
+        }
         startTime = System.currentTimeMillis();
         SharedPreferences preferences = getSharedPreferences("metal_prefs", Context.MODE_PRIVATE);
         threshold = preferences.getFloat("threshold", 50.0f);
@@ -125,6 +204,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+        handler.removeCallbacks(runnable);
     }
 
     @Override
@@ -134,6 +214,8 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        handler.removeCallbacks(runnable);
+
     }
 
     private SensorManager sensorManager;
@@ -146,15 +228,30 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // Không cần xử lý thay đổi độ chính xác
     }
+    private static final int WINDOW_SIZE = 10;
+    private ArrayList<Float> windowX = new ArrayList<>();
+    private ArrayList<Float> windowY = new ArrayList<>();
+    private ArrayList<Float> windowZ = new ArrayList<>();
 
+    private float movingAverage(ArrayList<Float> window, float newValue) {
+        if (window.size() >= WINDOW_SIZE) {
+            window.remove(0);
+        }
+        window.add(newValue);
+
+        float sum = 0;
+        for (Float value : window) {
+            sum += value;
+        }
+        return sum / window.size();
+    }
     private MediaPlayer mediaPlayer;
-    private boolean isPlaying = false;
     @Override
     public void onSensorChanged(SensorEvent event) {
         float[] filteredValues = lowPassFilter(event.values.clone(), gravity);
-        float x = filteredValues[0];
-        float y = filteredValues[1];
-        float z = filteredValues[2];
+        float x = movingAverage(windowX, filteredValues[0]);
+        float y = movingAverage(windowY, filteredValues[1]);
+        float z = movingAverage(windowZ, filteredValues[2]);
         double magnitude = sqrt(x * x + y * y + z * z);
         values.add(magnitude);
 
@@ -169,24 +266,13 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         updateStats();
         updateData((float) magnitude);
 
-//        if (magnitude > threshold && !isPlaying) {
-//            turnOn();
-//        } else if (magnitude <= threshold && isPlaying) {
-//            turnOff();
-//        }
+        if (isSpeak && magnitude > threshold && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        } else if (isSpeak && magnitude <= threshold && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            mediaPlayer.seekTo(0);
+        }
     }
-//    private void turnOn(float value) {
-//        if (value > threshold && !mediaPlayer.isPlaying()) {
-//            mediaPlayer.start();
-//        }
-//    }
-//
-//    private void turnOff() {
-//        if (mediaPlayer.isPlaying()) {
-//            mediaPlayer.pause();
-//            mediaPlayer.seekTo(0);
-//        }
-//    }
     private void updateStats() {
         if (values.isEmpty()) {
             return;
@@ -296,6 +382,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     private Typeface typeface;
     private ArrayList<Entry> yVals;
     private long startTime;
+    private long pauseTime;
 
 
     private void initChart() {
@@ -315,6 +402,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         x.setTextSize(10f);
         x.enableGridDashedLine(10f, 10f, 0f); // Set dashed lines
         x.setGridColor(Color.parseColor("#E4D342")); // Set grid line color
+        x.setAxisLineColor(Color.parseColor("#00000000"));
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
         x.setDrawGridLines(true);
         x.setTextColor(Color.parseColor("#E4D342"));
@@ -327,15 +415,16 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
 //      Thiết lập trục Y
         YAxis y = mChart.getAxisLeft();
-        y.setLabelCount(6, false);
+        y.setLabelCount(7, false);
         y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         y.setDrawGridLines(true);
         y.setTextColor(Color.parseColor("#E4D342"));
         y.setTypeface(typeface);
         y.enableGridDashedLine(10f, 10f, 0f); // Set dashed lines
         y.setGridColor(Color.parseColor("#E4D342")); // Set grid line color
+        y.setAxisLineColor(Color.parseColor("#E4D342"));
         y.setTextSize(10f);
-        y.setAxisMinimum(1000);
+        y.setAxisMinimum(0);
         y.setAxisMaximum(6000);
         y.setValueFormatter(new ValueFormatter() {
             @Override

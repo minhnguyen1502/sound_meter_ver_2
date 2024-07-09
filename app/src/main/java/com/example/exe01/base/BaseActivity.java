@@ -79,7 +79,6 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-        // Thiết lập màu trong suốt cho thanh điều hướng
         getWindow().setNavigationBarColor(Color.TRANSPARENT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

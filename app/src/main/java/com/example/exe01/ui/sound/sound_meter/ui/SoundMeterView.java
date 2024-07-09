@@ -79,6 +79,6 @@ public class SoundMeterView extends View {
         float minDb = 0;
         float maxDb = 140;
 
-        return (dbCount - minDb)  * 285.5f / (maxDb - minDb);
+        return (dbCount - minDb)  * 280.0f / (maxDb - minDb);
     }
 }

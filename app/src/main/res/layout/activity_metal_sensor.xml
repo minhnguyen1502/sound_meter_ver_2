@@ -110,6 +110,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_value" />
 <ImageView
+    android:id="@+id/iv_reset"
     android:layout_width="48dp"
     android:padding="4dp"
     android:layout_marginStart="24dp"
@@ -120,6 +121,7 @@
     android:src="@drawable/ic_reset"/>
 
     <ImageView
+        android:id="@+id/iv_sound"
         android:layout_width="48dp"
         android:padding="4dp"
         android:layout_marginEnd="24dp"
@@ -127,7 +129,7 @@
         app:layout_constraintEnd_toStartOf="@id/iv_pause"
         app:layout_constraintTop_toTopOf="@id/iv_pause"
         app:layout_constraintBottom_toBottomOf="@id/iv_pause"
-        android:src="@drawable/ic_on_sound"/>
+        android:src="@drawable/ic_off_sound"/>
     <LinearLayout
         android:id="@id/ll_avg"
         android:layout_width="wrap_content"

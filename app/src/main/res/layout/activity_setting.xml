@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.sound.setting.SettingActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img_bg"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_arrow_left"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:fontFamily="@font/pro_500"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/iv_arrow_left"
+        app:layout_constraintTop_toTopOf="@id/iv_arrow_left"
+        app:layout_constraintBottom_toBottomOf="@id/iv_arrow_left"
+        app:layout_constraintEnd_toStartOf="@id/gone"/>
+    <ImageView
+        android:id="@+id/gone"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        android:visibility="invisible"
+        android:focusable="false"
+        android:clickable="false"
+        android:src="@drawable/ic_arrow_left"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/iv_arrow_left"-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

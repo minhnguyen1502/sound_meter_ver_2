@@ -85,10 +85,10 @@ public class MetalSensorView extends View {
         }
     }
 
-    private float getAngle(float dbCount) {
-        float minDb = 0;
-        float maxDb = 140;
+    private float getAngle(float value) {
+        float min = 0;
+        float max = 6000;
 
-        return (dbCount - minDb) * 285.5f / (maxDb - minDb);
+        return (value - min) * 180.0f / (max - min);
     }
 }

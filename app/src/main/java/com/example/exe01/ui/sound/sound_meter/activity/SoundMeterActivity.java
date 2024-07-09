@@ -1,14 +1,25 @@
 package com.example.exe01.ui.sound.sound_meter.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputFilter;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +30,7 @@ import androidx.core.content.res.ResourcesCompat;
 import com.example.exe01.R;
 import com.example.exe01.base.BaseActivity;
 import com.example.exe01.databinding.ActivitySoundMeterBinding;
+import com.example.exe01.ui.sound.sound_meter.database.SoundMeterDatabaseHelper;
 import com.example.exe01.ui.sound.sound_meter.ui.FileUtil;
 import com.example.exe01.ui.sound.sound_meter.ui.Recoder;
 import com.example.exe01.ui.sound.sound_meter.ui.SoundMeterView;
@@ -34,6 +46,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -41,7 +54,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
 
     private Recoder recoder;
     private TextView value, max, min, avg;
-
+    private SoundMeterDatabaseHelper dbHelper;
 
     @Override
     public ActivitySoundMeterBinding getBinding() {
@@ -56,6 +69,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         max = binding.tvMax;
         min = binding.tvMin;
         avg = binding.tvAvg;
+        dbHelper = new SoundMeterDatabaseHelper(this);
     }
 
 
@@ -72,19 +86,27 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             @Override
             public void onClick(View v) {
                 onBack();
+                resetMeter();
             }
         });
 
+        binding.ivReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetMeter();
+                isPause = false;
+            }
+        });
         binding.ivSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showSaveDialog();
             }
         });
         binding.ivHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(SoundMeterActivity.this, HistoryActivity.class));
             }
         });
         binding.ivPause.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +127,142 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         typeface = ResourcesCompat.getFont(this, R.font.pro__400);
         initChart();
 
+    }
+
+    private String getDescription(float avg) {
+        if (avg >= 0 && avg < 20) {
+            return "Normal breathing";
+        } else if (avg >= 20 && avg < 30) {
+            return "Rustling leaves, Mosquito";
+        } else if (avg >= 30 && avg < 40) {
+            return "Whisper, rustling leaves";
+        } else if (avg >= 40 && avg < 50) {
+            return "Moderate, Stream";
+        } else if (avg >= 50 && avg < 60) {
+            return "Refrigerator";
+        } else if (avg >= 60 && avg < 70) {
+            return "Conversation, Quite office";
+        } else if (avg >= 70 && avg < 80) {
+            return "Car, City traffic";
+        } else if (avg >= 80 && avg < 90) {
+            return "Truck, City traffic noise";
+        } else if (avg >= 90 && avg < 100) {
+            return "Hairdryer, Lawnmower";
+        } else if (avg >= 100 && avg < 110) {
+            return "Helicopter, Train";
+        } else if (avg >= 110 && avg < 120) {
+            return "Trombone";
+        } else if (avg >= 120 && avg < 130) {
+            return "Police siren, Boom box";
+        } else if (avg >= 130 && avg < 140) {
+            return "Jet takeoff, shotgun firing";
+        } else if (avg >= 140) {
+            return "Fireworks";
+        } else {
+            return "Unknown";
+        }
+    }
+
+    private void showSaveDialog() {
+//            isShow = true;
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_set_name_record);
+
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText edtName = dialog.findViewById(R.id.edt_name);
+        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
+        TextView btnSave = dialog.findViewById(R.id.btn_save);
+        ImageView clear = dialog.findViewById(R.id.btn_clear);
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtName.setText("");
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String recordingName = edtName.getText().toString().trim();
+                if (!recordingName.isEmpty()) {
+                    saveRecordingToDatabase(recordingName);
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(SoundMeterActivity.this, "Please enter a name", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void saveRecordingToDatabase(String recordingName) {
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+
+        float minValue = World.MIN;
+        float maxValue = World.MAX;
+        float avgValue = avgSoundLevel;
+        String description = getDescription(avgValue);
+
+//        Bitmap chartBitmap = captureChartImage();
+//        byte[] chartImageBytes = getBytesFromBitmap(chartBitmap);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SoundMeterDatabaseHelper.COLUMN_START_TIME, startTime);
+        values.put(SoundMeterDatabaseHelper.COLUMN_DURATION, duration);
+        values.put(SoundMeterDatabaseHelper.COLUMN_MIN, minValue);
+        values.put(SoundMeterDatabaseHelper.COLUMN_MAX, maxValue);
+        values.put(SoundMeterDatabaseHelper.COLUMN_AVG, avgValue);
+        values.put(SoundMeterDatabaseHelper.COLUMN_DES, description);
+        values.put(SoundMeterDatabaseHelper.COLUMN_TITLE, recordingName);
+//        values.put(SoundMeterDatabaseHelper.COLUMN_IMAGE, chartImageBytes);
+
+        db.insert(SoundMeterDatabaseHelper.TABLE_RECORDINGS, null, values);
+        Toast.makeText(this, "Recording saved", Toast.LENGTH_SHORT).show();
+    }
+//    private Bitmap captureChartImage() {
+//        // Ensure the chart is fully updated
+//        mChart.invalidate();
+//        mChart.setDrawingCacheEnabled(true);
+//        mChart.buildDrawingCache();
+//        Bitmap chartBitmap = Bitmap.createBitmap(mChart.getDrawingCache());
+//        mChart.setDrawingCacheEnabled(false);
+//        return chartBitmap;
+//    }
+
+//    private byte[] getBytesFromBitmap(Bitmap bitmap) {
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//        return stream.toByteArray();
+//    }
+    private void resetMeter() {
+        soundView.refresh();
+
+        totalSoundLevel = 0.0f;
+        soundLevelCount = 0;
+
+        World.reset();
+        binding.tvValue.setText(String.format("%.1f", World.dbCount).replace(",", "."));
+        binding.tvMax.setText(String.format("%.1f", World.MAX).replace(",", "."));
+        binding.tvMin.setText(String.format("%.1f", World.MIN).replace(",", "."));
+        binding.tvAvg.setText(String.format("%.1f", World.getAvg()).replace(",", "."));
+        mChart.clear();
+        initChart();
+
+        startListen();
     }
 
     private void resumeMeter() {
@@ -128,6 +286,8 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     private float totalSoundLevel = 0.0f;
     private int soundLevelCount = 0;
     private SoundMeterView soundView;
+    float dbCount;
+    float avgSoundLevel;
     @SuppressLint("HandlerLeak")
     private final Handler handler = new Handler() {
         @Override
@@ -138,11 +298,11 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             }
             volume = recoder.getMax();
             if (volume > 0 && volume < 10000) {
-                float dbCount = World.setDbCount(20 * (float) (Math.log10(volume)));
+                dbCount = World.setDbCount(20 * (float) (Math.log10(volume)));
                 totalSoundLevel += dbCount;
                 soundLevelCount++;
 
-                float avgSoundLevel = totalSoundLevel / soundLevelCount;
+                avgSoundLevel = totalSoundLevel / soundLevelCount;
                 value.setText(String.format("%.1f dB", dbCount).replace(",", "."));
                 max.setText(String.format("%.1f", World.MAX).replace(",", "."));
                 min.setText(String.format("%.1f", World.MIN).replace(",", "."));
@@ -154,7 +314,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             startListen();
         }
     };
-
 
     private void startListen() {
         if (!isPause) {
@@ -209,7 +368,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     private ArrayList<Entry> yVals;
     private long startTime;
 
-
     private void initChart() {
 
         mChart = findViewById(R.id.chart);
@@ -237,7 +395,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             }
         });
 
-//      Thiết lập trục Y
+        //      Thiết lập trục Y
         YAxis y = mChart.getAxisLeft();
         y.setLabelCount(8, false);
         y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
@@ -261,7 +419,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         set1.setDrawCircles(false);
         set1.setHighlightEnabled(false);
         set1.setColor(Color.parseColor("#FFE400"));
-        set1.setFillDrawable( ContextCompat.getDrawable(this, R.drawable.bg_chart));
+        set1.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.bg_chart));
         set1.setDrawHorizontalHighlightIndicator(false);
         set1.setFillFormatter(new IFillFormatter() {
             @Override
@@ -280,7 +438,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     }
 
     private void updateData(float dbCount) {
-        long elapsedTime = System.currentTimeMillis() - startTime;
 
         LineData data = mChart.getData();
         if (data != null) {
@@ -289,7 +446,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
                 set = createSet();
                 data.addDataSet(set);
             }
-            data.addEntry(new Entry(elapsedTime *0.001f, dbCount), 0);
+            data.addEntry(new Entry(set.getEntryCount() * 0.1f, dbCount), 0);
             data.notifyDataChanged();
 
             mChart.notifyDataSetChanged();
