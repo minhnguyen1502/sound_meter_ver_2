@@ -200,7 +200,13 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
             notifyDataSetChanged();
         }
     }
-
+    public void deselectAll() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SoundMeterDatabaseHelper.COLUMN_SELECTED, 0);
+        db.update(SoundMeterDatabaseHelper.TABLE_RECORDINGS, cv, null, null);
+        notifyDataSetChanged();
+    }
     public void updateIcons(boolean isSelected) {
         this.isSelected = isSelected;
         notifyDataSetChanged();

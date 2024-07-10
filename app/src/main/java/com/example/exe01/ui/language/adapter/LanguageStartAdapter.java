@@ -51,10 +51,8 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
 
         if (languageModel.getActive()) {
             holder.layoutItem.setBackgroundResource(R.drawable.bg_lang_item_s);
-            holder.tvLang.setTextColor(context.getColor(R.color.color_D82D25));
         } else {
             holder.layoutItem.setBackgroundResource(R.drawable.bg_lang_item_sn);
-            holder.tvLang.setTextColor(context.getColor(R.color.color_3A5EA3));
         }
 
         switch (languageModel.getCode()) {

@@ -10,6 +10,7 @@ import com.example.exe01.base.BaseActivity;
 import com.example.exe01.databinding.ActivityIntroBinding;
 import com.example.exe01.ui.home.HomeActivity;
 import com.example.exe01.ui.permission.PermissionActivity;
+import com.example.exe01.ui.sound.SoundMainActivity;
 import com.example.exe01.util.SharePrefUtils;
 
 
@@ -80,7 +81,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
 
     public void goToNextScreen() {
         if (SharePrefUtils.getCountOpenApp(this) > 1) {
-            startNextActivity(HomeActivity.class, null);
+            startNextActivity(SoundMainActivity.class, null);
         } else {
             startNextActivity(PermissionActivity.class, null);
         }

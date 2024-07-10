@@ -87,5 +87,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="text_permission_start_1"><font color='#E4D342'>“Sound meter”</font> requires the following permissions to provide services for you:</string>
 
 </resources>

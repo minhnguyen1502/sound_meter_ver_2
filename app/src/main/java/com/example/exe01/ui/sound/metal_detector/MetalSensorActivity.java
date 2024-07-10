@@ -217,20 +217,18 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
     private SensorManager sensorManager;
     private Sensor magnetometer;
-    private final float[] gravity = new float[3];
     private final ArrayList<Double> values = new ArrayList<>();
 
+    private boolean isGotIt = false;
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-            if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE && !isGotItPressed) {
+            if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE && !isGotIt) {
                 showCalibrateSensor();
             }
         }
     }
-
-    private boolean isGotItPressed = false;
 
     private void showCalibrateSensor() {
         Dialog dialog = new Dialog(this);
@@ -255,7 +253,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                isGotItPressed = true;
+                isGotIt = true;
             }
         });
 

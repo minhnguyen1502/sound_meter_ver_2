@@ -36,6 +36,8 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     private RecyclerView recyclerView;
     private SoundAdapter adapter;
     private boolean isSelected = false;
+    private boolean isSelectFull = false;
+
     private int count;
     @Override
     public ActivityHistoryBinding getBinding() {
@@ -51,6 +53,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
             adapter.swapCursor(cursor);
         }
     }
+
     @Override
     public void initView() {
        binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -60,33 +63,40 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
            }
        });
 
-       binding.ivSelect.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               isSelected = !isSelected; // Toggle mode
-
-               if (isSelected) {
-                   binding.ivSelect.setImageResource(R.drawable.ic_multiple_select);
-                   binding.btnDelete.setVisibility(View.VISIBLE);
-                   binding.tvHeader.setText("Select"+" ("+ dbHelper.getSelectedItemCount()+")");
-                   Log.e("count: ", String.valueOf(dbHelper.getSelectedItemCount()));
-               } else {
-                   binding.ivSelect.setImageResource(R.drawable.ic_select);
-                   binding.btnDelete.setVisibility(View.GONE);
-                   binding.tvHeader.setText("History");
-
-               }
-
-               // Update icons in RecyclerView items
-               adapter.updateIcons(isSelected);
-
-           }
-       });
-
+//       binding.ivSelect.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View v) {
+//               isSelected = !isSelected;
+//
+//               if (isSelected) {
+//                   binding.ivSelect.setImageResource(R.drawable.ic_multiple_select);
+//                   binding.btnDelete.setVisibility(View.VISIBLE);
+//               } else {
+//                   binding.ivSelect.setImageResource(R.drawable.ic_select);
+//                   binding.btnDelete.setVisibility(View.GONE);
+////                   adapter.deselectAll();
+//               }
+////                   binding.btnDelete.setVisibility(View.VISIBLE);
+//
+//               adapter.updateIcons(isSelected);
+//           }
+//       });
+//
+//       binding.ivSelected.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View v) {
+//               isSelectFull = !isSelectFull;
+//               if (isSelectFull){
+//                   adapter.deselectAll();
+//
+//               }
+//
+//           }
+//       });
        binding.btnDelete.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               confirmDialog();
+               confirmDelete();
            }
        });
     }
@@ -107,14 +117,13 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     @Override
     protected void onResume() {
         super.onResume();
-        // Tải lại dữ liệu và cập nhật RecyclerView
         loadData();
     }
     @Override
     public void onBack() {
         finish();
     }
-    void confirmDialog(){
+    void confirmDelete(){
         Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialog_set_name_record);
