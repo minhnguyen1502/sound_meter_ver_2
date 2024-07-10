@@ -1,10 +1,16 @@
 package com.example.exe01.ui.sound.sound_meter.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -23,6 +29,8 @@ import com.example.exe01.R;
 import com.example.exe01.base.BaseActivity;
 import com.example.exe01.databinding.ActivityDetailItemSoundBinding;
 import com.example.exe01.ui.sound.sound_meter.database.SoundMeterDatabaseHelper;
+
+import java.io.ByteArrayOutputStream;
 
 public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoundBinding> {
     int id;
@@ -48,6 +56,8 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
         long duration = getIntent().getLongExtra("DURATION", 0);
         float min = getIntent().getFloatExtra("MIN", 0);
         float max = getIntent().getFloatExtra("MAX", 0);
+        byte[] imageBlob = getIntent().getByteArrayExtra("IMG");
+
 
 
         binding.tvMax.setText(String.format("%.1f", max).replace(",", "."));
@@ -56,7 +66,12 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
         binding.description.setText(""+ description);
         binding.duration.setText(""+ formatDuration(duration));
         binding.tvTime.setText(""+ formatTime(startTime));
-
+        if (imageBlob != null && imageBlob.length > 0) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBlob, 0, imageBlob.length);
+            binding.ivChart.setImageBitmap(bitmap);
+        } else {
+            binding.ivChart.setImageResource(R.drawable.default_chart_image);
+        }
         binding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +86,41 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
                 editName();
             }
         });
-    }
+        binding.btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo nội dung chia sẻ
+                String shareText = "Title: " + title + "\n"
+                        + "Start time: " + startTime + "\n"
+                        + "Duration: " + duration + "\n"
+                        + "Description: " + description + "\n"
+                        + "Max: " + max + "\n"
+                        + "Min: " + min + "\n"
+                        + "Average: " + String.format("%.1f", avg) + "\n";
 
+                if (imageBlob != null && imageBlob.length > 0) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageBlob, 0, imageBlob.length);
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("image/*");
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, getImageUri(DetailItemSoundActivity.this, bitmap));
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                    startActivity(Intent.createChooser(shareIntent, "Share via"));
+                } else {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                    startActivity(Intent.createChooser(shareIntent, "Share via"));
+                }
+
+            }
+        });
+    }
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
     private void editName() {
         Dialog dialog = new Dialog(this);
 
@@ -109,13 +157,13 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
             public void onClick(View v) {
                 String newName = edtName.getText().toString().trim();
                 if (!newName.isEmpty()) {
-                    // Update the title in the database
+                    // Update database
                     SoundMeterDatabaseHelper myDB = new SoundMeterDatabaseHelper(DetailItemSoundActivity.this);
                     myDB.updateTitle(id, newName);
 
-                    // Update the title in the UI
+                    // Update UI
                     binding.tvTitle.setText(newName);
-                    title = newName; // Update the title variable
+                    title = newName;
 
                     dialog.dismiss();
                     Toast.makeText(DetailItemSoundActivity.this, "Record renamed successfully", Toast.LENGTH_SHORT).show();
@@ -129,24 +177,43 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
     }
 
     void confirmDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete "  + " ?");
-        builder.setMessage("Are you sure you want to delete "  + " ?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_set_name_record);
+
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText edtName = dialog.findViewById(R.id.edt_name);
+        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
+        TextView btnSave = dialog.findViewById(R.id.btn_save);
+        ImageView clear = dialog.findViewById(R.id.btn_clear);
+        TextView tv_title = dialog.findViewById(R.id.tv_title);
+        ImageView line = dialog.findViewById(R.id.iv_line);
+
+        line.setVisibility(View.INVISIBLE);
+        tv_title.setText("Delete the "+ title +" ?");
+        edtName.setVisibility(View.GONE);
+        btnSave.setText("Confirm");
+        clear.setVisibility(View.GONE);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 SoundMeterDatabaseHelper myDB = new SoundMeterDatabaseHelper(DetailItemSoundActivity.this);
                 myDB.deleteOneRow(String.valueOf(id));
                 finish();
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        builder.create().show();
+        dialog.show();
     }
     @Override
     public void bindView() {

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -55,6 +56,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     private Recoder recoder;
     private TextView value, max, min, avg;
     private SoundMeterDatabaseHelper dbHelper;
+    private boolean isPause = false;
 
     @Override
     public ActivitySoundMeterBinding getBinding() {
@@ -70,6 +72,8 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         min = binding.tvMin;
         avg = binding.tvAvg;
         dbHelper = new SoundMeterDatabaseHelper(this);
+        mChart = findViewById(R.id.chart); // Initialize mChart here
+
     }
 
 
@@ -93,8 +97,11 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         binding.ivReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetMeter();
+                binding.ivPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
                 isPause = false;
+                resetMeter();
+                startListen();
+
             }
         });
         binding.ivSave.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +135,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         initChart();
 
     }
-
     private String getDescription(float avg) {
         if (avg >= 0 && avg < 20) {
             return "Normal breathing";
@@ -196,8 +202,12 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             public void onClick(View v) {
                 String recordingName = edtName.getText().toString().trim();
                 if (!recordingName.isEmpty()) {
-                    saveRecordingToDatabase(recordingName);
-                    dialog.dismiss();
+                    if (!dbHelper.doesRecordingNameExist(recordingName)) {
+                        saveRecordingToDatabase(recordingName);
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(SoundMeterActivity.this, "Name already exists. Please choose a different name.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(SoundMeterActivity.this, "Please enter a name", Toast.LENGTH_SHORT).show();
                 }
@@ -216,8 +226,8 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         float avgValue = avgSoundLevel;
         String description = getDescription(avgValue);
 
-//        Bitmap chartBitmap = captureChartImage();
-//        byte[] chartImageBytes = getBytesFromBitmap(chartBitmap);
+        Bitmap chartBitmap = captureChartImage();
+        byte[] chartImageBytes = getBytesFromBitmap(chartBitmap);
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -228,26 +238,25 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         values.put(SoundMeterDatabaseHelper.COLUMN_AVG, avgValue);
         values.put(SoundMeterDatabaseHelper.COLUMN_DES, description);
         values.put(SoundMeterDatabaseHelper.COLUMN_TITLE, recordingName);
-//        values.put(SoundMeterDatabaseHelper.COLUMN_IMAGE, chartImageBytes);
+        values.put(SoundMeterDatabaseHelper.COLUMN_IMAGE, chartImageBytes);
 
         db.insert(SoundMeterDatabaseHelper.TABLE_RECORDINGS, null, values);
         Toast.makeText(this, "Recording saved", Toast.LENGTH_SHORT).show();
     }
-//    private Bitmap captureChartImage() {
-//        // Ensure the chart is fully updated
-//        mChart.invalidate();
-//        mChart.setDrawingCacheEnabled(true);
-//        mChart.buildDrawingCache();
-//        Bitmap chartBitmap = Bitmap.createBitmap(mChart.getDrawingCache());
-//        mChart.setDrawingCacheEnabled(false);
-//        return chartBitmap;
-//    }
+    private Bitmap captureChartImage() {
+        mChart.invalidate();
+        mChart.setDrawingCacheEnabled(true);
+        mChart.buildDrawingCache();
+        Bitmap chartBitmap = Bitmap.createBitmap(mChart.getDrawingCache());
+        mChart.setDrawingCacheEnabled(false);
+        return chartBitmap;
+    }
 
-//    private byte[] getBytesFromBitmap(Bitmap bitmap) {
-//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//        return stream.toByteArray();
-//    }
+    private byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
     private void resetMeter() {
         soundView.refresh();
 
@@ -262,7 +271,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         mChart.clear();
         initChart();
 
-        startListen();
     }
 
     private void resumeMeter() {
@@ -282,7 +290,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     private static final int msgWhat = 0x1001;
     private static final int refreshTime = 100;
     private float volume = 10000;
-    private boolean isPause = false;
     private float totalSoundLevel = 0.0f;
     private int soundLevelCount = 0;
     private SoundMeterView soundView;
@@ -370,7 +377,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
 
     private void initChart() {
 
-        mChart = findViewById(R.id.chart);
         mChart.setViewPortOffsets(dpToPx(38, this), dpToPx(10, this), 0, dpToPx(18, this));
         mChart.setTouchEnabled(false);
         mChart.setDragEnabled(true);
@@ -389,6 +395,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         x.setDrawGridLines(true);
         x.setTextColor(Color.parseColor("#E4D342"));
         x.setValueFormatter(new ValueFormatter() {
+            @SuppressLint("DefaultLocale")
             @Override
             public String getFormattedValue(float value) {
                 return String.format("%.0f s", value + 1);

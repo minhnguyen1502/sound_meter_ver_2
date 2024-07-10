@@ -23,7 +23,7 @@ public class SoundMeterDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_MAX = "max";
     public static final String COLUMN_AVG = "avg";
     public static final String COLUMN_DES = "des";
-
+    public static final String COLUMN_SELECTED = "selected";
     public static final String COLUMN_IMAGE = "image";
 
     private static final String TABLE_CREATE =
@@ -36,13 +36,25 @@ public class SoundMeterDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_MAX + " REAL, " +
                     COLUMN_AVG + " REAL, " +
                     COLUMN_DES + " TEXT," +
-                    COLUMN_IMAGE + " TEXT" + // Add this line
+                    COLUMN_IMAGE + " BOLB," + // Add this line
+                    COLUMN_SELECTED + " INTEGER DEFAULT 0" + // Thêm cột mới để đánh dấu đã chọn hoặc chưa chọn
 
                     ");";
 
     public SoundMeterDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
+    }
+    public int getSelectedItemCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + TABLE_RECORDINGS + " WHERE " + COLUMN_SELECTED + " = 1";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
     }
 
     @Override
@@ -84,5 +96,19 @@ public class SoundMeterDatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
+    }
+    public boolean doesRecordingNameExist(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT 1 FROM " + TABLE_RECORDINGS + " WHERE " + COLUMN_TITLE + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{name});
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        return exists;
+    }
+
+    public void deleteSelectedData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_RECORDINGS, COLUMN_SELECTED + "=?", new String[]{"1"});
+        db.close();
     }
 }

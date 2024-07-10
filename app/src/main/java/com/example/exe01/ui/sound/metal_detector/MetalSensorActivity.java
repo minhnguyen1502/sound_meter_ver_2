@@ -1,7 +1,5 @@
 package com.example.exe01.ui.sound.metal_detector;
 
-import static java.lang.Math.sqrt;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +14,6 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -49,8 +46,10 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     public ActivityMetalSensorBinding getBinding() {
         return ActivityMetalSensorBinding.inflate(getLayoutInflater());
     }
+
     private boolean isPause = false;
     private boolean isSpeak = false;
+
     @Override
     public void initView() {
         binding.ivInfo.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +76,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         if (magnetometer == null) {
-            Toast.makeText(this, "No Magnetometer found on this device!", Toast.LENGTH_SHORT).show();
-            finish();
+            showNoSensor();
         } else {
             sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
             runnable = new Runnable() {
@@ -101,10 +99,10 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
                 isPause = !isPause;
                 if (isPause) {
                     pauseSensor();
-                    binding.ivPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_resume, null));
+                    binding.ivPause.setImageDrawable(ContextCompat.getDrawable(MetalSensorActivity.this, R.drawable.ic_resume));
                 } else {
                     resumeSensor();
-                    binding.ivPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause, null));
+                    binding.ivPause.setImageDrawable(ContextCompat.getDrawable(MetalSensorActivity.this, R.drawable.ic_pause));
 
                 }
             }
@@ -113,7 +111,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
             @Override
             public void onClick(View v) {
                 playSound();
-                
+
             }
         });
 
@@ -136,6 +134,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         });
 
     }
+
     private void resetSensor() {
         values.clear();
         binding.tvValue.setText("0");
@@ -148,8 +147,8 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         mChart.clear();
         mChart.invalidate();
         initChart();
-        startTime = System.currentTimeMillis();
     }
+
     private void playSound() {
         isSpeak = !isSpeak;
         binding.ivSound.setImageResource(isSpeak ? R.drawable.ic_on_sound : R.drawable.ic_off_sound);
@@ -160,26 +159,25 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     }
 
     private void resumeSensor() {
-        startTime += (System.currentTimeMillis() - pauseTime);
 
         sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
         handler.post(runnable);
     }
 
     private void pauseSensor() {
-        pauseTime = System.currentTimeMillis();
 
         sensorManager.unregisterListener(this);
         handler.removeCallbacks(runnable);
     }
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private Runnable runnable;
 
     @Override
     public void bindView() {
 
     }
+
     @Override
     public void onBack() {
         finish();
@@ -195,7 +193,6 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
                 handler.post(runnable);
             }
         }
-        startTime = System.currentTimeMillis();
         SharedPreferences preferences = getSharedPreferences("metal_prefs", Context.MODE_PRIVATE);
         threshold = preferences.getFloat("threshold", 50.0f);
     }
@@ -220,93 +217,123 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
     private SensorManager sensorManager;
     private Sensor magnetometer;
-    private float[] gravity = new float[3];
-    private ArrayList<Double> values = new ArrayList<>();
+    private final float[] gravity = new float[3];
+    private final ArrayList<Double> values = new ArrayList<>();
 
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Không cần xử lý thay đổi độ chính xác
-    }
-    private static final int WINDOW_SIZE = 10;
-    private ArrayList<Float> windowX = new ArrayList<>();
-    private ArrayList<Float> windowY = new ArrayList<>();
-    private ArrayList<Float> windowZ = new ArrayList<>();
-
-    private float movingAverage(ArrayList<Float> window, float newValue) {
-        if (window.size() >= WINDOW_SIZE) {
-            window.remove(0);
+        if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+            if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE && !isGotItPressed) {
+                showCalibrateSensor();
+            }
         }
-        window.add(newValue);
-
-        float sum = 0;
-        for (Float value : window) {
-            sum += value;
-        }
-        return sum / window.size();
     }
+
+    private boolean isGotItPressed = false;
+
+    private void showCalibrateSensor() {
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_calibrate_sensor);
+
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView cancel = dialog.findViewById(R.id.btn_cancel);
+        TextView gotIt = dialog.findViewById(R.id.btn_got_it);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        gotIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                isGotItPressed = true;
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void showNoSensor() {
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_no_sensor);
+
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView goHome = dialog.findViewById(R.id.btn_go_to_home);
+        goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
     private MediaPlayer mediaPlayer;
+
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float[] filteredValues = lowPassFilter(event.values.clone(), gravity);
-        float x = movingAverage(windowX, filteredValues[0]);
-        float y = movingAverage(windowY, filteredValues[1]);
-        float z = movingAverage(windowZ, filteredValues[2]);
-        double magnitude = sqrt(x * x + y * y + z * z);
-        values.add(magnitude);
+        if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            double magnitude = Math.sqrt(Math.pow(event.values[0], 2.0) +
+                    Math.pow(event.values[1], 2.0) +
+                    Math.pow(event.values[2], 2.0));
+            binding.metalView.setMetalValue((float) magnitude);
 
-        binding.metalView.setMetalValue((float) magnitude);
+            String value = String.format("%.0f", magnitude);
+            binding.tvValue.setText(value);
+            binding.tvX.setText(String.format("%.2f", x));
+            binding.tvY.setText(String.format("%.2f", y));
+            binding.tvZ.setText(String.format("%.2f", z));
+            values.add(magnitude);
 
-        String value = String.format("%.0f", magnitude);
-        binding.tvValue.setText(value + "");
-        binding.tvX.setText(String.format("%.2f", x));
-        binding.tvY.setText(String.format("%.2f", y));
-        binding.tvZ.setText(String.format("%.2f", z));
+            double max = Double.MIN_VALUE;
+            double min = Double.MAX_VALUE;
+            double sum = 0;
 
-        updateStats();
-        updateData((float) magnitude);
-
-        if (isSpeak && magnitude > threshold && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        } else if (isSpeak && magnitude <= threshold && mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            mediaPlayer.seekTo(0);
-        }
-    }
-    private void updateStats() {
-        if (values.isEmpty()) {
-            return;
-        }
-
-        double max = Double.MIN_VALUE;
-        double min = Double.MAX_VALUE;
-        double sum = 0;
-
-        for (double value : values) {
-            if (value > max) {
-                max = value;
+            for (double val : values) {
+                if (val > max) {
+                    max = val;
+                }
+                if (val < min) {
+                    min = val;
+                }
+                sum += val;
             }
-            if (value < min) {
-                min = value;
+
+            double avg = sum / values.size();
+
+            // Hiển thị các giá trị min, max, avg
+            binding.tvMax.setText(String.format("%.0f", max));
+            binding.tvMin.setText(String.format("%.0f", min));
+            binding.tvAvg.setText(String.format("%.0f", avg));
+            updateData((float) magnitude);
+
+            if (isSpeak && magnitude > threshold && !mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+            } else if (isSpeak && magnitude <= threshold && mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
             }
-            sum += value;
         }
 
-        double avg = sum / values.size();
-
-        binding.tvMax.setText(String.format("%.0f", max));
-        binding.tvMin.setText(String.format("%.0f", min));
-        binding.tvAvg.setText(String.format("%.0f", avg));
-    }
-
-    private static final float ALPHA = 0.25f;
-
-    private float[] lowPassFilter(float[] input, float[] output) {
-        if (output == null) return input;
-        for (int i = 0; i < input.length; i++) {
-            output[i] = output[i] + ALPHA * (input[i] - output[i]);
-        }
-        return output;
     }
 
     private boolean isShow = false;
@@ -381,8 +408,6 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     private LineChart mChart;
     private Typeface typeface;
     private ArrayList<Entry> yVals;
-    private long startTime;
-    private long pauseTime;
 
 
     private void initChart() {
@@ -462,24 +487,6 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         mChart.invalidate();
     }
 
-    private void updateData(float value) {
-        long elapsedTime = System.currentTimeMillis() - startTime;
-
-        LineData data = mChart.getData();
-        if (data != null) {
-            ILineDataSet set = data.getDataSetByIndex(0);
-            if (set == null) {
-                set = createSet();
-                data.addDataSet(set);
-            }
-            data.addEntry(new Entry(elapsedTime * 0.001f, value), 0);
-            data.notifyDataChanged();
-
-            mChart.notifyDataSetChanged();
-            mChart.moveViewToX(data.getEntryCount());
-        }
-    }
-
     private LineDataSet createSet() {
         LineDataSet set = new LineDataSet(null, "Metal");
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -495,5 +502,22 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
             }
         });
         return set;
+    }
+
+    private void updateData(float value) {
+
+        LineData data = mChart.getData();
+        if (data != null) {
+            ILineDataSet set = data.getDataSetByIndex(0);
+            if (set == null) {
+                set = createSet();
+                data.addDataSet(set);
+            }
+            data.addEntry(new Entry(set.getEntryCount() * 0.02f, value), 0);
+            data.notifyDataChanged();
+
+            mChart.notifyDataSetChanged();
+            mChart.moveViewToX(data.getEntryCount());
+        }
     }
 }

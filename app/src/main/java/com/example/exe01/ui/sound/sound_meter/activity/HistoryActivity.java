@@ -1,11 +1,19 @@
 package com.example.exe01.ui.sound.sound_meter.activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,6 +36,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     private RecyclerView recyclerView;
     private SoundAdapter adapter;
     private boolean isSelected = false;
+    private int count;
     @Override
     public ActivityHistoryBinding getBinding() {
         return ActivityHistoryBinding.inflate(getLayoutInflater());
@@ -59,23 +68,25 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
                if (isSelected) {
                    binding.ivSelect.setImageResource(R.drawable.ic_multiple_select);
                    binding.btnDelete.setVisibility(View.VISIBLE);
+                   binding.tvHeader.setText("Select"+" ("+ dbHelper.getSelectedItemCount()+")");
+                   Log.e("count: ", String.valueOf(dbHelper.getSelectedItemCount()));
                } else {
                    binding.ivSelect.setImageResource(R.drawable.ic_select);
                    binding.btnDelete.setVisibility(View.GONE);
+                   binding.tvHeader.setText("History");
 
                }
 
                // Update icons in RecyclerView items
                adapter.updateIcons(isSelected);
 
-//               confirmDialog();
            }
        });
 
        binding.btnDelete.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Toast.makeText(HistoryActivity.this, "delete", Toast.LENGTH_SHORT).show();
+               confirmDialog();
            }
        });
     }
@@ -103,27 +114,48 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     public void onBack() {
         finish();
     }
-    public void confirmDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete All?");
-        builder.setMessage("Are you sure you want to delete all Data?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+    void confirmDialog(){
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_set_name_record);
+
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText edtName = dialog.findViewById(R.id.edt_name);
+        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
+        TextView btnSave = dialog.findViewById(R.id.btn_save);
+        ImageView clear = dialog.findViewById(R.id.btn_clear);
+        TextView tv_title = dialog.findViewById(R.id.tv_title);
+        ImageView line = dialog.findViewById(R.id.iv_line);
+
+        line.setVisibility(View.INVISIBLE);
+        tv_title.setText("Delete the selected records from your history ?");
+        edtName.setVisibility(View.GONE);
+        btnSave.setText("Confirm");
+        clear.setVisibility(View.GONE);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Xoá các mục đã chọn từ database
                 SoundMeterDatabaseHelper myDB = new SoundMeterDatabaseHelper(HistoryActivity.this);
-                myDB.deleteAllData();
-                //Refresh Activity
+                myDB.deleteSelectedData();
+
+                // Refresh activity
                 Intent intent = new Intent(HistoryActivity.this, HistoryActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        builder.create().show();
+        dialog.show();
     }
 }

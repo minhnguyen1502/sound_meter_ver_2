@@ -39,327 +39,334 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/pro_500"
-        android:gravity="center"
-        android:text="Microtesla Values Information Table"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_arrow_left" />
-
-    <LinearLayout
-        android:id="@+id/header_title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginHorizontal="23dp"
-        android:layout_marginTop="23dp"
-        android:background="@drawable/bg_table_1"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="2"
-            android:fontFamily="@font/pro_500"
-            android:text="Magnetometer Condition"
-            android:textColor="#19513C"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/pro_500"
-            android:gravity="center"
-            android:text="From"
-            android:textColor="#19513C"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/pro_500"
-            android:gravity="center"
-            android:text="To"
-            android:textColor="#19513C"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <!-- Divider -->
-
-    <LinearLayout
-        android:id="@+id/row_1"
-        android:layout_width="0dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="-1dp"
-        android:background="@drawable/bg_table_3"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/header_title"
-        app:layout_constraintStart_toStartOf="@id/header_title"
-        app:layout_constraintTop_toBottomOf="@id/header_title">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="2"
-            android:text="Low Magnetic Field"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="1500"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/row_2"
-        android:layout_width="0dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="-1dp"
-        android:background="@drawable/bg_table_3"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/row_1"
-        app:layout_constraintStart_toStartOf="@id/row_1"
-        app:layout_constraintTop_toBottomOf="@id/row_1">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="2"
-            android:text="Detectable Range"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="2000"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="4000"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/row_3"
-        android:layout_width="0dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="-1dp"
-        android:background="@drawable/bg_table_3"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/row_2"
-        app:layout_constraintStart_toStartOf="@id/row_2"
-        app:layout_constraintTop_toBottomOf="@id/row_2">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="2"
-            android:text="Saurated Sensors"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="5000"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/row_4"
-        android:layout_width="0dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="-1dp"
-        android:background="@drawable/bg_table_2"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/row_3"
-        app:layout_constraintStart_toStartOf="@id/row_3"
-        app:layout_constraintTop_toBottomOf="@id/row_3">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="2"
-            android:text="Potenial Deprogramming"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="300"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#E3DB37" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-    <!-- Repeat the Divider and Data Rows for the remaining rows -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="28dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bg_calibrate_sensor"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/row_4">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_arrow_left">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/pro_500"
+                android:gravity="center"
+                android:text="Microtesla Values Information Table"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/txt_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="27dp"
-            android:fontFamily="@font/pro_500"
-            android:gravity="center"
-            android:text="Calibrate Sensor"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:id="@+id/header_title"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="23dp"
+                android:layout_marginTop="23dp"
+                android:background="@drawable/bg_table_1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="9dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/pro_500"
-            android:text="The accuracy of the magnetometer sensor is UNRELIABLE. Please calibrate the sensor as shown in the image below."
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_title" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/pro_500"
+                    android:text="Magnetometer Condition"
+                    android:textColor="#19513C"
+                    android:textSize="14sp" />
 
-        <ImageView
-            android:layout_width="161dp"
-            android:layout_height="76.65dp"
-            android:layout_marginTop="104dp"
-            android:layout_marginBottom="37.35dp"
-            android:src="@drawable/img_info_metal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_title" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pro_500"
+                    android:gravity="center"
+                    android:text="From"
+                    android:textColor="#19513C"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pro_500"
+                    android:gravity="center"
+                    android:text="To"
+                    android:textColor="#19513C"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_1"
+                android:layout_width="0dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="-1dp"
+                android:background="@drawable/bg_table_3"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/header_title"
+                app:layout_constraintStart_toStartOf="@id/header_title"
+                app:layout_constraintTop_toBottomOf="@id/header_title">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:text="Low Magnetic Field"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1500"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_2"
+                android:layout_width="0dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="-1dp"
+                android:background="@drawable/bg_table_3"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/row_1"
+                app:layout_constraintStart_toStartOf="@id/row_1"
+                app:layout_constraintTop_toBottomOf="@id/row_1">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:text="Detectable Range"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="2000"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="4000"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_3"
+                android:layout_width="0dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="-1dp"
+                android:background="@drawable/bg_table_3"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/row_2"
+                app:layout_constraintStart_toStartOf="@id/row_2"
+                app:layout_constraintTop_toBottomOf="@id/row_2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:text="Saurated Sensors"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="5000"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_4"
+                android:layout_width="0dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="-1dp"
+                android:background="@drawable/bg_table_2"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/row_3"
+                app:layout_constraintStart_toStartOf="@id/row_3"
+                app:layout_constraintTop_toBottomOf="@id/row_3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:text="Potenial Deprogramming"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="300"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#E3DB37" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_calibrate_sensor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/row_4">
+
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="27dp"
+                    android:fontFamily="@font/pro_500"
+                    android:gravity="center"
+                    android:text="Calibrate Sensor"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="9dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/pro_500"
+                    android:text="The accuracy of the magnetometer sensor is UNRELIABLE. Please calibrate the sensor as shown in the image below."
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_title" />
+
+                <ImageView
+                    android:layout_width="161dp"
+                    android:layout_height="76.65dp"
+                    android:layout_marginTop="104dp"
+                    android:layout_marginBottom="37.35dp"
+                    android:src="@drawable/img_info_metal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_title" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

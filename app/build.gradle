@@ -16,7 +16,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true // ADD THIS LINE
         def formattedDate = new Date().format('MMM.dd.yyyy')
-        archivesBaseName = "BaseProduct_v${versionName}(${versionCode})_${formattedDate}"
+        archivesBaseName = "SoundMeter2_v${versionName}_${versionCode}_${formattedDate}"
     }
 
     bundle {

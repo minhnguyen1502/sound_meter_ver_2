@@ -1,14 +1,22 @@
 package com.example.exe01.ui.sound.sound_meter.adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,15 +26,21 @@ import com.example.exe01.R;
 import com.example.exe01.ui.sound.sound_meter.activity.DetailItemSoundActivity;
 import com.example.exe01.ui.sound.sound_meter.database.SoundMeterDatabaseHelper;
 
+import java.io.ByteArrayOutputStream;
+
 public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> {
-    private final Context context;
+    private Context context;
     private Cursor cursor;
     private boolean isSelected = false;
     private boolean isSelect = false;
+    private boolean isChoose = false;
+    private SoundMeterDatabaseHelper dbHelper;
+
 
     public SoundAdapter(Context context, Cursor cursor) {
         this.context = context;
         this.cursor = cursor;
+        dbHelper = new SoundMeterDatabaseHelper(context);
     }
 
     @NonNull
@@ -50,26 +64,45 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
         long duration = cursor.getLong(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_DURATION));
         float min = cursor.getFloat(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_MIN));
         float max = cursor.getFloat(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_MAX));
-//        String imageUri = cursor.getString(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_IMAGE)); // Assuming you have a column for image URI
+        byte[] img = cursor.getBlob(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_IMAGE));
 
         holder.avgView.setText(String.format("%.1f", avg).replace(",", "."));
         holder.desView.setText(des);
         holder.time.setText(formatTime(startTime));
         holder.title.setText(title);
 
-//        if (imageUri != null && !imageUri.isEmpty()) {
-//// Load image using Glide
-//            Glide.with(context)
-//                    .load(imageUri)
-//                    .into(holder.chart);
-//        } else {
-//            holder.chart.setImageResource(R.drawable.default_chart_image); // Set a default image if no image URI is provided
-//        }
+        if (img != null && img.length > 0) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+
+            holder.chart.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    holder.chart.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                    int width = holder.chart.getWidth();
+                    int height = holder.chart.getHeight();
+
+                    if (width > 0 && height > 0) {
+                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+                        holder.chart.setImageBitmap(scaledBitmap);
+                    } else {
+                        holder.chart.setImageResource(R.drawable.default_chart_image);
+                    }
+
+                    return true;
+                }
+            });
+        } else {
+            holder.chart.setImageResource(R.drawable.default_chart_image);
+        }
 
         if (isSelected) {
-            holder.icShare.setImageResource(R.drawable.ic_select_item);
+            holder.icShare.setVisibility(View.INVISIBLE);
+            holder.icSelectItem.setVisibility(View.VISIBLE);
         } else {
-            holder.icShare.setImageResource(R.drawable.ic_share);
+            holder.icShare.setVisibility(View.VISIBLE);
+            holder.icSelectItem.setVisibility(View.INVISIBLE);
+
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,30 +116,77 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
                 intent.putExtra("DURATION", duration);
                 intent.putExtra("MIN", min);
                 intent.putExtra("MAX", max);
+                intent.putExtra("IMG", img);
                 context.startActivity(intent);
             }
         });
         holder.icShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isSelect = !isSelect; // Toggle isSelected state
+                // Tạo nội dung chia sẻ
+                String shareText = "Title: " + title + "\n"
+                        + "Start time: " + startTime + "\n"
+                        + "Duration: " + duration + "\n"
+                        + "Description: " + des + "\n"
+                        + "Max: " + String.format("%.1f", max) + "\n"
+                        + "Min: " + String.format("%.1f", min) + "\n"
+                        + "Average: " + String.format("%.1f", avg) + "\n";
 
-                if (isSelect) {
-                    holder.icShare.setImageResource(R.drawable.ic_selected_item);
+                if (img != null && img.length > 0) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("image/*");
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, getImageUri(context, bitmap));
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                    context.startActivity(Intent.createChooser(shareIntent, "Share via"));
                 } else {
-                    holder.icShare.setImageResource(R.drawable.ic_select_item);
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                    context.startActivity(Intent.createChooser(shareIntent, "Share via"));
                 }
             }
         });
-    }
 
+        holder.icSelectItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isChoose = !isChoose;
+
+                // Toggle between select and unselect icons
+                if (isChoose) {
+                    holder.icSelectedItem.setVisibility(View.VISIBLE);
+                    holder.icSelectItem.setVisibility(View.INVISIBLE);
+                    updateSelectedState(id, 1); // Cập nhật cột selected là 1 khi chọn mục
+                } else {
+                    holder.icSelectedItem.setVisibility(View.INVISIBLE);
+                    holder.icSelectItem.setVisibility(View.VISIBLE);
+                    updateSelectedState(id, 0); // Cập nhật cột selected là 0 khi bỏ chọn mục
+                }
+            }
+
+        });
+    }
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
+//    SoundMeterDatabaseHelper dbHelper = new SoundMeterDatabaseHelper(context); // 'this' là Context của hoạt động hiện tại
+
+    private void updateSelectedState(int id, int selected) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SoundMeterDatabaseHelper.COLUMN_SELECTED, selected);
+        db.update(SoundMeterDatabaseHelper.TABLE_RECORDINGS, cv, SoundMeterDatabaseHelper.COLUMN_ID + "=?", new String[]{String.valueOf(id)});
+    }
     @Override
     public int getItemCount() {
         return cursor.getCount();
     }
 
     private String formatTime(long timeMillis) {
-        // Format the time in milliseconds to a readable time string (hh:mm a)
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault());
         return sdf.format(new java.util.Date(timeMillis));
     }
@@ -129,7 +209,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
     public class Viewholder extends RecyclerView.ViewHolder {
         public TextView avgView, time;
         public TextView desView, title;
-        public ImageView icShare, chart;
+        public ImageView icShare, chart, icSelectItem, icSelectedItem;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -139,6 +219,8 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
             time = itemView.findViewById(R.id.tv_time);
             title = itemView.findViewById(R.id.tv_title);
             chart = itemView.findViewById(R.id.iv_chart);
+            icSelectItem = itemView.findViewById(R.id.ic_select_item);
+            icSelectedItem = itemView.findViewById(R.id.ic_selected_item);
         }
     }
 }

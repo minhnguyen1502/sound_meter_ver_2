@@ -9,13 +9,13 @@
         android:id="@+id/btn_setting"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
         android:padding="12dp"
         android:visibility="invisible"
         android:focusable="false"
         android:clickable="false"
         android:src="@drawable/ic_setting"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -28,18 +28,18 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/btn_setting"
-        app:layout_constraintEnd_toStartOf="@id/btn_setting"
-        app:layout_constraintStart_toEndOf="@id/gone"
+        app:layout_constraintEnd_toStartOf="@id/gone"
+        app:layout_constraintStart_toEndOf="@id/btn_setting"
         app:layout_constraintTop_toTopOf="@+id/btn_setting" />
 
     <ImageView
         android:id="@+id/gone"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:padding="12dp"
         android:src="@drawable/ic_setting"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
