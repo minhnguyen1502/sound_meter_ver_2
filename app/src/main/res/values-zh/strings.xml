@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">exe01</string>
+    <string name="english" translatable="false">English</string>
+    <string name="french" translatable="false">French</string>
+    <string name="portuguese" translatable="false">Portuguese</string>
+    <string name="spanish" translatable="false">Spanish</string>
+    <string name="german" translatable="false">German</string>
+    <string name="hindi" translatable="false">Hindi</string>
+    <string name="indonesia" translatable="false">Indonesia</string>
+    <string name="china" translatable="false">China</string>
+    <string name="title_home">主页</string>
+    <string name="title_dashboard">仪表板</string>
+    <string name="title_notifications">通知</string>
+
+    <string name="Send_Email">发送电子邮件</string>
+    <string name="There_is_no">没有</string>
+    <string name="thank_you">谢谢</string>
+    <string name="rate_us">评价我们</string>
+    <string name="not_now">稍后</string>
+    <string name="this_action_may_contain_advertising">此操作可能包含广告</string>
+    <string name="your_opinion_matter_to_us">您的意见对我们很重要</string>
+    <string name="if_you_enjoy_this_know_your_device_would_you_mind_rating_us_on_the_google_play_then">如果您喜欢这个BaseProduct，请在Google Play上给我们评分好吗？</string>
+
+    <string name="language">语言</string>
+    <string name="rate">评价</string>
+    <string name="share">分享</string>
+    <string name="about">关于</string>
+    <string name="feedback">反馈</string>
+    <string name="report_bugs_and_tell_us_what_to_improve">报告错误并告诉我们如何改进</string>
+    <string name="share_with_friends">与朋友分享</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="request">请求或反馈</string>
+    <string name="send_email">通过电子邮件发送...</string>
+    <string name="email_clients_not_found">未找到任何电子邮件客户端</string>
+    <string name="version">版本</string>
+    <string name="next">下一个</string>
+    <string name="quit">退出</string>
+    <string name="cancel">取消</string>
+    <string name="title_intro_01">标题 01</string>
+    <string name="title_intro_02">标题 02</string>
+    <string name="title_intro_03">标题 03</string>
+    <string name="content_intro_01">内容 01</string>
+    <string name="content_intro_02">内容 02</string>
+    <string name="content_intro_03">内容 03</string>
+    <string name="continue_">继续</string>
+    <string name="are_you_sure_want_to_quit_app">您确定要退出应用吗？</string>
+    <string name="no_internet_connection">没有互联网连接！</string>
+    <string name="first_fragment_label">第一个片段</string>
+    <string name="second_fragment_label">第二个片段</string>
+    <string name="previous">以前</string>
+
+    <string name="text_permission_start_1"><font color='#E4D342'>“Sound meter”</font> 需要以下权限来为您提供服务：</string>
+    <string name="measure_the_sound_of_the_surrounding_environment">测量周围环境的声音</string>
+
+</resources>

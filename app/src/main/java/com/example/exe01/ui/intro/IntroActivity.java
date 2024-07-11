@@ -1,17 +1,22 @@
 package com.example.exe01.ui.intro;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.exe01.R;
 import com.example.exe01.base.BaseActivity;
 import com.example.exe01.databinding.ActivityIntroBinding;
-import com.example.exe01.ui.home.HomeActivity;
 import com.example.exe01.ui.permission.PermissionActivity;
 import com.example.exe01.ui.sound.SoundMainActivity;
 import com.example.exe01.util.SharePrefUtils;
+import com.example.exe01.util.Utils;
 
 
 public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
@@ -57,7 +62,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
 
     @Override
     public void onBack() {
-
+    finishAffinity();
     }
 
     private void changeContentInit(int position) {
@@ -78,20 +83,40 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
                 break;
         }
     }
+    private boolean checkAudioPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                == PackageManager.PERMISSION_GRANTED;
+    }
 
-    public void goToNextScreen() {
-        if (SharePrefUtils.getCountOpenApp(this) > 1) {
-            startNextActivity(SoundMainActivity.class, null);
+    private boolean checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
+        } else return true;
+    }
+    private boolean checkLFilePermission() {
+        if (Build.VERSION.SDK_INT > 33) {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
+                    == PackageManager.PERMISSION_GRANTED;
         } else {
-            startNextActivity(PermissionActivity.class, null);
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED;
         }
     }
+    public void goToNextScreen() {
+        Utils.setFirstOpenApp(true);
+        if(checkAudioPermission()&&checkLFilePermission()&&checkNotificationPermission()){
+            Intent intent = new Intent(IntroActivity.this, SoundMainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(IntroActivity.this, PermissionActivity.class);
+            startActivity(intent);
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finishAffinity();
-    }
+        }
+}
 
     @Override
     protected void onStart() {

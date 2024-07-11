@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.exe01.R;
 import com.example.exe01.base.BaseActivity;
 import com.example.exe01.databinding.ActivityLanguageBinding;
-import com.example.exe01.ui.home.HomeActivity;
 import com.example.exe01.ui.language.adapter.LanguageAdapter;
 import com.example.exe01.ui.language.model.LanguageModel;
 import com.example.exe01.util.SystemUtil;
@@ -45,7 +44,7 @@ public class LanguageActivity extends BaseActivity<ActivityLanguageBinding> {
     public void bindView() {
         binding.viewTop.ivCheck.setOnClickListener(view -> {
             SystemUtil.saveLocale(getBaseContext(), codeLang);
-            startNextActivity(HomeActivity.class, null);
+//            startNextActivity(HomeActivity.class, null);
             finishAffinity();
         });
 

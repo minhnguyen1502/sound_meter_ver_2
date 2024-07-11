@@ -52,18 +52,18 @@
         <activity
             android:name=".ui.sound.SoundMainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Exe01">
+            android:theme="@style/Theme.Exe01"/>
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.splash.SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
         <activity
             android:name=".ui.language.LanguageStartActivity"
             android:exported="false"

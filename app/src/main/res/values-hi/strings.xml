@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">exe01</string>
+    <string name="english" translatable="false">English</string>
+    <string name="french" translatable="false">French</string>
+    <string name="portuguese" translatable="false">Portuguese</string>
+    <string name="spanish" translatable="false">Spanish</string>
+    <string name="german" translatable="false">German</string>
+    <string name="hindi" translatable="false">Hindi</string>
+    <string name="indonesia" translatable="false">Indonesia</string>
+    <string name="china" translatable="false">China</string>
+    <string name="title_home">होम</string>
+    <string name="title_dashboard">डैशबोर्ड</string>
+    <string name="title_notifications">सूचनाएं</string>
+
+    <string name="Send_Email">ईमेल भेजें</string>
+    <string name="There_is_no">कोई नहीं है</string>
+    <string name="thank_you">धन्यवाद</string>
+    <string name="rate_us">हमें रेट करें</string>
+    <string name="not_now">अभी नहीं</string>
+    <string name="this_action_may_contain_advertising">इस क्रिया में विज्ञापन हो सकते हैं</string>
+    <string name="your_opinion_matter_to_us">आपकी राय हमारे लिए महत्वपूर्ण है</string>
+    <string name="if_you_enjoy_this_know_your_device_would_you_mind_rating_us_on_the_google_play_then">यदि आपको यह BaseProduct पसंद है, तो क्या आप हमें Google Play पर रेट करेंगे?</string>
+
+    <string name="language">भाषा</string>
+    <string name="rate">रेट</string>
+    <string name="share">साझा करें</string>
+    <string name="about">के बारे में</string>
+    <string name="feedback">प्रतिक्रिया</string>
+    <string name="report_bugs_and_tell_us_what_to_improve">बग्स की रिपोर्ट करें और हमें सुधार के बारे में बताएं</string>
+    <string name="share_with_friends">मित्रों के साथ साझा करें</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="request">अनुरोध या प्रतिक्रिया</string>
+    <string name="send_email">ईमेल द्वारा भेजें</string>
+    <string name="email_clients_not_found">कोई ईमेल क्लाइंट नहीं मिला</string>
+    <string name="version">संस्करण</string>
+    <string name="next">अगला</string>
+    <string name="quit">छोड़ें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="title_intro_01">शीर्षक 01</string>
+    <string name="title_intro_02">शीर्षक 02</string>
+    <string name="title_intro_03">शीर्षक 03</string>
+    <string name="content_intro_01">सामग्री 01</string>
+    <string name="content_intro_02">सामग्री 02</string>
+    <string name="content_intro_03">सामग्री 03</string>
+    <string name="continue_">जारी रखें</string>
+    <string name="are_you_sure_want_to_quit_app">क्या आप ऐप छोड़ना चाहते हैं?</string>
+    <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं है!</string>
+    <string name="first_fragment_label">पहला टुकड़ा</string>
+    <string name="second_fragment_label">दूसरा टुकड़ा</string>
+    <string name="previous">पिछला</string>
+
+    <string name="text_permission_start_1"><font color='#E4D342'>“साउंड मीटर”</font> को सेवाएं प्रदान करने के लिए निम्नलिखित अनुमतियों की आवश्यकता है:</string>
+    <string name="measure_the_sound_of_the_surrounding_environment">पर्यावरण की ध्वनि मापें</string>
+
+</resources>

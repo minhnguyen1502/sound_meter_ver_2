@@ -73,7 +73,7 @@
             android:paddingVertical="@dimen/_5sdp"
             android:paddingStart="@dimen/_12sdp"
             android:text="@string/next"
-            android:textColor="@color/black"
+            android:textColor="#E4D342"
             android:textSize="@dimen/_12ssp"
             android:visibility="gone" />
 

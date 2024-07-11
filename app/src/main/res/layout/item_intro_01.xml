@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="Measure the sound of the surrounding environment"
+            android:text="@string/measure_the_sound_of_the_surrounding_environment"
             android:fontFamily="@font/pro__400"
             android:textStyle="bold"
             android:textColor="@color/white"
