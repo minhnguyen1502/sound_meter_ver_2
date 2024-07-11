@@ -9,19 +9,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.exe01.R;
 import com.example.exe01.ui.sound.sound_meter.activity.DetailItemSoundActivity;
 import com.example.exe01.ui.sound.sound_meter.database.SoundMeterDatabaseHelper;
@@ -29,12 +27,11 @@ import com.example.exe01.ui.sound.sound_meter.database.SoundMeterDatabaseHelper;
 import java.io.ByteArrayOutputStream;
 
 public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> {
-    private Context context;
+    private final Context context;
     private Cursor cursor;
     private boolean isSelected = false;
-    private boolean isSelect = false;
     private boolean isChoose = false;
-    private SoundMeterDatabaseHelper dbHelper;
+    private final SoundMeterDatabaseHelper dbHelper;
 
 
     public SoundAdapter(Context context, Cursor cursor) {
@@ -65,6 +62,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
         float min = cursor.getFloat(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_MIN));
         float max = cursor.getFloat(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_MAX));
         byte[] img = cursor.getBlob(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_IMAGE));
+        int selected = cursor.getInt(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_SELECTED));
 
         holder.avgView.setText(String.format("%.1f", avg).replace(",", "."));
         holder.desView.setText(des);
@@ -102,7 +100,12 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
         } else {
             holder.icShare.setVisibility(View.VISIBLE);
             holder.icSelectItem.setVisibility(View.INVISIBLE);
+        }
 
+        if (selected == 1) {
+            holder.icSelectItem.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_selected_item));
+        } else {
+            holder.icSelectItem.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_select_item));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,38 +151,54 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
             }
         });
 
+
         holder.icSelectItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isChoose = !isChoose;
 
-                // Toggle between select and unselect icons
                 if (isChoose) {
-                    holder.icSelectedItem.setVisibility(View.VISIBLE);
-                    holder.icSelectItem.setVisibility(View.INVISIBLE);
-                    updateSelectedState(id, 1); // Cập nhật cột selected là 1 khi chọn mục
+                    holder.icSelectItem.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_selected_item));
+                    updateSelectedState(id, 1);
                 } else {
-                    holder.icSelectedItem.setVisibility(View.INVISIBLE);
-                    holder.icSelectItem.setVisibility(View.VISIBLE);
-                    updateSelectedState(id, 0); // Cập nhật cột selected là 0 khi bỏ chọn mục
+                    holder.icSelectItem.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_select_item));
+                    updateSelectedState(id, 0);
                 }
             }
 
         });
     }
+
     private Uri getImageUri(Context context, Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
         return Uri.parse(path);
     }
-//    SoundMeterDatabaseHelper dbHelper = new SoundMeterDatabaseHelper(context); // 'this' là Context của hoạt động hiện tại
 
     private void updateSelectedState(int id, int selected) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(SoundMeterDatabaseHelper.COLUMN_SELECTED, selected);
         db.update(SoundMeterDatabaseHelper.TABLE_RECORDINGS, cv, SoundMeterDatabaseHelper.COLUMN_ID + "=?", new String[]{String.valueOf(id)});
+    }
+    public boolean hasSelectedItem() {
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int selected = cursor.getInt(cursor.getColumnIndexOrThrow(SoundMeterDatabaseHelper.COLUMN_SELECTED));
+                if (selected == 1) {
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+        return false;
+    }
+    public void selectAllItems(boolean select) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SoundMeterDatabaseHelper.COLUMN_SELECTED, select ? 1 : 0);
+        db.update(SoundMeterDatabaseHelper.TABLE_RECORDINGS, cv, null, null);
+        notifyDataSetChanged();
     }
     @Override
     public int getItemCount() {
@@ -200,13 +219,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
             notifyDataSetChanged();
         }
     }
-    public void deselectAll() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(SoundMeterDatabaseHelper.COLUMN_SELECTED, 0);
-        db.update(SoundMeterDatabaseHelper.TABLE_RECORDINGS, cv, null, null);
-        notifyDataSetChanged();
-    }
+
     public void updateIcons(boolean isSelected) {
         this.isSelected = isSelected;
         notifyDataSetChanged();
@@ -215,7 +228,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
     public class Viewholder extends RecyclerView.ViewHolder {
         public TextView avgView, time;
         public TextView desView, title;
-        public ImageView icShare, chart, icSelectItem, icSelectedItem;
+        public ImageView icShare, chart, icSelectItem;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -226,7 +239,6 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.Viewholder> 
             title = itemView.findViewById(R.id.tv_title);
             chart = itemView.findViewById(R.id.iv_chart);
             icSelectItem = itemView.findViewById(R.id.ic_select_item);
-            icSelectedItem = itemView.findViewById(R.id.ic_selected_item);
         }
     }
 }

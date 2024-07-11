@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -36,9 +37,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     private RecyclerView recyclerView;
     private SoundAdapter adapter;
     private boolean isSelected = false;
-    private boolean isSelectFull = false;
-
-    private int count;
+    private boolean all = false;
     @Override
     public ActivityHistoryBinding getBinding() {
         return ActivityHistoryBinding.inflate(getLayoutInflater());
@@ -52,6 +51,11 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         } else {
             adapter.swapCursor(cursor);
         }
+        if (adapter.hasSelectedItem()) {
+            binding.btnDelete.setVisibility(View.VISIBLE);
+        } else {
+            binding.btnDelete.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -63,36 +67,36 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
            }
        });
 
-//       binding.ivSelect.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View v) {
-//               isSelected = !isSelected;
-//
-//               if (isSelected) {
-//                   binding.ivSelect.setImageResource(R.drawable.ic_multiple_select);
-//                   binding.btnDelete.setVisibility(View.VISIBLE);
-//               } else {
-//                   binding.ivSelect.setImageResource(R.drawable.ic_select);
-//                   binding.btnDelete.setVisibility(View.GONE);
-////                   adapter.deselectAll();
-//               }
-////                   binding.btnDelete.setVisibility(View.VISIBLE);
-//
-//               adapter.updateIcons(isSelected);
-//           }
-//       });
-//
-//       binding.ivSelected.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View v) {
-//               isSelectFull = !isSelectFull;
-//               if (isSelectFull){
-//                   adapter.deselectAll();
-//
-//               }
-//
-//           }
-//       });
+       binding.ivSingleSelect.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               isSelected = !isSelected;
+               adapter.updateIcons(isSelected);
+               if (isSelected){
+                   binding.ivMultipleSelect.setVisibility(View.VISIBLE);
+                   binding.btnDelete.setVisibility(View.VISIBLE);
+                   binding.ivSingleSelect.setVisibility(View.GONE);
+               }else {
+                   binding.ivMultipleSelect.setVisibility(View.GONE);
+                   binding.btnDelete.setVisibility(View.GONE);
+                   binding.ivSingleSelect.setVisibility(View.VISIBLE);
+               }
+           }
+       });
+
+        binding.ivMultipleSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                all = !all; // Toggle the all flag
+
+                if (all) {
+                    adapter.selectAllItems(true); // Select all items
+                } else {
+                    adapter.selectAllItems(false); // Deselect all items
+                }
+                adapter.updateIcons(all);
+            }
+        });
        binding.btnDelete.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

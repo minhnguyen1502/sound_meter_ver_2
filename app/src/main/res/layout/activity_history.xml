@@ -26,10 +26,10 @@
         app:layout_constraintTop_toTopOf="@id/iv_back"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintStart_toEndOf="@id/iv_back"
-        app:layout_constraintEnd_toStartOf="@id/iv_select"/>
+        app:layout_constraintEnd_toStartOf="@id/iv_single_select"/>
 
     <ImageView
-        android:id="@+id/iv_select"
+        android:id="@+id/iv_single_select"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:padding="12dp"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
     <ImageView
-        android:id="@+id/iv_selected"
+        android:id="@+id/iv_multiple_select"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:padding="12dp"

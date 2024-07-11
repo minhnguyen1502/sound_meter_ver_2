@@ -1,6 +1,7 @@
 package com.example.exe01.ui.sound.setting;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,12 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
     @Override
     public void initView() {
 
+        binding.ivArrowLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBack();
+            }
+        });
     }
 
     @Override
