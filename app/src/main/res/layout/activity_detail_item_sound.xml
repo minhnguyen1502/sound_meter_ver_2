@@ -231,6 +231,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_decibel_description" />
 
             <ImageView
+                android:id="@+id/iv_play"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="79dp"

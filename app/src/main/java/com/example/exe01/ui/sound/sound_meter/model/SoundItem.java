@@ -4,14 +4,16 @@ public class SoundItem {
     private int id;
     private long startTime;
     private String title;
-    private int duration;
+    private long duration;
     private float min;
     private float max;
     private float avg;
     private String description;
     private byte[] image;
+//    private byte[] video; // Added property for video
 
-    public SoundItem(int id, long startTime, String title, int duration, float min, float max, float avg, String description, byte[] image) {
+
+    public SoundItem(int id, long startTime, String title, long duration, float min, float max, float avg, String description, byte[] image) {
         this.id = id;
         this.startTime = startTime;
         this.title = title;
@@ -48,11 +50,11 @@ public class SoundItem {
         this.title = title;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 

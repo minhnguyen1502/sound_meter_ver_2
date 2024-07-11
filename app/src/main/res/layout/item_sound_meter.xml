@@ -147,6 +147,7 @@
             app:layout_constraintStart_toStartOf="@id/iv_chart"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <TextView
+            android:id="@+id/tv_duration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="00:00"

@@ -49,13 +49,14 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> {
 
     private Recoder recoder;
     private TextView value, max, min, avg;
-    private SoundMeterDatabaseHelper dbHelper;
     private boolean isPause = false;
 
     @Override
@@ -71,7 +72,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         max = binding.tvMax;
         min = binding.tvMin;
         avg = binding.tvAvg;
-        dbHelper = new SoundMeterDatabaseHelper(this);
         mChart = findViewById(R.id.chart); // Initialize mChart here
 
     }
@@ -108,6 +108,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             @Override
             public void onClick(View v) {
                 showSaveDialog();
+
             }
         });
         binding.ivHistory.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +135,97 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         typeface = ResourcesCompat.getFont(this, R.font.pro__400);
         initChart();
 
+    }
+    private void showSaveDialog() {
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_set_name_record);
+
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText edtName = dialog.findViewById(R.id.edt_name);
+        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
+        TextView btnSave = dialog.findViewById(R.id.btn_save);
+        ImageView clear = dialog.findViewById(R.id.btn_clear);
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtName.setText("");
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String recordingName = edtName.getText().toString().trim();
+                if (!recordingName.isEmpty()) {
+                    saveRecording(recordingName);
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(SoundMeterActivity.this, "Please enter a name", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        dialog.show();
+    }
+    private void saveRecording(String title) {
+        long startTime = this.startTime;
+        int duration = (int) ((System.currentTimeMillis() - startTime) / 1000);
+        float min = Float.parseFloat(binding.tvMin.getText().toString());
+        float max = Float.parseFloat(binding.tvMax.getText().toString());
+        float avg = Float.parseFloat(binding.tvAvg.getText().toString());
+        String description = getDescription(avg);
+
+//        saveChartImagesAsVideo();
+        Bitmap chartBitmap = captureChartImage();
+        byte[] image = getBytesFromBitmap(chartBitmap);
+//        Bitmap lastChartBitmap = chartBitmaps.isEmpty() ? null : chartBitmaps.get(chartBitmaps.size() - 1);
+//        byte[] lastImage = lastChartBitmap != null ? getBytesFromBitmap(lastChartBitmap) : null;
+
+        // Save the data to SQLite
+        SoundMeterDatabaseHelper dbHelper = new SoundMeterDatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("title", title);
+        values.put("startTime", startTime);
+        values.put("duration", duration);
+        values.put("min", min);
+        values.put("max", max);
+        values.put("avg", avg);
+        values.put("description", description);
+        values.put("image", image);
+        long newRowId = db.insert("SoundItems", null, values);
+        db.close();
+
+        if (newRowId != -1) {
+            Toast.makeText(this, "Recording saved", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error saving recording", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private Bitmap captureChartImage() {
+        mChart.invalidate();
+        mChart.setDrawingCacheEnabled(true);
+        mChart.buildDrawingCache();
+        Bitmap chartBitmap = Bitmap.createBitmap(mChart.getDrawingCache());
+        mChart.setDrawingCacheEnabled(false);
+        return chartBitmap;
+    }
+
+    private byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
     }
     private String getDescription(float avg) {
         if (avg >= 0 && avg < 20) {
@@ -169,94 +261,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         }
     }
 
-    private void showSaveDialog() {
-//            isShow = true;
-        Dialog dialog = new Dialog(this);
 
-        dialog.setContentView(R.layout.dialog_set_name_record);
-
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        EditText edtName = dialog.findViewById(R.id.edt_name);
-        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
-        TextView btnSave = dialog.findViewById(R.id.btn_save);
-        ImageView clear = dialog.findViewById(R.id.btn_clear);
-
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edtName.setText("");
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String recordingName = edtName.getText().toString().trim();
-                if (!recordingName.isEmpty()) {
-                    if (!dbHelper.doesRecordingNameExist(recordingName)) {
-                        saveRecordingToDatabase(recordingName);
-                        dialog.dismiss();
-                    } else {
-                        Toast.makeText(SoundMeterActivity.this, "Name already exists. Please choose a different name.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(SoundMeterActivity.this, "Please enter a name", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        dialog.show();
-    }
-
-    private void saveRecordingToDatabase(String recordingName) {
-        long endTime = System.currentTimeMillis();
-        long duration = endTime - startTime;
-
-        float minValue = World.MIN;
-        float maxValue = World.MAX;
-        float avgValue = avgSoundLevel;
-        String description = getDescription(avgValue);
-
-        Bitmap chartBitmap = captureChartImage();
-        byte[] chartImageBytes = getBytesFromBitmap(chartBitmap);
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(SoundMeterDatabaseHelper.COLUMN_START_TIME, startTime);
-        values.put(SoundMeterDatabaseHelper.COLUMN_DURATION, duration);
-        values.put(SoundMeterDatabaseHelper.COLUMN_MIN, minValue);
-        values.put(SoundMeterDatabaseHelper.COLUMN_MAX, maxValue);
-        values.put(SoundMeterDatabaseHelper.COLUMN_AVG, avgValue);
-        values.put(SoundMeterDatabaseHelper.COLUMN_DES, description);
-        values.put(SoundMeterDatabaseHelper.COLUMN_TITLE, recordingName);
-        values.put(SoundMeterDatabaseHelper.COLUMN_IMAGE, chartImageBytes);
-
-        db.insert(SoundMeterDatabaseHelper.TABLE_RECORDINGS, null, values);
-        Toast.makeText(this, "Recording saved", Toast.LENGTH_SHORT).show();
-    }
-    private Bitmap captureChartImage() {
-        mChart.invalidate();
-        mChart.setDrawingCacheEnabled(true);
-        mChart.buildDrawingCache();
-        Bitmap chartBitmap = Bitmap.createBitmap(mChart.getDrawingCache());
-        mChart.setDrawingCacheEnabled(false);
-        return chartBitmap;
-    }
-
-    private byte[] getBytesFromBitmap(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
-    }
     private void resetMeter() {
         soundView.refresh();
 
@@ -443,24 +448,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         mChart.getLegend().setEnabled(false);
         mChart.invalidate();
     }
-
-    private void updateData(float dbCount) {
-
-        LineData data = mChart.getData();
-        if (data != null) {
-            ILineDataSet set = data.getDataSetByIndex(0);
-            if (set == null) {
-                set = createSet();
-                data.addDataSet(set);
-            }
-            data.addEntry(new Entry(set.getEntryCount() * 0.1f, dbCount), 0);
-            data.notifyDataChanged();
-
-            mChart.notifyDataSetChanged();
-            mChart.moveViewToX(data.getEntryCount());
-        }
-    }
-
     private LineDataSet createSet() {
         LineDataSet set = new LineDataSet(null, "Sound Level");
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -477,4 +464,48 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         });
         return set;
     }
+
+    private void updateData(float dbCount) {
+
+        LineData data = mChart.getData();
+        if (data != null) {
+            ILineDataSet set = data.getDataSetByIndex(0);
+            if (set == null) {
+                set = createSet();
+                data.addDataSet(set);
+            }
+            data.addEntry(new Entry(set.getEntryCount() * 0.1f, dbCount), 0);
+            data.notifyDataChanged();
+
+            mChart.notifyDataSetChanged();
+            mChart.moveViewToX(data.getEntryCount());
+//            Bitmap chartBitmap = captureChartImage();
+//            chartBitmaps.add(chartBitmap);
+        }
+    }
+
+//    private ArrayList<Bitmap> chartBitmaps = new ArrayList<>();
+//
+//    private void saveChartImagesAsVideo() {
+//        // Kiểm tra xem có hình ảnh nào được chụp không
+//        if (chartBitmaps.isEmpty()) {
+//            return;
+//        }
+//
+//        // Lưu hình ảnh thành video hoặc tệp hình ảnh liên tiếp
+//        // Ví dụ: lưu thành các tệp PNG liên tiếp
+//        for (int i = 0; i < chartBitmaps.size(); i++) {
+//            saveBitmapToFile(chartBitmaps.get(i), "chart_frame_" + i + ".png");
+//        }
+//    }
+//
+//    // Phương thức để lưu Bitmap thành tệp hình ảnh
+//    private void saveBitmapToFile(Bitmap bitmap, String filename) {
+//        File file = new File(getExternalFilesDir(null), filename);
+//        try (FileOutputStream out = new FileOutputStream(file)) {
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // Lưu dưới dạng PNG
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
