@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_bg">
@@ -9,17 +10,19 @@
         android:id="@+id/iv_arrow_left"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="back"
         android:padding="12dp"
         android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pro_500"
         android:gravity="center"
-        android:text="Metal Sensor"
+        android:text="@string/metal_sensor"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -38,7 +41,8 @@
         android:src="@drawable/ic_arrow_left"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,7 +55,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            tools:ignore="ScrollViewSize">
 
             <ImageView
                 android:id="@+id/iv_info"
@@ -102,7 +107,8 @@
                     android:fontFamily="@font/pro_700"
                     android:text="225"
                     android:textColor="@color/black"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -110,7 +116,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="µT"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
 
@@ -119,32 +126,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
+                android:contentDescription="pause"
                 android:src="@drawable/ic_pause"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_value" />
+                app:layout_constraintTop_toBottomOf="@id/ll_value"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_reset"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="24dp"
+                android:contentDescription="reset"
                 android:padding="4dp"
                 android:src="@drawable/ic_reset"
                 app:layout_constraintBottom_toBottomOf="@id/iv_pause"
                 app:layout_constraintStart_toEndOf="@id/iv_pause"
-                app:layout_constraintTop_toTopOf="@id/iv_pause" />
+                app:layout_constraintTop_toTopOf="@id/iv_pause"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_sound"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="24dp"
+                android:contentDescription="sound"
                 android:padding="4dp"
                 android:src="@drawable/ic_off_sound"
                 app:layout_constraintBottom_toBottomOf="@id/iv_pause"
                 app:layout_constraintEnd_toStartOf="@id/iv_pause"
-                app:layout_constraintTop_toTopOf="@id/iv_pause" />
+                app:layout_constraintTop_toTopOf="@id/iv_pause"
+                tools:ignore="HardcodedText" />
 
             <LinearLayout
                 android:id="@id/ll_avg"
@@ -163,7 +176,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="AVG"
                     android:textColor="#BBBBBB"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_avg"
@@ -172,7 +186,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="30"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -192,7 +207,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="MIN"
                     android:textColor="#BBBBBB"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_min"
@@ -201,7 +217,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="30"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -220,7 +237,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="MAX"
                     android:textColor="#BBBBBB"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_max"
@@ -229,7 +247,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="30"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -250,7 +269,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="y-axis"
                     android:textColor="#BBBBBB"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_y"
@@ -259,7 +279,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="-22.33"
                     android:textColor="#FFFFFF"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
 
@@ -281,7 +302,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="x-axis"
                     android:textColor="#BBBBBB"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_x"
@@ -290,7 +312,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="-22.33"
                     android:textColor="#FFFFFF"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
 
@@ -312,7 +335,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="z-axis"
                     android:textColor="#BBBBBB"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_z"
@@ -321,7 +345,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="-22.33"
                     android:textColor="#FFFFFF"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
 
@@ -336,7 +361,8 @@
                 android:textColor="#E4D342"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_y_axis" />
+                app:layout_constraintTop_toBottomOf="@id/ll_y_axis"
+                tools:ignore="HardcodedText" />
 
 
             <com.github.mikephil.charting.charts.LineChart

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_bg">
@@ -9,17 +10,19 @@
         android:id="@+id/iv_arrow_left"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="back"
         android:padding="12dp"
         android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pro_500"
         android:gravity="center"
-        android:text="Sound Meter"
+        android:text="@string/sound_meter"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -38,7 +41,8 @@
         android:src="@drawable/ic_arrow_left"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ScrollView
         android:scrollbars="none"
@@ -50,22 +54,25 @@
         app:layout_constraintTop_toBottomOf="@id/iv_arrow_left">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            tools:ignore="ScrollViewSize">
             <ImageView
                 android:id="@+id/iv_info"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="12dp"
+                android:contentDescription="info"
                 android:padding="4dp"
                 android:src="@drawable/ic_info"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pro__400"
-                android:text="Info"
+                android:text="@string/info"
                 android:gravity="center"
                 android:textColor="#BBBBBB"
                 android:textSize="16sp"
@@ -78,17 +85,19 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="16dp"
+                android:contentDescription="history"
                 android:padding="4dp"
                 android:src="@drawable/ic_history"
                 app:layout_constraintBottom_toBottomOf="@id/iv_info"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_info" />
+                app:layout_constraintTop_toTopOf="@id/iv_info"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pro__400"
-                android:text="History"
+                android:text="@string/history"
                 android:gravity="center"
                 android:textColor="#BBBBBB"
                 android:textSize="16sp"
@@ -117,39 +126,46 @@
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_info" />
+                app:layout_constraintTop_toBottomOf="@id/iv_info"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_pause"
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="260dp"
+                android:contentDescription="pause"
                 android:src="@drawable/ic_pause"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_info" />
+                app:layout_constraintTop_toBottomOf="@id/iv_info"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_reset"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="20dp"
+                android:contentDescription="reset"
                 android:padding="4dp"
                 android:src="@drawable/ic_reset"
                 app:layout_constraintBottom_toBottomOf="@id/iv_pause"
                 app:layout_constraintEnd_toStartOf="@id/iv_pause"
-                app:layout_constraintTop_toTopOf="@+id/iv_pause" />
+                app:layout_constraintTop_toTopOf="@+id/iv_pause"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_save"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="20dp"
+                android:contentDescription="save"
                 android:padding="4dp"
                 android:src="@drawable/img_save"
                 app:layout_constraintBottom_toBottomOf="@id/iv_pause"
                 app:layout_constraintStart_toEndOf="@id/iv_pause"
-                app:layout_constraintTop_toTopOf="@+id/iv_pause" />
+                app:layout_constraintTop_toTopOf="@+id/iv_pause"
+                tools:ignore="HardcodedText" />
 
             <LinearLayout
                 android:id="@+id/ll_avg"
@@ -168,7 +184,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="AVG"
                     android:textColor="#BBBBBB"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_avg"
@@ -177,7 +194,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="200.5"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -197,7 +215,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="MIN"
                     android:textColor="#BBBBBB"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_min"
@@ -206,7 +225,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="200.5"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -226,7 +246,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="MAX"
                     android:textColor="#BBBBBB"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_max"
@@ -235,7 +256,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="200.5"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <TextView
@@ -249,7 +271,8 @@
                 android:fontFamily="@font/pro__400"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_avg"/>
+                app:layout_constraintTop_toBottomOf="@id/ll_avg"
+                tools:ignore="HardcodedText" />
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"

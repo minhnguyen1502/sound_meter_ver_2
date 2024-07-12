@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -25,7 +26,8 @@
             android:src="@drawable/ic_calibrate_sensor"
             app:layout_constraintBottom_toTopOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/title"
@@ -34,7 +36,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/pro_500"
             android:gravity="center"
-            android:text="Calibrate Sensor"
+            android:text="@string/calibrate_sensor"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -48,7 +50,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pro_500"
             android:gravity="center"
-            android:text="The accuracy of the magnetometer sensor is UNRELIABLE. Please calibrate the sensor as shown in the image below."
+            android:text="@string/the_accuracy_of_the_magnetometer_sensor_is_unreliable_please_calibrate_the_sensor_as_shown_in_the_image_below"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +66,8 @@
             android:src="@drawable/img_calibrate_sensor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt" />
+            app:layout_constraintTop_toBottomOf="@+id/txt"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/btn_cancel"
@@ -75,7 +78,7 @@
             android:fontFamily="@font/pro_500"
             android:gravity="center"
             android:paddingVertical="16dp"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +94,7 @@
             android:fontFamily="@font/pro_500"
             android:gravity="center"
             android:paddingVertical="16dp"
-            android:text="Got it"
+            android:text="@string/got_it"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

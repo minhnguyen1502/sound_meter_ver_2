@@ -30,9 +30,9 @@
     <string name="feedback">Feedback</string>
     <string name="report_bugs_and_tell_us_what_to_improve">Report bugs and tell us what to improve</string>
     <string name="share_with_friends">Share with friends</string>
-    <string name="privacy_policy">Privacy Policy.</string>
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="request">Request or feedback</string>
-    <string name="send_email">Send by email&#8230;</string>
+    <string name="send_email">Send by email</string>
     <string name="email_clients_not_found">Not found any Email client</string>
     <string name="version">Version</string>
     <string name="next">Next</string>
@@ -55,6 +55,7 @@
     <string name="text_permission_start_1"><font color='#E4D342'>“Sound meter”</font> requires the following permissions to provide services for you:</string>
     <string name="measure_the_sound_of_the_surrounding_environment">Measure the sound of the surrounding environment</string>
     <string name="home">Home</string>
+
     <string name="title_dialog_per">Grant these permissions to use <b>\"Metal Detector\"</b></string>
     <string name="content_dialog_per_1">Note: You can also grant permission in <b>Settings -> Apps -> Sound Meter 2 -> Microphone </b></string>
     <string name="content_dialog_per_2">Note: You can also grant permission in <b>Settings -> Apps -> Sound Meter 2 -> Notifications </b></string>
@@ -91,5 +92,28 @@
     <string name="whisper_rustling_leaves">Whisper, rustling leaves</string>
     <string name="rustling_leaves_mosquito">Rustling leaves, Mosquito</string>
     <string name="normal_breathing">Normal breathing</string>
+    <string name="languages">Languages</string>
+    <string name="metal_sensor">Metal Sensor</string>
+    <string name="exit">Exit</string>
+    <string name="audio_access">Audio access</string>
+    <string name="memory_access">Memory access</string>
+    <string name="agree_and_continue">Agree and Continue</string>
+    <string name="setting">Setting</string>
+    <string name="sound_meter">Sound Meter</string>
+    <string name="accurately_measure_db_levels_and_manage_noise_exposure_to_protect_your_ears_and_preserve_a_healthy_auditory_environment">Accurately measure dB levels and manage noise exposure to protect your ears and preserve a healthy auditory environment.</string>
+    <string name="got_it">Got it</string>
+    <string name="sorry_your_device_doesn_t_have_a_magnetic_field_sensor_so_you_can_t_use_this_function">Sorry, your device doesn\'t have a magnetic field sensor so you can\'t use this function.</string>
+    <string name="go_to_home">Go to home</string>
+    <string name="permission">Permission</string>
+    <string name="grant_these_permissions_to_use_sound_meter_2">Grant these permissions to use “Sound Meter 2”</string>
+    <string name="stay">Stay</string>
+    <string name="agree">Agree</string>
+    <string name="please_grant_permissions_for_the_feature_to_be_used_normally">Please grant permissions for the feature to be used normally</string>
+    <string name="ok">ok</string>
+    <string name="set_record_s_name">Set Record’s Name</string>
+    <string name="please_enter_name">Please enter name</string>
+    <string name="save">Save</string>
+    <string name="set_threshold">Set Threshold</string>
+    <string name="set">Set</string>
 
 </resources>

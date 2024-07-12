@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_bg">
@@ -37,10 +38,12 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="12dp"
+        android:contentDescription="setting"
         android:padding="12dp"
         android:src="@drawable/ic_setting"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_metal"
@@ -68,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/pro_500"
-            android:text="Metal Sensor"
+            android:text="@string/metal_sensor"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -105,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/pro_500"
-            android:text="Sound Meter"
+            android:text="@string/sound_meter"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"

@@ -25,7 +25,7 @@
             android:fontFamily="@font/pro_500"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="please_grant_permissions_for_the_feature_to_be_used_normally"
+            android:text="@string/please_grant_permissions_for_the_feature_to_be_used_normally"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -45,7 +45,8 @@
                 android:src="@drawable/ic_micro"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -58,7 +59,7 @@
                 android:gravity="start"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="audio access"
+                android:text="@string/audio_access"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -99,7 +100,8 @@
                 android:src="@drawable/ic_storage"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -113,7 +115,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="Memory access"
+                android:text="@string/memory_access"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
@@ -154,7 +156,7 @@
             android:maxLines="1"
             android:paddingHorizontal="32dp"
             android:paddingVertical="12dp"
-            android:text="ok"
+            android:text="@string/ok"
             android:textSize="20sp" />
     </LinearLayout>
 

@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="Sound Meter"
+            android:text="@string/sound_meter"
             android:fontFamily="@font/pro_500"
             android:textStyle="bold"
             android:textColor="@color/white"
