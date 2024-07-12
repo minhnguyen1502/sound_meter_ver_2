@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_bg">
@@ -9,17 +10,19 @@
         android:id="@+id/iv_arrow_left"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="back"
         android:padding="12dp"
         android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pro_500"
         android:gravity="center"
-        android:text="Info"
+        android:text="@string/info"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -38,7 +41,8 @@
         android:src="@drawable/ic_arrow_left"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -49,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/iv_arrow_left">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/txt"
                 android:layout_width="0dp"
@@ -58,7 +62,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/pro_500"
                 android:gravity="center"
-                android:text="Microtesla Values Information Table"
+                android:text="@string/microtesla_values_information_table"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +89,7 @@
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
                     android:fontFamily="@font/pro_500"
-                    android:text="Magnetometer Condition"
+                    android:text="@string/magnetometer_condition"
                     android:textColor="#19513C"
                     android:textSize="14sp" />
 
@@ -100,7 +104,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/pro_500"
                     android:gravity="center"
-                    android:text="From"
+                    android:text="@string/from"
                     android:textColor="#19513C"
                     android:textSize="14sp" />
 
@@ -115,7 +119,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/pro_500"
                     android:gravity="center"
-                    android:text="To"
+                    android:text="@string/to"
                     android:textColor="#19513C"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -138,7 +142,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
-                    android:text="Low Magnetic Field"
+                    android:text="@string/low_magnetic_field"
                     android:textColor="@android:color/white" />
 
                 <View
@@ -152,7 +156,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    tools:ignore="HardcodedText" />
 
                 <View
                     android:layout_width="2dp"
@@ -165,7 +170,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="1500"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -186,7 +192,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
-                    android:text="Detectable Range"
+                    android:text="@string/detectable_range"
                     android:textColor="@android:color/white" />
 
                 <View
@@ -200,7 +206,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="2000"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    tools:ignore="HardcodedText" />
 
                 <View
                     android:layout_width="2dp"
@@ -213,7 +220,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="4000"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -234,7 +242,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
-                    android:text="Saurated Sensors"
+                    android:text="@string/saturated_sensors"
                     android:textColor="@android:color/white" />
 
                 <View
@@ -248,7 +256,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="5000"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    tools:ignore="HardcodedText" />
 
                 <View
                     android:layout_width="2dp"
@@ -282,7 +291,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
-                    android:text="Potenial Deprogramming"
+                    android:text="@string/potential_deprogramming"
                     android:textColor="@android:color/white" />
 
                 <View
@@ -296,7 +305,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="300"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    tools:ignore="HardcodedText" />
 
                 <View
                     android:layout_width="2dp"
@@ -318,9 +328,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="28dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/bg_calibrate_sensor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/row_4">
 
                 <TextView
@@ -330,7 +342,7 @@
                     android:layout_marginTop="27dp"
                     android:fontFamily="@font/pro_500"
                     android:gravity="center"
-                    android:text="Calibrate Sensor"
+                    android:text="@string/calibrate_sensor"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -344,7 +356,7 @@
                     android:layout_marginHorizontal="9dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/pro_500"
-                    android:text="The accuracy of the magnetometer sensor is UNRELIABLE. Please calibrate the sensor as shown in the image below."
+                    android:text="@string/the_accuracy_of_the_magnetometer_sensor_is_unreliable_please_calibrate_the_sensor_as_shown_in_the_image_below"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="14sp"
@@ -361,7 +373,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_title" />
+                    app:layout_constraintTop_toBottomOf="@id/txt_title"
+                    tools:ignore="ContentDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

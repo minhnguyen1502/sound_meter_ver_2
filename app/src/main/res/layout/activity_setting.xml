@@ -44,12 +44,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_language"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="24dp"
         android:layout_marginTop="27dp"
-        android:background="@drawable/bg_setting"
-        android:paddingHorizontal="8dp"
         android:paddingVertical="4dp"
+        android:paddingHorizontal="8dp"
+        android:background="@drawable/bg_setting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_setting">
@@ -60,7 +60,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:importantForAccessibility="no"
-            android:padding="12dp"
+            android:padding="4dp"
             android:src="@drawable/ic_language_setting"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,12 +71,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:ellipsize="end"
-
+            android:fontFamily="@font/pro_500"
             android:lines="1"
+
             android:maxLines="1"
             android:text="@string/language"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_translate"
             app:layout_constraintStart_toEndOf="@id/iv_translate"
             app:layout_constraintTop_toTopOf="@id/iv_translate" />
@@ -97,9 +98,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="-8dp"
+            android:fontFamily="@font/pro_500"
             android:text="@string/english"
             android:textColor="#E4D342"
-            android:textSize="14sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_arrow_right"
             app:layout_constraintTop_toTopOf="parent" />
@@ -135,7 +137,6 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:paddingHorizontal="8dp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -145,7 +146,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:importantForAccessibility="no"
-                android:padding="12dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_share_setting"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -155,11 +156,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/pro_500"
                 android:lines="1"
                 android:maxLines="1"
                 android:text="@string/share"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_share"
                 app:layout_constraintStart_toEndOf="@id/iv_share"
                 app:layout_constraintTop_toTopOf="@id/iv_share" />
@@ -181,7 +183,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:importantForAccessibility="no"
-                android:padding="12dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_rate_setting"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -191,11 +193,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/pro_500"
                 android:lines="1"
                 android:maxLines="1"
                 android:text="@string/rate"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_rate"
                 app:layout_constraintStart_toEndOf="@id/iv_rate"
                 app:layout_constraintTop_toTopOf="@id/iv_rate" />
@@ -217,7 +220,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:importantForAccessibility="no"
-                android:padding="12dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_info_setting"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -228,14 +231,52 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/pro_500"
                 android:lines="1"
                 android:maxLines="1"
                 android:text="@string/about"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_about"
                 app:layout_constraintStart_toEndOf="@id/iv_about"
                 app:layout_constraintTop_toTopOf="@id/iv_about" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_priprivacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingHorizontal="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_about">
+
+            <ImageView
+                android:id="@+id/iv_privacy_policy"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_rate_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_privacy_policy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/pro_500"
+                android:lines="1"
+                android:maxLines="1"
+                android:text="privacy policy"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_privacy_policy"
+                app:layout_constraintStart_toEndOf="@id/iv_privacy_policy"
+                app:layout_constraintTop_toTopOf="@id/iv_privacy_policy" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -5,9 +5,37 @@
     android:background="@drawable/img_bg"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/view_top"
-        layout="@layout/tool_bar" />
+    <ImageView
+        android:id="@+id/iv_arrow_left"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_arrow_left"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Privacy Policy"
+        android:fontFamily="@font/pro_500"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@id/iv_arrow_left"
+        app:layout_constraintTop_toTopOf="@id/iv_arrow_left"
+        app:layout_constraintBottom_toBottomOf="@id/iv_arrow_left"
+        app:layout_constraintEnd_toStartOf="@id/iv_check"/>
+    <ImageView
+        android:id="@+id/iv_check"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        android:visibility="invisible"
+        android:clickable="false"
+        android:focusable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <WebView
         android:id="@+id/web_view"
@@ -17,7 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_top" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_arrow_left" />
 
     <LinearLayout
         android:id="@+id/ln_no_internet"
@@ -44,7 +72,7 @@
             android:textSize="@dimen/_12ssp"
             android:includeFontPadding="false"
             android:text="@string/no_internet_connection"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

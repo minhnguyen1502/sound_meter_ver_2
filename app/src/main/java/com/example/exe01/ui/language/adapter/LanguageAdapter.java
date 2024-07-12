@@ -46,9 +46,14 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langug
         if (languageModel == null) {
             return;
         }
+        holder.rdbCheck.setVisibility(View.GONE);
         holder.tvLang.setText(languageModel.getName());
-        holder.rdbCheck.setChecked(languageModel.getActive());
-        holder.rdbCheck.setClickable(false);
+
+        if (languageModel.getActive()) {
+            holder.layoutItem.setBackgroundResource(R.drawable.bg_lang_item_s);
+        } else {
+            holder.layoutItem.setBackgroundResource(R.drawable.bg_lang_item_sn);
+        }
 
         switch (languageModel.getCode()) {
             case "fr":

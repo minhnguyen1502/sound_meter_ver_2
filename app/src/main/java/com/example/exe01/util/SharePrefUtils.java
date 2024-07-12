@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 
 public class SharePrefUtils {
     public static String email = "abcd@gmail.com";
-    public static String subject = "Base Product";
+    public static String subject = "Sound Meter 2";
     private static SharedPreferences mSharePref;
 
     public static void init(Context context) {

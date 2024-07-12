@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_bg">
@@ -9,17 +10,19 @@
         android:id="@+id/iv_back"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="back"
         android:padding="12dp"
         android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pro_500"
         android:gravity="center"
-        android:text="Info"
+        android:text="@string/info"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -38,7 +41,8 @@
         android:src="@drawable/ic_arrow_left"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -49,14 +53,15 @@
         app:layout_constraintTop_toBottomOf="@id/iv_back">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            tools:ignore="ScrollViewSize">
             <TextView
                 android:id="@+id/tv_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Fireworks"
+                android:text="@string/fireworks"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/img_140"
@@ -72,7 +77,8 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/img_140"
-                app:layout_constraintEnd_toStartOf="@id/img_140" />
+                app:layout_constraintEnd_toStartOf="@id/img_140"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/img_140"
@@ -82,7 +88,8 @@
                 android:layout_marginTop="33dp"
                 android:src="@drawable/img_140"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -91,7 +98,8 @@
                 android:src="@drawable/img_line_140"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/img_140"
-                app:layout_constraintTop_toBottomOf="@id/img_140" />
+                app:layout_constraintTop_toBottomOf="@id/img_140"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_2"
@@ -99,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Jet takeoff, shotgun firing"
+                android:text="@string/jet_takeoff_shotgun_firing"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/img_130"
@@ -116,7 +124,8 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/img_130"
-                app:layout_constraintEnd_toStartOf="@id/img_140" />
+                app:layout_constraintEnd_toStartOf="@id/img_140"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/img_130"
@@ -125,7 +134,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_130"
                 app:layout_constraintStart_toStartOf="@id/img_140"
-                app:layout_constraintTop_toBottomOf="@id/img_140" />
+                app:layout_constraintTop_toBottomOf="@id/img_140"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -136,7 +146,8 @@
 
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/img_130"
-                app:layout_constraintTop_toBottomOf="@id/img_130" />
+                app:layout_constraintTop_toBottomOf="@id/img_130"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/iv_120"
@@ -145,7 +156,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_120"
                 app:layout_constraintStart_toStartOf="@id/img_130"
-                app:layout_constraintTop_toBottomOf="@id/img_130" />
+                app:layout_constraintTop_toBottomOf="@id/img_130"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -157,14 +169,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_120"
-                app:layout_constraintEnd_toStartOf="@id/iv_120" />
+                app:layout_constraintEnd_toStartOf="@id/iv_120"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Police siren, Boom box"
+                android:text="@string/police_siren_boom_box"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_120"
@@ -179,14 +192,15 @@
 
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_120"
-                app:layout_constraintTop_toBottomOf="@id/iv_120" />
+                app:layout_constraintTop_toBottomOf="@id/iv_120"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Trombone"
+                android:text="@string/trombone"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_110"
@@ -203,7 +217,8 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_110"
-                app:layout_constraintEnd_toStartOf="@id/iv_110" />
+                app:layout_constraintEnd_toStartOf="@id/iv_110"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_110"
@@ -212,7 +227,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_110"
                 app:layout_constraintStart_toStartOf="@id/iv_120"
-                app:layout_constraintTop_toBottomOf="@id/iv_120" />
+                app:layout_constraintTop_toBottomOf="@id/iv_120"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -222,14 +238,15 @@
 
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_110"
-                app:layout_constraintTop_toBottomOf="@id/iv_110" />
+                app:layout_constraintTop_toBottomOf="@id/iv_110"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Helicopter, Train"
+                android:text="@string/helicopter_train"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_100"
@@ -246,7 +263,8 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_100"
-                app:layout_constraintEnd_toStartOf="@id/iv_100" />
+                app:layout_constraintEnd_toStartOf="@id/iv_100"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_100"
@@ -255,7 +273,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_100"
                 app:layout_constraintStart_toStartOf="@id/iv_110"
-                app:layout_constraintTop_toBottomOf="@id/iv_110" />
+                app:layout_constraintTop_toBottomOf="@id/iv_110"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -265,7 +284,8 @@
 
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_100"
-                app:layout_constraintTop_toBottomOf="@id/iv_100" />
+                app:layout_constraintTop_toBottomOf="@id/iv_100"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -277,14 +297,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_90"
-                app:layout_constraintEnd_toStartOf="@id/iv_90" />
+                app:layout_constraintEnd_toStartOf="@id/iv_90"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Hairdryer, Lawnmower"
+                android:text="@string/hairdryer_lawnmower"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_90"
@@ -298,7 +319,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_90"
                 app:layout_constraintStart_toStartOf="@id/iv_100"
-                app:layout_constraintTop_toBottomOf="@id/iv_100" />
+                app:layout_constraintTop_toBottomOf="@id/iv_100"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -308,7 +330,8 @@
 
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_90"
-                app:layout_constraintTop_toBottomOf="@id/iv_90" />
+                app:layout_constraintTop_toBottomOf="@id/iv_90"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -320,14 +343,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_80"
-                app:layout_constraintEnd_toStartOf="@id/iv_80" />
+                app:layout_constraintEnd_toStartOf="@id/iv_80"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Truck, City traffic noise"
+                android:text="@string/truck_city_traffic_noise"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_80"
@@ -341,7 +365,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_80"
                 app:layout_constraintStart_toStartOf="@id/iv_90"
-                app:layout_constraintTop_toBottomOf="@id/iv_90" />
+                app:layout_constraintTop_toBottomOf="@id/iv_90"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -350,7 +375,8 @@
                 android:src="@drawable/img_line_80"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_80"
-                app:layout_constraintTop_toBottomOf="@id/iv_80" />
+                app:layout_constraintTop_toBottomOf="@id/iv_80"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -362,14 +388,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_70"
-                app:layout_constraintEnd_toStartOf="@id/iv_70" />
+                app:layout_constraintEnd_toStartOf="@id/iv_70"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Car, City traffic"
+                android:text="@string/car_city_traffic"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_70"
@@ -383,7 +410,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_70"
                 app:layout_constraintStart_toStartOf="@id/iv_80"
-                app:layout_constraintTop_toBottomOf="@id/iv_80" />
+                app:layout_constraintTop_toBottomOf="@id/iv_80"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -392,7 +420,8 @@
                 android:src="@drawable/img_line_70"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_70"
-                app:layout_constraintTop_toBottomOf="@id/iv_70" />
+                app:layout_constraintTop_toBottomOf="@id/iv_70"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -404,14 +433,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_60"
-                app:layout_constraintEnd_toStartOf="@id/iv_60" />
+                app:layout_constraintEnd_toStartOf="@id/iv_60"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Conversation, Quite office"
+                android:text="@string/conversation_quite_office"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_60"
@@ -425,7 +455,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_60"
                 app:layout_constraintStart_toStartOf="@id/iv_70"
-                app:layout_constraintTop_toBottomOf="@id/iv_70" />
+                app:layout_constraintTop_toBottomOf="@id/iv_70"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -434,7 +465,8 @@
                 android:src="@drawable/img_line_60"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_60"
-                app:layout_constraintTop_toBottomOf="@id/iv_60" />
+                app:layout_constraintTop_toBottomOf="@id/iv_60"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -446,14 +478,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_50"
-                app:layout_constraintEnd_toStartOf="@id/iv_50" />
+                app:layout_constraintEnd_toStartOf="@id/iv_50"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Refrigerator"
+                android:text="@string/refrigerator"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_50"
@@ -467,7 +500,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_50"
                 app:layout_constraintStart_toStartOf="@id/iv_60"
-                app:layout_constraintTop_toBottomOf="@id/iv_60" />
+                app:layout_constraintTop_toBottomOf="@id/iv_60"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -476,7 +510,8 @@
                 android:src="@drawable/img_line_50"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_50"
-                app:layout_constraintTop_toBottomOf="@id/iv_50" />
+                app:layout_constraintTop_toBottomOf="@id/iv_50"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -488,14 +523,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_40"
-                app:layout_constraintEnd_toStartOf="@id/iv_40" />
+                app:layout_constraintEnd_toStartOf="@id/iv_40"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Moderate, Stream"
+                android:text="@string/moderate_stream"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_40"
@@ -509,7 +545,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_40"
                 app:layout_constraintStart_toStartOf="@id/iv_50"
-                app:layout_constraintTop_toBottomOf="@id/iv_50" />
+                app:layout_constraintTop_toBottomOf="@id/iv_50"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -519,7 +556,8 @@
                 android:src="@drawable/img_line_40"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_40"
-                app:layout_constraintTop_toBottomOf="@id/iv_40" />
+                app:layout_constraintTop_toBottomOf="@id/iv_40"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -531,14 +569,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_30"
-                app:layout_constraintEnd_toStartOf="@id/iv_30" />
+                app:layout_constraintEnd_toStartOf="@id/iv_30"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Whisper, rustling leaves"
+                android:text="@string/whisper_rustling_leaves"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_30"
@@ -553,7 +592,8 @@
                 android:layout_marginStart="1dp"
                 android:src="@drawable/img_30"
                 app:layout_constraintStart_toStartOf="@id/iv_40"
-                app:layout_constraintTop_toBottomOf="@id/iv_40" />
+                app:layout_constraintTop_toBottomOf="@id/iv_40"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -562,7 +602,8 @@
                 android:src="@drawable/img_line_30"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_30"
-                app:layout_constraintTop_toBottomOf="@id/iv_30" />
+                app:layout_constraintTop_toBottomOf="@id/iv_30"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -574,14 +615,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_20"
-                app:layout_constraintEnd_toStartOf="@id/iv_20" />
+                app:layout_constraintEnd_toStartOf="@id/iv_20"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Rustling leaves, Mosquito"
+                android:text="@string/rustling_leaves_mosquito"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_20"
@@ -595,7 +637,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_20"
                 app:layout_constraintStart_toStartOf="@id/iv_30"
-                app:layout_constraintTop_toBottomOf="@id/iv_30" />
+                app:layout_constraintTop_toBottomOf="@id/iv_30"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -605,7 +648,8 @@
                 android:layout_marginStart="2dp"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_20"
-                app:layout_constraintTop_toBottomOf="@id/iv_20" />
+                app:layout_constraintTop_toBottomOf="@id/iv_20"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="0dp"
@@ -617,14 +661,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_0"
-                app:layout_constraintEnd_toStartOf="@id/iv_0" />
+                app:layout_constraintEnd_toStartOf="@id/iv_0"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="@font/pro_500"
-                android:text="Normal breathing"
+                android:text="@string/normal_breathing"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_0"
@@ -637,8 +682,11 @@
                 android:layout_height="31dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/img_0"
+                android:layout_marginBottom="32dp"
                 app:layout_constraintStart_toStartOf="@id/iv_20"
-                app:layout_constraintTop_toBottomOf="@id/iv_20" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_20"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -648,7 +696,8 @@
                 android:src="@drawable/img_line_0"
                 app:layout_constraintEnd_toEndOf="@id/tv_2"
                 app:layout_constraintStart_toStartOf="@id/iv_0"
-                app:layout_constraintTop_toBottomOf="@id/iv_0" />
+                app:layout_constraintTop_toBottomOf="@id/iv_0"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

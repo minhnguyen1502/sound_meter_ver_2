@@ -60,7 +60,7 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
 
     private void initData() {
         listLanguage = new ArrayList<>();
-        String lang = Locale.getDefault().getLanguage();
+//        String lang = Locale.getDefault().getLanguage();
         listLanguage.add(new LanguageModel("English", "en", false));
         listLanguage.add(new LanguageModel("China", "zh", false));
         listLanguage.add(new LanguageModel("French", "fr", false));

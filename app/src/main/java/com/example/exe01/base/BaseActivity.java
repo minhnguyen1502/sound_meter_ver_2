@@ -3,8 +3,6 @@ package com.example.exe01.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,7 +44,7 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         SystemUtil.setLocale(this);
-//        LanguageUtil.setupLanguage(this);
+//        setupLanguage(this);
         super.onCreate(savedInstanceState);
         binding = getBinding();
         if (Utils.getScreenAllwaysOn()) {

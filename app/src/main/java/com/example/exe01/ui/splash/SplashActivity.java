@@ -24,14 +24,15 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
     @Override
     public void initView() {
         new Handler(Looper.getMainLooper()).postDelayed(()->{
-            runAfterFinish();
+//            runAfterFinish();
+            startNextActivity(LanguageStartActivity.class, null);
         },3000);
 
     }
     private void runAfterFinish() {
         if (!isFinishing() && !isDestroyed()) {
             if (!Utils.isLanguageSelected()) {
-                Intent intent = new Intent(this, LanguageActivity.class);
+                Intent intent = new Intent(this, LanguageStartActivity.class);
                 startActivity(intent);
                 finish();
             } else {

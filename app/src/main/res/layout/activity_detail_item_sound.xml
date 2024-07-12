@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_bg">
@@ -9,10 +10,12 @@
         android:id="@+id/iv_arrow_left"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="back"
         android:padding="12dp"
         android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -27,25 +30,29 @@
         app:layout_constraintBottom_toBottomOf="@id/iv_arrow_left"
         app:layout_constraintEnd_toStartOf="@id/iv_edit"
         app:layout_constraintStart_toEndOf="@id/iv_arrow_left"
-        app:layout_constraintTop_toTopOf="@id/iv_arrow_left" />
+        app:layout_constraintTop_toTopOf="@id/iv_arrow_left"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/iv_edit"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="edit"
         android:padding="12dp"
         android:src="@drawable/ic_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
         android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_arrow_left">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +80,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="AVG"
                     android:textColor="#C4C4C4"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_avg"
@@ -82,7 +90,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="100.0"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -102,7 +111,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="MIN"
                     android:textColor="#C4C4C4"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_min"
@@ -111,7 +121,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="100.0"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -131,7 +142,8 @@
                     android:fontFamily="@font/pro__400"
                     android:text="MAX"
                     android:textColor="#C4C4C4"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_max"
@@ -140,7 +152,8 @@
                     android:fontFamily="@font/pro_500"
                     android:text="100.0"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <TextView
@@ -149,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/pro__400"
-                android:text="Start Time"
+                android:text="@string/start_time"
                 android:textColor="#C4C4C4"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/ll_min"
@@ -166,7 +179,8 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_start_time"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_start_time" />
+                app:layout_constraintTop_toTopOf="@id/tv_start_time"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/tv_duration"
@@ -174,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/pro__400"
-                android:text="Duration"
+                android:text="@string/duration"
                 android:textColor="#C4C4C4"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_start_time"
@@ -191,7 +205,8 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_duration"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_duration" />
+                app:layout_constraintTop_toTopOf="@id/tv_duration"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/tv_decibel_description"
@@ -199,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/pro__400"
-                android:text="Decibel description"
+                android:text="@string/decibel_description"
                 android:textColor="#C4C4C4"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_duration"
@@ -216,19 +231,21 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_decibel_description"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_decibel_description" />
+                app:layout_constraintTop_toTopOf="@id/tv_decibel_description"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_chart"
                 android:layout_width="match_parent"
                 android:layout_height="272dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="51dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="51dp"
+                app:layout_constraintBottom_toTopOf="@id/btn_delete"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/btn_delete"
-                app:layout_constraintTop_toBottomOf="@id/tv_decibel_description" />
+                app:layout_constraintTop_toBottomOf="@id/tv_decibel_description"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/iv_play"
@@ -239,38 +256,41 @@
                 android:src="@drawable/ic_play"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="ContentDescription" />
+
             <TextView
                 android:id="@+id/btn_delete"
                 android:layout_width="142dp"
                 android:layout_height="wrap_content"
-                android:text="Delete"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:paddingVertical="16dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="24dp"
-                android:fontFamily="@font/pro_500"
-                android:textSize="16sp"
                 android:background="@drawable/bg_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:fontFamily="@font/pro_500"
+                android:gravity="center"
+                android:paddingVertical="16dp"
+                android:text="@string/delete"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/btn_share"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Share"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:paddingVertical="16dp"
-                android:paddingHorizontal="50.5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="24dp"
-                android:fontFamily="@font/pro_500"
-                android:textSize="16sp"
                 android:background="@drawable/bg_button_yellow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:fontFamily="@font/pro_500"
+                android:gravity="center"
+                android:paddingHorizontal="50.5dp"
+                android:paddingVertical="16dp"
+                android:text="@string/share"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

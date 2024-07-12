@@ -41,36 +41,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_lock" />
 
-    <RelativeLayout
-        android:id="@+id/layoutGrantNoti"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_1">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/layoutGrantNoti"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="32dp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_1">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:text="Notification access"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="16dp" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="Notification access"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="16dp" />-->
 
-        <ImageView
-            android:id="@+id/ivGrantNotification"
-            android:layout_width="@dimen/_36sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="12sp"
-            android:src="@drawable/ic_sw_off" />
+<!--        <ImageView-->
+<!--            android:id="@+id/ivGrantNotification"-->
+<!--            android:layout_width="@dimen/_36sdp"-->
+<!--            android:layout_height="@dimen/_20sdp"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginEnd="12sp"-->
+<!--            android:src="@drawable/ic_sw_off" />-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/layoutAudio"
@@ -80,7 +80,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutGrantNoti">
+        app:layout_constraintTop_toBottomOf="@id/tv_1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
             android:textSize="16dp" />
 
         <ImageView
-            android:id="@+id/ivMemory"
+            android:id="@+id/ivFile"
             android:layout_width="@dimen/_36sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_alignParentEnd="true"
