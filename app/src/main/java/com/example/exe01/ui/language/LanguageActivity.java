@@ -1,5 +1,7 @@
 package com.example.exe01.ui.language;
 
+import android.view.View;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.exe01.R;
@@ -28,7 +30,6 @@ public class LanguageActivity extends BaseActivity<ActivityLanguageBinding> {
         initData();
         codeLang = Locale.getDefault().getLanguage();
 
-        binding.viewTop.tvToolBar.setText(getString(R.string.language));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         LanguageAdapter languageAdapter = new LanguageAdapter(listLanguage, code -> codeLang = code, this);
@@ -38,22 +39,26 @@ public class LanguageActivity extends BaseActivity<ActivityLanguageBinding> {
 
         binding.rcvLang.setLayoutManager(linearLayoutManager);
         binding.rcvLang.setAdapter(languageAdapter);
+        binding.ivCheck.setOnClickListener(view -> {
+            SystemUtil.saveLocale(getBaseContext(), codeLang);
+            onBack();
+        });
+        binding.ivArrowLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBack();
+            }
+        });
     }
 
     @Override
     public void bindView() {
-        binding.viewTop.ivCheck.setOnClickListener(view -> {
-            SystemUtil.saveLocale(getBaseContext(), codeLang);
-//            startNextActivity(HomeActivity.class, null);
-            finishAffinity();
-        });
 
-        binding.viewTop.ivBack.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
     public void onBack() {
-
+    finish();
     }
 
     private void initData() {
@@ -68,9 +73,4 @@ public class LanguageActivity extends BaseActivity<ActivityLanguageBinding> {
         listLanguage.add(new LanguageModel("Spanish", "es", false));
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finishThisActivity();
-    }
 }

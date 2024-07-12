@@ -1,6 +1,5 @@
-package com.example.exe01.ui.sound.setting;
+package com.example.exe01.ui.sound.about;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,29 +11,21 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.exe01.R;
 import com.example.exe01.base.BaseActivity;
-import com.example.exe01.databinding.ActivitySettingBinding;
-import com.example.exe01.ui.language.LanguageActivity;
+import com.example.exe01.databinding.ActivityAboutBinding;
 
-public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
+public class AboutActivity extends BaseActivity<ActivityAboutBinding> {
 
     @Override
-    public ActivitySettingBinding getBinding() {
-        return ActivitySettingBinding.inflate(getLayoutInflater());
+    public ActivityAboutBinding getBinding() {
+        return  ActivityAboutBinding.inflate(getLayoutInflater());
     }
 
     @Override
     public void initView() {
-
         binding.ivArrowLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBack();
-            }
-        });
-        binding.constraintLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SettingActivity.this, LanguageActivity.class));
             }
         });
     }

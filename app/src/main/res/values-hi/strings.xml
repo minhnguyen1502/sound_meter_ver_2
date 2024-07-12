@@ -52,5 +52,6 @@
 
     <string name="text_permission_start_1"><font color='#E4D342'>“साउंड मीटर”</font> को सेवाएं प्रदान करने के लिए निम्नलिखित अनुमतियों की आवश्यकता है:</string>
     <string name="measure_the_sound_of_the_surrounding_environment">पर्यावरण की ध्वनि मापें</string>
+    <string name="home">"घर "</string>
 
 </resources>

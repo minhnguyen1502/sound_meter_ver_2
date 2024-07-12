@@ -52,5 +52,6 @@
 
     <string name="text_permission_start_1"><font color='#E4D342'>“Medidor de sonido”</font> requiere los siguientes permisos para brindarle servicios:</string>
     <string name="measure_the_sound_of_the_surrounding_environment">Medir el sonido del entorno</string>
+    <string name="home">Hogar</string>
 
 </resources>

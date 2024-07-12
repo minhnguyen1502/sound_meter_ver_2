@@ -26,6 +26,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
         new Handler(Looper.getMainLooper()).postDelayed(()->{
             runAfterFinish();
         },3000);
+
     }
     private void runAfterFinish() {
         if (!isFinishing() && !isDestroyed()) {

@@ -52,5 +52,6 @@
 
     <string name="text_permission_start_1"><font color='#E4D342'>“Sound meter”</font> memerlukan izin berikut untuk memberikan layanan kepada Anda:</string>
     <string name="measure_the_sound_of_the_surrounding_environment">Ukur suara lingkungan sekitar</string>
+    <string name="home">Rumah</string>
 
 </resources>

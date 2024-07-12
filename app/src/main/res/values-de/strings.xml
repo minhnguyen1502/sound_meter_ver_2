@@ -52,5 +52,6 @@
 
     <string name="text_permission_start_1"><font color='#E4D342'>„Sound meter“</font> benötigt die folgenden Berechtigungen, um Ihnen Dienstleistungen anzubieten:</string>
     <string name="measure_the_sound_of_the_surrounding_environment">Den Klang der Umgebung messen</string>
+    <string name="home">Zuhause</string>
 
 </resources>

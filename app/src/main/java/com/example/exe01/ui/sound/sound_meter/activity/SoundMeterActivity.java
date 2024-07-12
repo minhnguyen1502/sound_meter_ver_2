@@ -66,6 +66,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
 
     @Override
     public void initView() {
+        startTime = System.currentTimeMillis();  // Initialize start time
 
         soundView = findViewById(R.id.sound_view);
         value = binding.tvValue;
@@ -179,8 +180,8 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         dialog.show();
     }
     private void saveRecording(String title) {
-        long startTime = this.startTime;
-        int duration = (int) ((System.currentTimeMillis() - startTime) / 1000);
+        long time = System.currentTimeMillis();
+        long duration = (time - startTime) / 1000;
         float min = Float.parseFloat(binding.tvMin.getText().toString());
         float max = Float.parseFloat(binding.tvMax.getText().toString());
         float avg = Float.parseFloat(binding.tvAvg.getText().toString());
@@ -197,7 +198,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("title", title);
-        values.put("startTime", startTime);
+        values.put("startTime", time);
         values.put("duration", duration);
         values.put("min", min);
         values.put("max", max);
@@ -275,6 +276,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         binding.tvAvg.setText(String.format("%.1f", World.getAvg()).replace(",", "."));
         mChart.clear();
         initChart();
+        startTime = System.currentTimeMillis();  // Initialize start time
 
     }
 
@@ -354,7 +356,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         super.onResume();
         File file = FileUtil.createFile("sound_meter.amr", this);
         startRecode(file);
-        startTime = System.currentTimeMillis();  // Initialize start time
     }
 
     @Override

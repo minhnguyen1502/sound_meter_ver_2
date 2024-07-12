@@ -105,7 +105,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
         }
     }
     public void goToNextScreen() {
-        Utils.setFirstOpenApp(true);
+//        Utils.setFirstOpenApp(true);
         if(checkAudioPermission()&&checkLFilePermission()&&checkNotificationPermission()){
             Intent intent = new Intent(IntroActivity.this, SoundMainActivity.class);
             startActivity(intent);

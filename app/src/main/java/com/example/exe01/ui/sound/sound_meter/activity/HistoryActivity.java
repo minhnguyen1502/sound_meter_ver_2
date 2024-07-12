@@ -1,11 +1,14 @@
 package com.example.exe01.ui.sound.sound_meter.activity;
 
-import android.content.DialogInterface;
-import android.os.Bundle;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
-import android.widget.Toast;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.exe01.R;
@@ -13,7 +16,6 @@ import com.example.exe01.base.BaseActivity;
 import com.example.exe01.databinding.ActivityHistoryBinding;
 import com.example.exe01.ui.sound.sound_meter.adapter.SoundAdapter;
 import com.example.exe01.ui.sound.sound_meter.database.SoundItemDAO;
-import com.example.exe01.ui.sound.sound_meter.database.SoundMeterDatabaseHelper;
 import com.example.exe01.ui.sound.sound_meter.model.SoundItem;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     SoundItemDAO dao;
     private List<SoundItem> soundItemList;
     private boolean isMultipleSelectMode = false;
+    private boolean isClick = false;
 
     @Override
     public ActivityHistoryBinding getBinding() {
@@ -56,6 +59,14 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         binding.ivSingleSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isMultipleSelectMode = !isMultipleSelectMode;
+                soundAdapter.setMultipleSelectMode(isMultipleSelectMode);
+                binding.btnDelete.setVisibility(isMultipleSelectMode ? View.VISIBLE : View.INVISIBLE);
+                if (!isMultipleSelectMode) {
+                    soundAdapter.clearSelections();
+                }
+                updateSelectIcons();
+
             }
         });
 
@@ -63,6 +74,16 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         binding.ivMultipleSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (selectedCount == soundItemList.size()){
+                    soundAdapter.clearSelections();
+
+                }else {
+                    soundAdapter.selectAllItems();
+
+                }
+
+                updateSelectIcons();
+
             }
         });
 
@@ -70,13 +91,14 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         binding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                confirmDelete();
             }
         });
     }
 
+
     @Override
     public void bindView() {
-        // Additional view bindings if necessary
     }
 
     @Override
@@ -95,6 +117,65 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         soundItemList.addAll(dao.getAllSoundItems());
         soundAdapter.notifyDataSetChanged();
     }
+    private void deleteSelectedItems() {
+        List<Integer> selectedIds = soundAdapter.getSelectedIds();
+        for (int id : selectedIds) {
+            dao.deleteSoundItem(id);
+        }
+        loadData();
+        isMultipleSelectMode = false;
+        soundAdapter.setMultipleSelectMode(isMultipleSelectMode);
+        updateSelectIcons();
+        binding.btnDelete.setVisibility(View.GONE);
+    }
+    void confirmDelete(){
+        Dialog dialog = new Dialog(this);
 
+        dialog.setContentView(R.layout.dialog_set_name_record);
 
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText edtName = dialog.findViewById(R.id.edt_name);
+        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
+        TextView btnSave = dialog.findViewById(R.id.btn_save);
+        ImageView clear = dialog.findViewById(R.id.btn_clear);
+        TextView tv_title = dialog.findViewById(R.id.tv_title);
+        ImageView line = dialog.findViewById(R.id.iv_line);
+
+        line.setVisibility(View.INVISIBLE);
+        tv_title.setText("Delete the selected records from your history ?");
+        edtName.setVisibility(View.GONE);
+        btnSave.setText("Confirm");
+        clear.setVisibility(View.GONE);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteSelectedItems();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+    int selectedCount;
+    public void updateSelectIcons() {
+        selectedCount = soundAdapter.getSelectedCount();
+        binding.tvHeader.setText(isMultipleSelectMode ? "Select"+" ("+selectedCount +")" : "History");
+        if (selectedCount >= 1) {
+            binding.ivSingleSelect.setVisibility(View.INVISIBLE);
+            binding.ivMultipleSelect.setVisibility(View.VISIBLE);
+        } else {
+            binding.ivSingleSelect.setVisibility(View.VISIBLE);
+            binding.ivMultipleSelect.setVisibility(View.INVISIBLE);
+        }
+    }
 }

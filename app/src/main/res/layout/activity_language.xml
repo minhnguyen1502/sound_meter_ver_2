@@ -2,11 +2,38 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@drawable/img_bg"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/view_top"
-        layout="@layout/tool_bar"/>
+    <ImageView
+        android:id="@+id/iv_arrow_left"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_arrow_left"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Languages"
+        android:fontFamily="@font/pro_500"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@id/iv_arrow_left"
+        app:layout_constraintTop_toTopOf="@id/iv_arrow_left"
+        app:layout_constraintBottom_toBottomOf="@id/iv_arrow_left"
+        app:layout_constraintEnd_toStartOf="@id/iv_check"/>
+    <ImageView
+        android:id="@+id/iv_check"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_lang"
@@ -18,5 +45,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_top" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_arrow_left" />
 </androidx.constraintlayout.widget.ConstraintLayout>

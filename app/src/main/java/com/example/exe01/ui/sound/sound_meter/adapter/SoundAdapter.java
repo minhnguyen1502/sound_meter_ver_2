@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exe01.R;
 import com.example.exe01.ui.sound.sound_meter.activity.DetailItemSoundActivity;
+import com.example.exe01.ui.sound.sound_meter.activity.HistoryActivity;
 import com.example.exe01.ui.sound.sound_meter.model.SoundItem;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +30,9 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
 
     private final Context context;
     private final List<SoundItem> soundRecordings;
+    private final List<Integer> selectedIds = new ArrayList<>();
+    private boolean isMultipleSelectMode = false;
+
 
     public SoundAdapter(Context context, List<SoundItem> soundRecordings) {
         this.context = context;
@@ -45,6 +50,10 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SoundItem recording = soundRecordings.get(position);
 
+        holder.icShare.setVisibility(isMultipleSelectMode ? View.INVISIBLE : View.VISIBLE);
+        holder.icSelectItem.setVisibility(isMultipleSelectMode ? View.VISIBLE : View.INVISIBLE);
+        holder.icSelectItem.setImageResource(selectedIds.contains(recording.getId()) ? R.drawable.ic_selected_item : R.drawable.ic_select_item);
+
         holder.avgView.setText(String.format("%.1f dB", recording.getAvg()));
         holder.desView.setText(recording.getDescription());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault());
@@ -53,23 +62,35 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
         holder.duration.setText(formatDuration(recording.getDuration()));
         holder.title.setText(recording.getTitle());
 
+        holder.icSelectItem.setOnClickListener(v -> {
+            if (selectedIds.contains(recording.getId())) {
+                selectedIds.remove(Integer.valueOf(recording.getId()));
+                holder.icSelectItem.setImageResource(R.drawable.ic_select_item);
+            } else {
+                selectedIds.add(recording.getId());
+                holder.icSelectItem.setImageResource(R.drawable.ic_selected_item);
+            }
+            ((HistoryActivity) context).updateSelectIcons(); // Notify the activity to update icons
+
+        });
+
         // Convert byte array to Bitmap and set to ImageView
         Bitmap bitmap = BitmapFactory.decodeByteArray(recording.getImage(), 0, recording.getImage().length);
         holder.chart.setImageBitmap(bitmap);
 
         holder.icShare.setOnClickListener(v -> shareRecording(recording));
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DetailItemSoundActivity.class);
-            intent.putExtra("id", recording.getId());
-            intent.putExtra("title", recording.getTitle());
-            intent.putExtra("min", recording.getMin());
-            intent.putExtra("max", recording.getMax());
-            intent.putExtra("avg", recording.getAvg());
-            intent.putExtra("des", recording.getDescription());
-            intent.putExtra("duration", recording.getDuration());
-            intent.putExtra("time", recording.getStartTime());
-            intent.putExtra("img", recording.getImage());
-            context.startActivity(intent);
+                Intent intent = new Intent(context, DetailItemSoundActivity.class);
+                intent.putExtra("id", recording.getId());
+                intent.putExtra("title", recording.getTitle());
+                intent.putExtra("min", recording.getMin());
+                intent.putExtra("max", recording.getMax());
+                intent.putExtra("avg", recording.getAvg());
+                intent.putExtra("des", recording.getDescription());
+                intent.putExtra("duration", recording.getDuration());
+                intent.putExtra("time", recording.getStartTime());
+                intent.putExtra("img", recording.getImage());
+                context.startActivity(intent);
         });
     }
     private String formatDuration(long durationInSeconds) {
@@ -110,6 +131,30 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
 
         // Start activity to share
         context.startActivity(Intent.createChooser(shareIntent, "Share Sound Recording"));
+    }
+    public List<Integer> getSelectedIds() {
+        return selectedIds;
+    }
+    public void setMultipleSelectMode(boolean isMultipleSelectMode) {
+        this.isMultipleSelectMode = isMultipleSelectMode;
+        notifyDataSetChanged();
+    }
+
+    public void clearSelections() {
+        selectedIds.clear();
+        notifyDataSetChanged();
+    }
+
+    public void selectAllItems() {
+        selectedIds.clear();
+        for (SoundItem item : soundRecordings) {
+            selectedIds.add(item.getId());
+        }
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedCount() {
+        return selectedIds.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

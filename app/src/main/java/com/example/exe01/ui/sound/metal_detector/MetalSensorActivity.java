@@ -193,8 +193,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
                 handler.post(runnable);
             }
         }
-        SharedPreferences preferences = getSharedPreferences("metal_prefs", Context.MODE_PRIVATE);
-        threshold = preferences.getFloat("threshold", 50.0f);
+
     }
 
     @Override
@@ -335,10 +334,12 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     }
 
     private boolean isShow = false;
-    private float threshold = 50.0f;
+    private int threshold = 50;
 
     private void openDialog() {
         isShow = true;
+        SharedPreferences preferences = getSharedPreferences("metal_prefs", Context.MODE_PRIVATE);
+        threshold = preferences.getInt("threshold", 50);
         Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialog_threshold);
@@ -371,7 +372,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
                     return;
                 }
                 try {
-                    float number = Float.parseFloat(numberStr);
+                    int number = Integer.parseInt((numberStr));
 
                     if (number < 0 || number > 6000) {
 

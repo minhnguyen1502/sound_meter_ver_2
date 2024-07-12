@@ -33,7 +33,6 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
         codeLang = Locale.getDefault().getLanguage();
 
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         LanguageStartAdapter languageStartAdapter = new LanguageStartAdapter(listLanguage, code -> codeLang = code, this);
 
@@ -71,12 +70,12 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
         listLanguage.add(new LanguageModel("Portuguese", "pt", false));
         listLanguage.add(new LanguageModel("Spanish", "es", false));
 
-        for (int i = 0; i < listLanguage.size(); i++) {
-            if (listLanguage.get(i).getCode().equals(lang)) {
-                listLanguage.add(0, listLanguage.get(i));
-                listLanguage.remove(i + 1);
-            }
-        }
+//        for (int i = 0; i < listLanguage.size(); i++) {
+//            if (listLanguage.get(i).getCode().equals(lang)) {
+//                listLanguage.add(0, listLanguage.get(i));
+//                listLanguage.remove(i + 1);
+//            }
+//        }
     }
 
 }

@@ -54,5 +54,6 @@
 
     <string name="text_permission_start_1"><font color='#E4D342'>“Sound meter”</font> requires the following permissions to provide services for you:</string>
     <string name="measure_the_sound_of_the_surrounding_environment">Measure the sound of the surrounding environment</string>
+    <string name="home">Home</string>
 
 </resources>

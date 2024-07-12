@@ -36,10 +36,10 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
             }
         });
 
-        binding.btnSetting.setOnClickListener(new View.OnClickListener() {
+        binding.ivSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SoundMainActivity.this, SettingActivity.class));
+//                startActivity(new Intent(SoundMainActivity.this, SettingActivity.class));
             }
         });
         binding.btnMetal.setOnClickListener(new View.OnClickListener() {
