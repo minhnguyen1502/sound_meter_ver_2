@@ -21,7 +21,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pro_500"
             android:text="Session 1"
+            app:layout_constraintEnd_toStartOf="@id/iv_chart"
             android:textColor="@color/white"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:lines="1"
+            android:ellipsize="end"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,10 +39,17 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/pro_300"
             android:text="02:05 PM"
+            android:lines="1"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="55dp"
             android:textColor="#C4C4C4"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintStart_toEndOf="@id/tv_title"
             app:layout_constraintTop_toTopOf="@id/tv_title"
+
             tools:ignore="HardcodedText" />
 
         <ImageView
@@ -121,6 +133,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pro_500"
                 android:text="Refrigerator"
+                android:lines="1"
+                android:maxLines="1"
+
                 android:textColor="#E4D342"
                 android:textSize="24sp"
                 android:textStyle="bold"

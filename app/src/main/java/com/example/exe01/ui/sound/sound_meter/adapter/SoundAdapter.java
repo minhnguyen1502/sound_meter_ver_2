@@ -1,11 +1,11 @@
 package com.example.exe01.ui.sound.sound_meter.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exe01.R;
@@ -21,6 +21,9 @@ import com.example.exe01.ui.sound.sound_meter.activity.DetailItemSoundActivity;
 import com.example.exe01.ui.sound.sound_meter.activity.HistoryActivity;
 import com.example.exe01.ui.sound.sound_meter.model.SoundItem;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
         return new ViewHolder(view);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SoundItem recording = soundRecordings.get(position);
@@ -54,7 +58,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
         holder.icSelectItem.setVisibility(isMultipleSelectMode ? View.VISIBLE : View.INVISIBLE);
         holder.icSelectItem.setImageResource(selectedIds.contains(recording.getId()) ? R.drawable.ic_selected_item : R.drawable.ic_select_item);
 
-        holder.avgView.setText(String.format("%.1f dB", recording.getAvg()));
+        holder.avgView.setText(String.format("%.1f", recording.getAvg()));
         holder.desView.setText(recording.getDescription());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault());
 
@@ -93,6 +97,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
                 context.startActivity(intent);
         });
     }
+    @SuppressLint("DefaultLocale")
     private String formatDuration(long durationInSeconds) {
         long minutes = durationInSeconds / 60;
         long seconds = durationInSeconds % 60;
@@ -103,48 +108,67 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
         return soundRecordings.size();
     }
 
+    @SuppressLint("DefaultLocale")
     private void shareRecording(SoundItem recording) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
 
         // Prepare text data to share
-        StringBuilder shareText = new StringBuilder();
-        shareText.append("Title: ").append(recording.getTitle()).append("\n");
-        shareText.append("Average dB: ").append(String.format("%.1f dB", recording.getAvg())).append("\n");
-        shareText.append("Min dB: ").append(String.format("%.1f dB", recording.getMin())).append("\n");
-        shareText.append("Max dB: ").append(String.format("%.1f dB", recording.getMax())).append("\n");
-        shareText.append("Start Time: ").append(recording.getStartTime()).append("\n");
-        shareText.append("Duration: ").append(recording.getDuration()).append("\n");
-        shareText.append("Description: ").append(recording.getDescription()).append("\n");
+        String shareText = "Title: " + recording.getTitle() + "\n" +
+                "Average: " + String.format("%.1f dB", recording.getAvg()) + "\n" +
+                "Min: " + String.format("%.1f dB", recording.getMin()) + "\n" +
+                "Max: " + String.format("%.1f dB", recording.getMax()) + "\n" +
+                "Start Time: " + recording.getStartTime() + "\n" +
+                "Duration: " + recording.getDuration() + "\n" +
+                "Description: " + recording.getDescription() + "\n";
 
         // Set text data to the intent
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText.toString());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
 
         // Prepare image data to share (if available)
         if (recording.getImage() != null && recording.getImage().length > 0) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(recording.getImage(), 0, recording.getImage().length);
-            String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Sound Recording", null);
-            Uri uri = Uri.parse(path);
+
+            // Save bitmap to cache directory
+            File cachePath = new File(context.getCacheDir(), "images");
+            cachePath.mkdirs();
+            File imageFile = new File(cachePath, "shared_image.png");
+
+            try (FileOutputStream stream = new FileOutputStream(imageFile)) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Get URI for the image file using FileProvider
+            Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", imageFile);
             shareIntent.setType("image/*");
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+            // Grant temporary read permission to the content URI
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
 
         // Start activity to share
         context.startActivity(Intent.createChooser(shareIntent, "Share Sound Recording"));
     }
+
     public List<Integer> getSelectedIds() {
         return selectedIds;
     }
+    @SuppressLint("NotifyDataSetChanged")
     public void setMultipleSelectMode(boolean isMultipleSelectMode) {
         this.isMultipleSelectMode = isMultipleSelectMode;
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void clearSelections() {
         selectedIds.clear();
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void selectAllItems() {
         selectedIds.clear();
         for (SoundItem item : soundRecordings) {

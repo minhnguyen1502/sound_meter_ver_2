@@ -12,6 +12,7 @@ import com.example.exe01.ui.intro.IntroActivity;
 import com.example.exe01.ui.language.adapter.LanguageStartAdapter;
 import com.example.exe01.ui.language.model.LanguageModel;
 import com.example.exe01.util.SystemUtil;
+import com.example.exe01.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,6 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
         initData();
         codeLang = Locale.getDefault().getLanguage();
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         LanguageStartAdapter languageStartAdapter = new LanguageStartAdapter(listLanguage, code -> codeLang = code, this);
 
@@ -47,6 +47,7 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
     public void bindView() {
         binding.ivCheck.setOnClickListener(view -> {
             SystemUtil.saveLocale(getBaseContext(), codeLang);
+            Utils.setLanguageSelected(true);
             startNextActivity(IntroActivity.class, null);
             finishAffinity();
         });

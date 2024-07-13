@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.exe01.R;
@@ -27,9 +28,6 @@ public class MetalSensorView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    public MetalSensorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -37,7 +35,6 @@ public class MetalSensorView extends View {
         init(w,h);
     }
     private int newWidth, newHeight;
-    private float scaleWidth, scaleHeight;
     private final Matrix matrix = new Matrix();
     private Bitmap indiBitmap;
     private Paint paint = new Paint();
@@ -50,8 +47,8 @@ public class MetalSensorView extends View {
         newHeight = height;
         newWidth = width;
 
-        scaleWidth = ((float) newWidth) / ((float) bitmapW);
-        scaleHeight = ((float) newHeight) / ((float) bitmapH);
+        float scaleWidth = ((float) newWidth) / ((float) bitmapW);
+        float scaleHeight = ((float) newHeight) / ((float) bitmapH);
         matrix.postScale(scaleWidth, scaleHeight);
         indiBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapW, bitmapH, matrix, true);
 
@@ -69,7 +66,6 @@ public class MetalSensorView extends View {
 
     private float metalValue = 0;
     public void setMetalValue(float metalValue) {
-        // Cap the metal value at 6000
         if (metalValue > 6000) {
             metalValue = 6000;
         }
@@ -77,10 +73,10 @@ public class MetalSensorView extends View {
         refresh();
     }
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         if (indiBitmap != null) {
-            matrix.setRotate(getAngle(metalValue), newWidth / 2, newHeight * 229f / 460);
+            matrix.setRotate(getAngle(metalValue), (float) newWidth / 2, newHeight * 229f / 460);
             canvas.drawBitmap(indiBitmap, matrix, paint);
         }
     }
@@ -89,6 +85,6 @@ public class MetalSensorView extends View {
         float min = 0;
         float max = 6000;
 
-        return (value - min) * 180.0f / (max - min);
+        return (value - min) * 210f / (max - min);
     }
 }

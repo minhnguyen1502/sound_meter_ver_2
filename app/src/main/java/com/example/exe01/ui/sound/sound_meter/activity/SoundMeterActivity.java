@@ -1,12 +1,10 @@
 package com.example.exe01.ui.sound.sound_meter.activity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -14,11 +12,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.text.InputFilter;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,9 +44,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> {
 
@@ -96,6 +90,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         });
 
         binding.ivReset.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
                 binding.ivPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
@@ -119,6 +114,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             }
         });
         binding.ivPause.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
                 isPause = !isPause;
@@ -142,7 +138,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
 
         dialog.setContentView(R.layout.dialog_set_name_record);
 
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -181,17 +177,14 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     }
     private void saveRecording(String title) {
         long time = System.currentTimeMillis();
-        long duration = (time - startTime) / 1000;
+//        long duration = (time - startTime) / 1000;
         float min = Float.parseFloat(binding.tvMin.getText().toString());
         float max = Float.parseFloat(binding.tvMax.getText().toString());
         float avg = Float.parseFloat(binding.tvAvg.getText().toString());
         String description = getDescription(avg);
 
-//        saveChartImagesAsVideo();
         Bitmap chartBitmap = captureChartImage();
         byte[] image = getBytesFromBitmap(chartBitmap);
-//        Bitmap lastChartBitmap = chartBitmaps.isEmpty() ? null : chartBitmaps.get(chartBitmaps.size() - 1);
-//        byte[] lastImage = lastChartBitmap != null ? getBytesFromBitmap(lastChartBitmap) : null;
 
         // Save the data to SQLite
         SoundMeterDatabaseHelper dbHelper = new SoundMeterDatabaseHelper(this);
@@ -209,9 +202,9 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         db.close();
 
         if (newRowId != -1) {
-            Toast.makeText(this, "Recording saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.recording_saved), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Error saving recording", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  getString(R.string.error_saving_recording), Toast.LENGTH_SHORT).show();
         }
     }
     private Bitmap captureChartImage() {
@@ -230,39 +223,40 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     }
     private String getDescription(float avg) {
         if (avg >= 0 && avg < 20) {
-            return "Normal breathing";
+            return getString(R.string.normal_breathing);
         } else if (avg >= 20 && avg < 30) {
-            return "Rustling leaves, Mosquito";
+            return getString(R.string.rustling_leaves_mosquito);
         } else if (avg >= 30 && avg < 40) {
-            return "Whisper, rustling leaves";
+            return getString(R.string.whisper_rustling_leaves);
         } else if (avg >= 40 && avg < 50) {
-            return "Moderate, Stream";
+            return getString(R.string.moderate_stream);
         } else if (avg >= 50 && avg < 60) {
-            return "Refrigerator";
+            return getString(R.string.refrigerator);
         } else if (avg >= 60 && avg < 70) {
-            return "Conversation, Quite office";
+            return getString(R.string.conversation_quite_office);
         } else if (avg >= 70 && avg < 80) {
-            return "Car, City traffic";
+            return getString(R.string.car_city_traffic);
         } else if (avg >= 80 && avg < 90) {
-            return "Truck, City traffic noise";
+            return getString(R.string.truck_city_traffic_noise);
         } else if (avg >= 90 && avg < 100) {
-            return "Hairdryer, Lawnmower";
+            return getString(R.string.hairdryer_lawnmower);
         } else if (avg >= 100 && avg < 110) {
-            return "Helicopter, Train";
+            return getString(R.string.helicopter_train);
         } else if (avg >= 110 && avg < 120) {
-            return "Trombone";
+            return getString(R.string.trombone);
         } else if (avg >= 120 && avg < 130) {
-            return "Police siren, Boom box";
+            return getString(R.string.police_siren_boom_box);
         } else if (avg >= 130 && avg < 140) {
-            return "Jet takeoff, shotgun firing";
+            return getString(R.string.jet_takeoff_shotgun_firing);
         } else if (avg >= 140) {
-            return "Fireworks";
+            return getString(R.string.fireworks);
         } else {
-            return "Unknown";
+            return getString(R.string.unknown);
         }
     }
 
 
+    @SuppressLint("DefaultLocale")
     private void resetMeter() {
         soundView.refresh();
 
@@ -304,6 +298,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     float avgSoundLevel;
     @SuppressLint("HandlerLeak")
     private final Handler handler = new Handler() {
+        @SuppressLint("DefaultLocale")
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -466,6 +461,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         return set;
     }
 
+    long duration;
     private void updateData(float dbCount) {
 
         LineData data = mChart.getData();
@@ -477,7 +473,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             }
             data.addEntry(new Entry(set.getEntryCount() * 0.1f, dbCount), 0);
             data.notifyDataChanged();
-
+            duration = (long) (set.getEntryCount()*0.1f);
             mChart.notifyDataSetChanged();
             mChart.moveViewToX(data.getEntryCount());
 //            Bitmap chartBitmap = captureChartImage();

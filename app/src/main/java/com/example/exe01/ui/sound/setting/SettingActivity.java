@@ -13,8 +13,9 @@ import com.example.exe01.dialog.rate.IClickDialogRate;
 import com.example.exe01.dialog.rate.RatingDialog;
 import com.example.exe01.ui.language.LanguageActivity;
 import com.example.exe01.ui.policy.PolicyActivity;
-import com.example.exe01.ui.sound.about.AboutActivity;
+import com.example.exe01.ui.sound.setting.about.AboutActivity;
 import com.example.exe01.util.SharePrefUtils;
+import com.example.exe01.util.SystemUtil;
 import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
@@ -54,7 +55,7 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
         binding.layoutRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rateApp(false);
+                rateApp();
             }
         });
         binding.layoutShare.setOnClickListener(new View.OnClickListener() {
@@ -63,12 +64,38 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
                 shareApp();
             }
         });
+        String currentLanguageCode = SystemUtil.getPreLanguage(this);
+        String currentLanguage = getLanguageNameByCode(currentLanguageCode);
+        binding.tvChangeLanguage.setText(currentLanguage);
         binding.layoutPriprivacyPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SettingActivity.this, PolicyActivity.class));
             }
         });
+    }
+
+    private String getLanguageNameByCode(String code) {
+        switch (code) {
+            case "en":
+                return "English";
+            case "zh":
+                return "China";
+            case "fr":
+                return "French";
+            case "de":
+                return "German";
+            case "hi":
+                return "Hindi";
+            case "in":
+                return "Indonesia";
+            case "pt":
+                return "Portuguese";
+            case "es":
+                return "Spanish";
+            default:
+                return "Unknown";
+        }
     }
 
     @Override
@@ -87,7 +114,7 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
     ReviewInfo reviewInfo;
     ReviewManager manager;
 
-    private void rateApp(boolean isQuitApp) {
+    private void rateApp() {
         RatingDialog ratingDialog = new RatingDialog(SettingActivity.this, true);
         ratingDialog.init(new IClickDialogRate() {
             @Override
@@ -99,9 +126,6 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
                 sendIntent.setData(uri);
                 try {
-                    if (isQuitApp) {
-                        finishAffinity();
-                    }
                     startActivity(Intent.createChooser(sendIntent, getString(R.string.Send_Email)));
                     SharePrefUtils.forceRated(SettingActivity.this);
                 } catch (android.content.ActivityNotFoundException ex) {
@@ -121,9 +145,6 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
                             binding.layoutRate.setVisibility(View.GONE);
                             SharePrefUtils.forceRated(SettingActivity.this);
                             ratingDialog.dismiss();
-                            if (isQuitApp) {
-                                finishAffinity();
-                            }
                         });
                     } else {
                         ratingDialog.dismiss();
@@ -134,9 +155,6 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
             @Override
             public void later() {
                 ratingDialog.dismiss();
-                if (isQuitApp) {
-                    finishAffinity();
-                }
             }
 
         });

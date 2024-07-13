@@ -1,5 +1,6 @@
 package com.example.exe01.ui.language;
 
+import android.content.Intent;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +11,8 @@ import com.example.exe01.databinding.ActivityLanguageBinding;
 import com.example.exe01.ui.intro.IntroActivity;
 import com.example.exe01.ui.language.adapter.LanguageAdapter;
 import com.example.exe01.ui.language.model.LanguageModel;
+import com.example.exe01.ui.sound.SoundMainActivity;
+import com.example.exe01.ui.sound.setting.SettingActivity;
 import com.example.exe01.util.SystemUtil;
 
 import java.util.ArrayList;
@@ -31,7 +34,6 @@ public class LanguageActivity extends BaseActivity<ActivityLanguageBinding> {
         initData();
         codeLang = Locale.getDefault().getLanguage();
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         LanguageAdapter languageAdapter = new LanguageAdapter(listLanguage, code -> codeLang = code, this);
 
@@ -42,7 +44,8 @@ public class LanguageActivity extends BaseActivity<ActivityLanguageBinding> {
         binding.rcvLang.setAdapter(languageAdapter);
         binding.ivCheck.setOnClickListener(view -> {
             SystemUtil.saveLocale(getBaseContext(), codeLang);
-            onBack();
+            startActivity(new Intent(LanguageActivity.this, SoundMainActivity.class));
+            finishAffinity();
         });
         binding.ivArrowLeft.setOnClickListener(new View.OnClickListener() {
             @Override

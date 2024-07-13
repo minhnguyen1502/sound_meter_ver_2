@@ -17,7 +17,8 @@
         android:clickable="false"
         android:src="@drawable/ic_setting"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:layout_width="0dp"
@@ -27,6 +28,10 @@
         android:text="@string/home"
         android:textColor="@color/white"
         android:textSize="24sp"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:lines="1"
+        android:ellipsize="end"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/btn_setting"
         app:layout_constraintEnd_toStartOf="@id/iv_setting"
@@ -64,7 +69,8 @@
             android:src="@drawable/img_logo_metal_sensor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="0dp"
@@ -101,7 +107,8 @@
             android:src="@drawable/img_logo_sound_meter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="0dp"

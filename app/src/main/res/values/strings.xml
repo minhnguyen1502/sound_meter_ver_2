@@ -115,5 +115,21 @@
     <string name="save">Save</string>
     <string name="set_threshold">Set Threshold</string>
     <string name="set">Set</string>
+    <string name="easily_find_metal_objects_hidden_nearby">Easily find metal objects hidden nearby.</string>
+    <string name="metal_detector">Metal Detector</string>
+    <string name="audio_storage">Audio Storage</string>
+    <string name="has_the_function_to_save_a_history_of_measurements_for_review">Has the function to save a history of measurements for review.</string>
+    <string name="delete_the">"Delete the "</string>
+    <string name="confirm">Confirm</string>
+    <string name="rename">Rename</string>
+    <string name="delete_the_selected_records_from_your_history">Delete the selected records from your history ?</string>
+    <string name="select">Select</string>
+    <string name="recording_saved">Recording saved</string>
+    <string name="error_saving_recording">Error saving recording</string>
+    <string name="unknown">Unknown</string>
+    <string name="input_cannot_be_empty">input cannot be empty</string>
+    <string name="from_0_to_6000">from 0 to 6000</string>
+    <string name="threshold_set_to">Threshold set to</string>
+    <string name="invalid_input">invalid input)</string>
 
 </resources>

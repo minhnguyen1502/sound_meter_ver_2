@@ -43,11 +43,11 @@ public class Utils {
     }
 
     public static boolean isLanguageSelected() {
-        return SharePrefUtils.getBoolean("IS_LANGUAGE_SELECTED", false);
+        return SharePrefUtils.getBoolean("IS_LANGUAGE_SELECTED_DATA", false);
     }
 
     public static void setLanguageSelected(boolean value) {
-        SharePrefUtils.putBoolean("IS_LANGUAGE_SELECTED", value);
+        SharePrefUtils.putBoolean("IS_LANGUAGE_SELECTED_DATA", value);
     }
 
     public static boolean isChooseTheme() {

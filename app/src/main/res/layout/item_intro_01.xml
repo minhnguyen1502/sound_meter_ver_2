@@ -2,48 +2,76 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@drawable/img_intro_1"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    android:background="@drawable/img_bg">
 
 
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/guideline"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="1dp"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        app:layout_constraintGuide_begin="329dp" />-->
 
-<!--    <androidx.constraintlayout.widget.Guideline-->
-<!--        android:id="@+id/guideline"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintGuide_begin="329dp" />-->
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/ll_bottom"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="@dimen/_12sdp"-->
+    <!--        android:layout_marginTop="@dimen/_20sdp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent">-->
 
-    <LinearLayout
-        android:id="@+id/ll_bottom"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/img_intro_1"
+        android:layout_marginTop="-270dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/pro_500"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:maxLines="1"
+        android:text="@string/sound_meter"
+        android:textColor="#E4D342"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/des"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/sound_meter"
-            android:fontFamily="@font/pro_500"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="28sp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/measure_the_sound_of_the_surrounding_environment"
-            android:fontFamily="@font/pro__400"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="53dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="67dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/pro__400"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lines="2"
+        android:maxLines="2"
+        android:text="@string/measure_the_sound_of_the_surrounding_environment"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <!--    </LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

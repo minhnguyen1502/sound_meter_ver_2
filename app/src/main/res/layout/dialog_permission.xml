@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="287dp"
-        android:layout_height="243dp"
+        android:layout_width="295dp"
+        android:layout_height="249dp"
         android:background="@drawable/bg_dialog"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,12 +19,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:ellipsize="end"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:includeFontPadding="false"
             android:maxLines="1"
+            android:lines="1"
+            android:ellipsize="end"
             android:fontFamily="@font/pro_500"
             android:text="@string/permission"
             android:textColor="@color/white"

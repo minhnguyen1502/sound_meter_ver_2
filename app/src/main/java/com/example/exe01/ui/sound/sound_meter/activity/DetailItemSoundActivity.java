@@ -1,16 +1,13 @@
 package com.example.exe01.ui.sound.sound_meter.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -18,31 +15,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.FileProvider;
 
 import com.example.exe01.R;
 import com.example.exe01.base.BaseActivity;
 import com.example.exe01.databinding.ActivityDetailItemSoundBinding;
 import com.example.exe01.ui.sound.sound_meter.database.SoundItemDAO;
-import com.example.exe01.ui.sound.sound_meter.database.SoundMeterDatabaseHelper;
-import com.example.exe01.ui.sound.sound_meter.model.SoundItem;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoundBinding> {
-    private SoundMeterDatabaseHelper dbHelper;
-    private SoundItem soundItem;
     SoundItemDAO dao;
     int id;
     String title, description;
-    float avg, min,max;
+    float avg, min, max;
     long startTime, duration;
     byte[] imageBlob;
 
@@ -77,9 +68,9 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
         max = getIntent().getFloatExtra("max", 0);
         imageBlob = getIntent().getByteArrayExtra("img");
         binding.tvTitle.setText(title);
-        binding.tvAvg.setText(String.format(Locale.getDefault(), "%.1f dB", avg));
-        binding.tvMin.setText(String.format(Locale.getDefault(), "%.1f dB", min));
-        binding.tvMax.setText(String.format(Locale.getDefault(), "%.1f dB", max));
+        binding.tvAvg.setText(String.format(Locale.getDefault(), "%.1f", avg));
+        binding.tvMin.setText(String.format(Locale.getDefault(), "%.1f", min));
+        binding.tvMax.setText(String.format(Locale.getDefault(), "%.1f", max));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault());
         binding.tvTime.setText(sdf.format(startTime));
@@ -115,12 +106,13 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void confirmDelete() {
         Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialog_set_name_record);
 
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -132,9 +124,9 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
         ImageView line = dialog.findViewById(R.id.iv_line);
 
         line.setVisibility(View.INVISIBLE);
-        tv_title.setText("Delete the "+ title +" ?");
+        tv_title.setText(getString(R.string.delete_the) + title + " ?");
         edtName.setVisibility(View.GONE);
-        btnSave.setText("Confirm");
+        btnSave.setText(R.string.confirm);
         clear.setVisibility(View.GONE);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +146,7 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
         dialog.show();
     }
 
+    @SuppressLint("DefaultLocale")
     private String formatDuration(long durationInSeconds) {
         long minutes = durationInSeconds / 60;
         long seconds = durationInSeconds % 60;
@@ -162,7 +155,6 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
 
     @Override
     public void bindView() {
-        dbHelper = new SoundMeterDatabaseHelper(this);
         dao = new SoundItemDAO(this);
     }
 
@@ -170,12 +162,14 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
     public void onBack() {
         finish();
     }
+
+    @SuppressLint("SetTextI18n")
     private void editName() {
         Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialog_set_name_record);
 
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -185,7 +179,7 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
         ImageView clear = dialog.findViewById(R.id.btn_clear);
         TextView tv_title = dialog.findViewById(R.id.tv_title);
 
-        tv_title.setText("Rename");
+        tv_title.setText(R.string.rename);
         edtName.setText(title);
 
         clear.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +202,7 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
                 String newName = edtName.getText().toString().trim();
                 if (!newName.isEmpty()) {
                     Toast.makeText(DetailItemSoundActivity.this, "Record renamed successfully", Toast.LENGTH_SHORT).show();
-                    dao.updateTitle(id,newName);
+                    dao.updateTitle(id, newName);
 
                     // Update UI
                     binding.tvTitle.setText(newName);
@@ -224,30 +218,47 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
 
         dialog.show();
     }
+
     private void shareRecording() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
 
         // Prepare text data to share
-        StringBuilder shareText = new StringBuilder();
-        shareText.append("Title: ").append(title).append("\n");
-        shareText.append("Average: ").append(String.format("%.1f dB", avg)).append("\n");
-        shareText.append("Min: ").append(String.format("%.1f dB", min)).append("\n");
-        shareText.append("Max: ").append(String.format("%.1f dB", max)).append("\n");
-        shareText.append("Start Time: ").append(startTime).append("\n");
-        shareText.append("Duration: ").append(duration).append("\n");
-        shareText.append("Description: ").append(description).append("\n");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault());
+        String formattedDuration = formatDuration(duration);
+        @SuppressLint("DefaultLocale") String shareText = "Title: " + title + "\n" +
+                "Average: " + String.format("%.1f dB", avg) + "\n" +
+                "Min: " + String.format("%.1f dB", min) + "\n" +
+                "Max: " + String.format("%.1f dB", max) + "\n" +
+                "Start Time: " + sdf.format(startTime) + "\n" +
+                "Duration: " + formattedDuration + "\n" +
+                "Description: " + description + "\n";
 
         // Set text data to the intent
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText.toString());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
 
         // Prepare image data to share (if available)
         if (imageBlob != null && imageBlob.length > 0) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(imageBlob, 0, imageBlob.length);
-            String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "Sound Recording", null);
-            Uri uri = Uri.parse(path);
+
+            // Save bitmap to cache directory
+            File cachePath = new File(this.getCacheDir(), "images");
+            cachePath.mkdirs();
+            File imageFile = new File(cachePath, "shared_image.png");
+
+            try (FileOutputStream stream = new FileOutputStream(imageFile)) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Get URI for the image file using FileProvider
+            Uri uri = FileProvider.getUriForFile(this, this.getPackageName() + ".provider", imageFile);
             shareIntent.setType("image/*");
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+            // Grant temporary read permission to the content URI
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
 
         // Start activity to share

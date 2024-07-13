@@ -26,6 +26,10 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:lines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@id/iv_arrow_left"
         app:layout_constraintEnd_toStartOf="@id/gone"
         app:layout_constraintStart_toEndOf="@id/iv_arrow_left"
@@ -62,6 +66,10 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/pro_500"
                 android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:lines="1"
+                android:ellipsize="end"
                 android:text="@string/microtesla_values_information_table"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -91,6 +99,10 @@
                     android:fontFamily="@font/pro_500"
                     android:text="@string/magnetometer_condition"
                     android:textColor="#19513C"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textSize="14sp" />
 
                 <View
@@ -105,6 +117,10 @@
                     android:fontFamily="@font/pro_500"
                     android:gravity="center"
                     android:text="@string/from"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textColor="#19513C"
                     android:textSize="14sp" />
 
@@ -120,6 +136,10 @@
                     android:fontFamily="@font/pro_500"
                     android:gravity="center"
                     android:text="@string/to"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textColor="#19513C"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -142,6 +162,10 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:text="@string/low_magnetic_field"
                     android:textColor="@android:color/white" />
 
@@ -192,6 +216,10 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:text="@string/detectable_range"
                     android:textColor="@android:color/white" />
 
@@ -242,6 +270,10 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:text="@string/saturated_sensors"
                     android:textColor="@android:color/white" />
 
@@ -291,6 +323,10 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:text="@string/potential_deprogramming"
                     android:textColor="@android:color/white" />
 
@@ -345,6 +381,10 @@
                     android:text="@string/calibrate_sensor"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

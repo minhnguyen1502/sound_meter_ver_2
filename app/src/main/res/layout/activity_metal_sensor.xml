@@ -92,7 +92,7 @@
                 android:id="@+id/ll_value"
                 android:layout_width="84dp"
                 android:layout_height="84dp"
-                android:layout_marginTop="161dp"
+                android:layout_marginTop="143dp"
                 android:background="@drawable/bg_circle_value_metal"
                 android:gravity="center"
                 android:orientation="vertical"

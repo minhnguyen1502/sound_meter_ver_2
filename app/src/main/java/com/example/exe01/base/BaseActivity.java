@@ -44,13 +44,12 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         SystemUtil.setLocale(this);
-//        setupLanguage(this);
         super.onCreate(savedInstanceState);
         binding = getBinding();
+
         if (Utils.getScreenAllwaysOn()) {
             binding.getRoot().setKeepScreenOn(true);
         }
-
 
         int flags = 0;
         if (Utils.getScreenAllwaysOn()) {
@@ -72,12 +71,9 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
                 binding.getRoot().getPaddingBottom()
         );
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         //make fully Android Transparent Status bar
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-        getWindow().setNavigationBarColor(Color.TRANSPARENT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -178,11 +174,6 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
         super.onResume();
         //tắt ads resume all
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        finishThisActivity();
-//    }
 
     public void hideFullNavigation() {
         try {

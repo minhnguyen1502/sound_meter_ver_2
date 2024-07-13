@@ -46,7 +46,6 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
             return;
         }
 
-        holder.rdbCheck.setVisibility(View.GONE);
         holder.tvLang.setText(languageModel.getName());
 
         if (languageModel.getActive()) {
@@ -100,14 +99,12 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
     }
 
     public static class LanguageViewHolder extends RecyclerView.ViewHolder {
-        private final RadioButton rdbCheck;
         private final TextView tvLang;
         private final LinearLayout layoutItem;
         private final ImageView icLang;
 
         public LanguageViewHolder(@NonNull View itemView) {
             super(itemView);
-            rdbCheck = itemView.findViewById(R.id.rdbCheck);
             icLang = itemView.findViewById(R.id.icLang);
             tvLang = itemView.findViewById(R.id.tvLang);
             layoutItem = itemView.findViewById(R.id.layoutItem);

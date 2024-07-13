@@ -38,6 +38,10 @@
             android:text="@string/sorry_your_device_doesn_t_have_a_magnetic_field_sensor_so_you_can_t_use_this_function"
             android:textColor="@color/white"
             android:textSize="16sp"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:lines="2"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img"/>
