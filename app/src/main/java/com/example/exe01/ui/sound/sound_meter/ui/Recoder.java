@@ -24,9 +24,6 @@ public class Recoder {
         }
     }
 
-    public File getmFile() {
-        return mFile;
-    }
 
     public void setmFile(File mFile) {
         this.mFile = mFile;

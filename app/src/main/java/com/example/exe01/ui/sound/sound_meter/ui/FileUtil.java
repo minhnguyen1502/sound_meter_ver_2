@@ -6,6 +6,7 @@ import android.os.Environment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class FileUtil {
     private static final String LOCAL = "Sound_Meter_2_05072024";
@@ -27,7 +28,7 @@ public class FileUtil {
         File mFile;
         if (Build.VERSION.SDK_INT == 29) {
             // save file android 10
-            mFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + LOCAL + fileName);
+            mFile = new File(Objects.requireNonNull(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)).getAbsolutePath() + LOCAL + fileName);
         } else {
             // all android
             mFile = new File(REC_PATH + fileName);

@@ -11,46 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SoundItemDAO {
-    private SQLiteDatabase database;
-    private SoundMeterDatabaseHelper dbHelper;
+    private final SQLiteDatabase database;
 
     public SoundItemDAO(Context context) {
-        dbHelper = new SoundMeterDatabaseHelper(context);
+        SoundMeterDatabaseHelper dbHelper = new SoundMeterDatabaseHelper(context);
         database = dbHelper.getWritableDatabase();
-    }
-
-    public void close() {
-        dbHelper.close();
-    }
-
-    public long addSoundItem(SoundItem soundItem) {
-        ContentValues values = new ContentValues();
-        values.put(SoundMeterDatabaseHelper.COLUMN_START_TIME, soundItem.getStartTime());
-        values.put(SoundMeterDatabaseHelper.COLUMN_TITLE, soundItem.getTitle());
-        values.put(SoundMeterDatabaseHelper.COLUMN_DURATION, soundItem.getDuration());
-        values.put(SoundMeterDatabaseHelper.COLUMN_MIN, soundItem.getMin());
-        values.put(SoundMeterDatabaseHelper.COLUMN_MAX, soundItem.getMax());
-        values.put(SoundMeterDatabaseHelper.COLUMN_AVG, soundItem.getAvg());
-        values.put(SoundMeterDatabaseHelper.COLUMN_DESCRIPTION, soundItem.getDescription());
-        values.put(SoundMeterDatabaseHelper.COLUMN_IMAGE, soundItem.getImage());
-
-        return database.insert(SoundMeterDatabaseHelper.TABLE_NAME, null, values);
-    }
-
-    public int updateSoundItem(SoundItem soundItem) {
-        ContentValues values = new ContentValues();
-        values.put(SoundMeterDatabaseHelper.COLUMN_START_TIME, soundItem.getStartTime());
-        values.put(SoundMeterDatabaseHelper.COLUMN_TITLE, soundItem.getTitle());
-        values.put(SoundMeterDatabaseHelper.COLUMN_DURATION, soundItem.getDuration());
-        values.put(SoundMeterDatabaseHelper.COLUMN_MIN, soundItem.getMin());
-        values.put(SoundMeterDatabaseHelper.COLUMN_MAX, soundItem.getMax());
-        values.put(SoundMeterDatabaseHelper.COLUMN_AVG, soundItem.getAvg());
-        values.put(SoundMeterDatabaseHelper.COLUMN_DESCRIPTION, soundItem.getDescription());
-        values.put(SoundMeterDatabaseHelper.COLUMN_IMAGE, soundItem.getImage());
-
-        return database.update(SoundMeterDatabaseHelper.TABLE_NAME, values,
-                SoundMeterDatabaseHelper.COLUMN_ID + " = ?",
-                new String[]{String.valueOf(soundItem.getId())});
     }
 
     public void deleteSoundItem(int id) {
@@ -85,11 +50,11 @@ public class SoundItemDAO {
 
         return soundItems;
     }
-    public int updateTitle(int id, String newTitle) {
+    public void updateTitle(int id, String newTitle) {
         ContentValues values = new ContentValues();
         values.put(SoundMeterDatabaseHelper.COLUMN_TITLE, newTitle);
 
-        return database.update(SoundMeterDatabaseHelper.TABLE_NAME, values,
+        database.update(SoundMeterDatabaseHelper.TABLE_NAME, values,
                 SoundMeterDatabaseHelper.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(id)});
     }

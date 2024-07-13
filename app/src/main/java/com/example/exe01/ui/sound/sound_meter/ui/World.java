@@ -5,11 +5,12 @@ public class World {
     public static float MIN = 140 ;
     public static float MAX = 0 ;
     public static float lastDB = dbCount;
-    private static float mindb = 0.5f;
-    private static float value = 0;
+
     public static float setDbCount(float mValue) {
+        float mindb = 0.5f;
+        float value = 0;
         if (mValue > lastDB) {
-            value = mValue - lastDB > mindb ? mValue - lastDB : mindb;
+            value = Math.max(mValue - lastDB, mindb);
         } else {
             value = mValue - lastDB < -mindb ? mValue - lastDB : mindb;
         }

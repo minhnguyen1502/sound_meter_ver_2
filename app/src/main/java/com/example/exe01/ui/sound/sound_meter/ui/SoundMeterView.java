@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.exe01.R;
@@ -26,9 +27,6 @@ public class SoundMeterView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    public SoundMeterView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -37,7 +35,6 @@ public class SoundMeterView extends View {
     }
 
     private int newHeight, newWidth;
-    private float scaleHeight, scaleWidth;
     private final Matrix matrix = new Matrix();
     private Bitmap bitmap;
     private Paint paint;
@@ -50,8 +47,8 @@ public class SoundMeterView extends View {
         newHeight = height;
         newWidth = width;
 
-        scaleHeight = ((float) newHeight) / ((float) bitmapH);
-        scaleWidth = ((float) newWidth) / ((float) bitmapW);
+        float scaleHeight = ((float) newHeight) / ((float) bitmapH);
+        float scaleWidth = ((float) newWidth) / ((float) bitmapW);
 
         matrix.postScale(scaleWidth, scaleHeight);
         bitmap = Bitmap.createBitmap(mbitmap, 0, 0, bitmapH, bitmapW, matrix, true);
@@ -67,10 +64,10 @@ public class SoundMeterView extends View {
         postInvalidateDelayed(ANIMATION_INTERVAL);
     }
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         if (bitmap != null) {
-            matrix.setRotate(getAngle(World.dbCount), newWidth / 2, newHeight * 229f / 460);
+            matrix.setRotate(getAngle(World.dbCount), (float) newWidth / 2, newHeight * 229f / 460);
             canvas.drawBitmap(bitmap, matrix, paint);
         }
     }

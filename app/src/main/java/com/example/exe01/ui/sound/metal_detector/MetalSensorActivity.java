@@ -1,5 +1,6 @@
 package com.example.exe01.ui.sound.metal_detector;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding> implements SensorEventListener {
 
@@ -119,22 +121,22 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         binding.ivReset.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
                 isPause = false;
                 isSpeak = false;
                 binding.ivSound.setImageDrawable(getResources().getDrawable(R.drawable.ic_off_sound));
                 binding.ivPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
-                if (handler != null) {
-                    sensorManager.registerListener(MetalSensorActivity.this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
-                    handler.post(runnable);
-                }
+                sensorManager.registerListener(MetalSensorActivity.this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
+                handler.post(runnable);
                 resetSensor();
             }
         });
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void resetSensor() {
         values.clear();
         binding.tvValue.setText("0");
@@ -234,7 +236,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
         dialog.setContentView(R.layout.dialog_calibrate_sensor);
 
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -264,7 +266,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
         dialog.setContentView(R.layout.dialog_no_sensor);
 
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -283,6 +285,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
     private MediaPlayer mediaPlayer;
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
@@ -336,6 +339,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     private boolean isShow = false;
     private int threshold = 50;
 
+    @SuppressLint("SetTextI18n")
     private void openDialog() {
         isShow = true;
         SharedPreferences preferences = getSharedPreferences("metal_prefs", Context.MODE_PRIVATE);
@@ -344,7 +348,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
         dialog.setContentView(R.layout.dialog_threshold);
 
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -368,7 +372,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
                 String numberStr = input.getText().toString();
 
                 if (numberStr.isEmpty()) {
-                    Toast.makeText(MetalSensorActivity.this, "input cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MetalSensorActivity.this, getString(R.string.input_cannot_be_empty), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 try {
@@ -376,7 +380,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
                     if (number < 0 || number > 6000) {
 
-                        Toast.makeText(MetalSensorActivity.this, "from 0 to 6000", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MetalSensorActivity.this, getString(R.string.from_0_to_6000), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -387,11 +391,11 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
                     editor.putFloat("threshold", threshold);
                     editor.apply();
 
-                    Toast.makeText(MetalSensorActivity.this, "threshold set to)" + threshold, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MetalSensorActivity.this, getString(R.string.threshold_set_to) + threshold, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     isShow = false;
                 } catch (NumberFormatException e) {
-                    Toast.makeText(MetalSensorActivity.this, "invalid input)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MetalSensorActivity.this, getString(R.string.invalid_input), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -406,7 +410,6 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
 
     private LineChart mChart;
     private Typeface typeface;
-    private ArrayList<Entry> yVals;
 
 
     private void initChart() {
@@ -431,6 +434,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         x.setDrawGridLines(true);
         x.setTextColor(Color.parseColor("#E4D342"));
         x.setValueFormatter(new ValueFormatter() {
+            @SuppressLint("DefaultLocale")
             @Override
             public String getFormattedValue(float value) {
                 return String.format("%.0f s", value + 1);
@@ -451,6 +455,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         y.setAxisMinimum(0);
         y.setAxisMaximum(6000);
         y.setValueFormatter(new ValueFormatter() {
+            @SuppressLint("DefaultLocale")
             @Override
             public String getFormattedValue(float value) {
                 return String.format("%.0f", value).replace(",", "");
@@ -460,7 +465,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         mChart.getAxisRight().setEnabled(false);
 
         // Thiết lập dữ liệu cho biểu đồ
-        yVals = new ArrayList<>();
+        ArrayList<Entry> yVals = new ArrayList<>();
         LineDataSet set1 = new LineDataSet(yVals, "Metal");
         set1.setMode(LineDataSet.Mode.LINEAR);
         set1.setCubicIntensity(0.2f);

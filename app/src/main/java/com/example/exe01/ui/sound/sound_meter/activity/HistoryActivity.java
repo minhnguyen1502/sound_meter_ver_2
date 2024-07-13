@@ -1,5 +1,6 @@
 package com.example.exe01.ui.sound.sound_meter.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +21,7 @@ import com.example.exe01.ui.sound.sound_meter.model.SoundItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
 
@@ -27,7 +29,6 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     SoundItemDAO dao;
     private List<SoundItem> soundItemList;
     private boolean isMultipleSelectMode = false;
-    private boolean isClick = false;
 
     @Override
     public ActivityHistoryBinding getBinding() {
@@ -112,6 +113,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         finish();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void loadData() {
         soundItemList.clear();
         soundItemList.addAll(dao.getAllSoundItems());
@@ -128,12 +130,13 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         updateSelectIcons();
         binding.btnDelete.setVisibility(View.GONE);
     }
+    @SuppressLint("SetTextI18n")
     void confirmDelete(){
         Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialog_set_name_record);
 
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -145,9 +148,9 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         ImageView line = dialog.findViewById(R.id.iv_line);
 
         line.setVisibility(View.INVISIBLE);
-        tv_title.setText("Delete the selected records from your history ?");
+        tv_title.setText(R.string.delete_the_selected_records_from_your_history);
         edtName.setVisibility(View.GONE);
-        btnSave.setText("Confirm");
+        btnSave.setText(R.string.confirm);
         clear.setVisibility(View.GONE);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +172,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     int selectedCount;
     public void updateSelectIcons() {
         selectedCount = soundAdapter.getSelectedCount();
-        binding.tvHeader.setText(isMultipleSelectMode ? "Select"+" ("+selectedCount +")" : "History");
+        binding.tvHeader.setText(isMultipleSelectMode ? getString(R.string.select)+" ("+selectedCount +")" : getString(R.string.history));
         if (selectedCount >= 1) {
             binding.ivSingleSelect.setVisibility(View.INVISIBLE);
             binding.ivMultipleSelect.setVisibility(View.VISIBLE);
