@@ -189,6 +189,9 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     @Override
     protected void onResume() {
         super.onResume();
+        if (magnetometer == null) {
+            return;
+        }
         if (!isPause) {
             if (handler != null) {
                 sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
@@ -201,6 +204,9 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     @Override
     protected void onPause() {
         super.onPause();
+        if (magnetometer == null) {
+            return;
+        }
         sensorManager.unregisterListener(this);
         handler.removeCallbacks(runnable);
     }
@@ -208,6 +214,9 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (magnetometer == null) {
+            return;
+        }
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;

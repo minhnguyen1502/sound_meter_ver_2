@@ -112,5 +112,22 @@
     <string name="save">Guardar</string>
     <string name="set_threshold">Establecer Umbral</string>
     <string name="set">Establecer</string>
+    <string name="easily_find_metal_objects_hidden_nearby">Encuentra fácilmente objetos metálicos ocultos cerca.</string>
+    <string name="metal_detector">Detector de Metales</string>
+    <string name="audio_storage">Almacenamiento de Audio</string>
+    <string name="has_the_function_to_save_a_history_of_measurements_for_review">Tiene la función de guardar un historial de mediciones para revisión.</string>
+    <string name="delete_the">"Eliminar el "</string>
+    <string name="confirm">Confirmar</string>
+    <string name="rename">Renombrar</string>
+    <string name="delete_the_selected_records_from_your_history">¿Eliminar los registros seleccionados de tu historial?</string>
+    <string name="select">Seleccionar</string>
+    <string name="recording_saved">Grabación guardada</string>
+    <string name="error_saving_recording">Error al guardar la grabación</string>
+    <string name="unknown">Desconocido</string>
+    <string name="input_cannot_be_empty">la entrada no puede estar vacía</string>
+    <string name="from_0_to_6000">de 0 a 6000</string>
+    <string name="threshold_set_to">Umbral establecido en</string>
+    <string name="invalid_input">entrada no válida</string>
+    <string name="title_already_exists">El título ya existe.</string>
 
 </resources>

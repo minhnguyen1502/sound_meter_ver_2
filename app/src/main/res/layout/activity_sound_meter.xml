@@ -64,33 +64,34 @@
                 android:id="@+id/iv_info"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="12dp"
                 android:contentDescription="info"
                 android:padding="4dp"
+                android:layout_marginStart="12dp"
                 android:src="@drawable/ic_info"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText" />
 
             <TextView
+                android:id="@+id/tv_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pro__400"
                 android:text="@string/info"
+                android:layout_marginStart="20dp"
                 android:gravity="center"
                 android:textColor="#BBBBBB"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/iv_info"
-                app:layout_constraintEnd_toEndOf="@id/iv_info"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_info" />
 
             <ImageView
                 android:id="@+id/iv_history"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginEnd="16dp"
                 android:contentDescription="history"
                 android:padding="4dp"
+                android:layout_marginEnd="12dp"
                 android:src="@drawable/ic_history"
                 app:layout_constraintBottom_toBottomOf="@id/iv_info"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -98,6 +99,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
+                android:id="@id/tv_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pro__400"
@@ -105,8 +107,8 @@
                 android:gravity="center"
                 android:textColor="#BBBBBB"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@id/iv_history"
-                app:layout_constraintStart_toStartOf="@id/iv_history"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_history" />
 
             <com.example.exe01.ui.sound.sound_meter.ui.SoundMeterView

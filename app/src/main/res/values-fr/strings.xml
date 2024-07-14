@@ -112,5 +112,22 @@
     <string name="save">Sauvegarder</string>
     <string name="set_threshold">Définir le seuil</string>
     <string name="set">Définir</string>
+    <string name="easily_find_metal_objects_hidden_nearby">Trouvez facilement des objets métalliques cachés à proximité.</string>
+    <string name="metal_detector">Détecteur de Métaux</string>
+    <string name="audio_storage">Stockage Audio</string>
+    <string name="has_the_function_to_save_a_history_of_measurements_for_review">Possède la fonction de sauvegarder un historique des mesures pour consultation.</string>
+    <string name="delete_the">"Supprimer le "</string>
+    <string name="confirm">Confirmer</string>
+    <string name="rename">Renommer</string>
+    <string name="delete_the_selected_records_from_your_history">Supprimer les enregistrements sélectionnés de votre historique ?</string>
+    <string name="select">Sélectionner</string>
+    <string name="recording_saved">Enregistrement sauvegardé</string>
+    <string name="error_saving_recording">Erreur lors de la sauvegarde de l\'enregistrement</string>
+    <string name="unknown">Inconnu</string>
+    <string name="input_cannot_be_empty">la saisie ne peut pas être vide</string>
+    <string name="from_0_to_6000">de 0 à 6000</string>
+    <string name="threshold_set_to">Seuil défini à</string>
+    <string name="invalid_input">entrée invalide</string>
+    <string name="title_already_exists">Le titre existe déjà.</string>
 
 </resources>

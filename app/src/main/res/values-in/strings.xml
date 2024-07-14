@@ -112,5 +112,22 @@
     <string name="save">Simpan</string>
     <string name="set_threshold">Tetapkan Ambang Batas</string>
     <string name="set">Tetapkan</string>
+    <string name="easily_find_metal_objects_hidden_nearby">Dengan mudah menemukan objek logam yang tersembunyi di sekitar.</string>
+    <string name="metal_detector">Detektor Logam</string>
+    <string name="audio_storage">Penyimpanan Audio</string>
+    <string name="has_the_function_to_save_a_history_of_measurements_for_review">Memiliki fungsi untuk menyimpan riwayat pengukuran untuk ditinjau.</string>
+    <string name="delete_the">"Hapus "</string>
+    <string name="confirm">Konfirmasi</string>
+    <string name="rename">Ganti Nama</string>
+    <string name="delete_the_selected_records_from_your_history">Hapus catatan yang dipilih dari riwayat Anda?</string>
+    <string name="select">Pilih</string>
+    <string name="recording_saved">Rekaman disimpan</string>
+    <string name="error_saving_recording">Kesalahan menyimpan rekaman</string>
+    <string name="unknown">Tidak diketahui</string>
+    <string name="input_cannot_be_empty">input tidak boleh kosong</string>
+    <string name="from_0_to_6000">dari 0 hingga 6000</string>
+    <string name="threshold_set_to">Ambang batas diatur ke</string>
+    <string name="invalid_input">input tidak valid</string>
+    <string name="title_already_exists">Judul sudah ada.</string>
 
 </resources>

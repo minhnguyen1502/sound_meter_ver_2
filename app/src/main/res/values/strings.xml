@@ -130,6 +130,7 @@
     <string name="input_cannot_be_empty">input cannot be empty</string>
     <string name="from_0_to_6000">from 0 to 6000</string>
     <string name="threshold_set_to">Threshold set to</string>
-    <string name="invalid_input">invalid input)</string>
+    <string name="invalid_input">invalid input</string>
+    <string name="title_already_exists">Title already exists.</string>
 
 </resources>

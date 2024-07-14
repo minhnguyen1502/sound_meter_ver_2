@@ -113,5 +113,22 @@
     <string name="save">保存</string>
     <string name="set_threshold">设置阈值</string>
     <string name="set">设置</string>
+    <string name="easily_find_metal_objects_hidden_nearby">轻松找到附近隐藏的金属物体。</string>
+    <string name="metal_detector">金属探测器</string>
+    <string name="audio_storage">音频存储</string>
+    <string name="has_the_function_to_save_a_history_of_measurements_for_review">具有保存测量历史记录以供查看的功能。</string>
+    <string name="delete_the">"删除 "</string>
+    <string name="confirm">确认</string>
+    <string name="rename">重命名</string>
+    <string name="delete_the_selected_records_from_your_history">从历史记录中删除所选记录？</string>
+    <string name="select">选择</string>
+    <string name="recording_saved">录音已保存</string>
+    <string name="error_saving_recording">保存录音时出错</string>
+    <string name="unknown">未知</string>
+    <string name="input_cannot_be_empty">输入不能为空</string>
+    <string name="from_0_to_6000">从0到6000</string>
+    <string name="threshold_set_to">阈值设置为</string>
+    <string name="invalid_input">无效输入</string>
+    <string name="title_already_exists">标题已存在。</string>
 
 </resources>

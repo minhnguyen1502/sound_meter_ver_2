@@ -85,6 +85,6 @@ public class MetalSensorView extends View {
         float min = 0;
         float max = 6000;
 
-        return (value - min) * 210f / (max - min);
+        return (value - min) * 205f / (max - min);
     }
 }

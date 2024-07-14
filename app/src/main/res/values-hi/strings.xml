@@ -112,5 +112,22 @@
     <string name="save">सहेजें</string>
     <string name="set_threshold">थ्रेशोल्ड सेट करें</string>
     <string name="set">सेट करें</string>
+    <string name="easily_find_metal_objects_hidden_nearby">आसपास छिपी धातु की वस्तुओं को आसानी से खोजें।</string>
+    <string name="metal_detector">धातु खोजी</string>
+    <string name="audio_storage">ऑडियो संग्रहण</string>
+    <string name="has_the_function_to_save_a_history_of_measurements_for_review">समीक्षा के लिए माप का इतिहास सहेजने की सुविधा है।</string>
+    <string name="delete_the">"हटाएं "</string>
+    <string name="confirm">पुष्टि करें</string>
+    <string name="rename">नाम बदलें</string>
+    <string name="delete_the_selected_records_from_your_history">अपने इतिहास से चयनित रिकॉर्ड हटाएं?</string>
+    <string name="select">चुनें</string>
+    <string name="recording_saved">रिकॉर्डिंग सहेजी गई</string>
+    <string name="error_saving_recording">रिकॉर्डिंग सहेजने में त्रुटि</string>
+    <string name="unknown">अज्ञात</string>
+    <string name="input_cannot_be_empty">इनपुट खाली नहीं हो सकता</string>
+    <string name="from_0_to_6000">0 से 6000 तक</string>
+    <string name="threshold_set_to">सीमा निर्धारित की गई</string>
+    <string name="invalid_input">अवैध इनपुट</string>
+    <string name="title_already_exists">शीर्षक पहले से ही मौजूद है।</string>
 
 </resources>

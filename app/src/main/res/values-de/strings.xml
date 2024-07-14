@@ -112,5 +112,22 @@
     <string name="save">Speichern</string>
     <string name="set_threshold">Schwellenwert festlegen</string>
     <string name="set">Festlegen</string>
+    <string name="easily_find_metal_objects_hidden_nearby">Finden Sie leicht versteckte Metallobjekte in der Nähe.</string>
+    <string name="metal_detector">Metalldetektor</string>
+    <string name="audio_storage">Audio-Speicher</string>
+    <string name="has_the_function_to_save_a_history_of_measurements_for_review">Hat die Funktion, eine Historie der Messungen zur Überprüfung zu speichern.</string>
+    <string name="delete_the">"Löschen Sie die "</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="rename">Umbenennen</string>
+    <string name="delete_the_selected_records_from_your_history">Die ausgewählten Aufzeichnungen aus Ihrem Verlauf löschen?</string>
+    <string name="select">Auswählen</string>
+    <string name="recording_saved">Aufnahme gespeichert</string>
+    <string name="error_saving_recording">Fehler beim Speichern der Aufnahme</string>
+    <string name="unknown">Unbekannt</string>
+    <string name="input_cannot_be_empty">Eingabe darf nicht leer sein</string>
+    <string name="from_0_to_6000">von 0 bis 6000</string>
+    <string name="threshold_set_to">Schwellenwert eingestellt auf</string>
+    <string name="invalid_input">ungültige Eingabe</string>
+    <string name="title_already_exists">Titel existiert bereits.</string>
 
 </resources>

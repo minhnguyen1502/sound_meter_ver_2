@@ -48,10 +48,11 @@
 
         <TextView
             android:id="@+id/btn_go_to_home"
-            android:layout_width="135.5dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/bg_button_yellow"
+            android:paddingHorizontal="32dp"
             android:fontFamily="@font/pro_500"
             android:gravity="center"
             android:paddingVertical="16dp"

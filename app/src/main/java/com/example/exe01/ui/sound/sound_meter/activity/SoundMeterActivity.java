@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -52,6 +53,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     private Recoder recoder;
     private TextView value, max, min, avg;
     private boolean isPause = false;
+    private long startTime;
 
     @Override
     public ActivitySoundMeterBinding getBinding() {
@@ -133,6 +135,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         initChart();
 
     }
+
     private void showSaveDialog() {
         Dialog dialog = new Dialog(this);
 
@@ -165,8 +168,11 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             public void onClick(View v) {
                 String recordingName = edtName.getText().toString().trim();
                 if (!recordingName.isEmpty()) {
-                    saveRecording(recordingName);
-                    dialog.dismiss();
+                    if (saveRecording(recordingName)) {
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(SoundMeterActivity.this, getString(R.string.title_already_exists), Toast.LENGTH_SHORT).show();;
+                    }
                 } else {
                     Toast.makeText(SoundMeterActivity.this, "Please enter a name", Toast.LENGTH_SHORT).show();
                 }
@@ -175,8 +181,9 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
 
         dialog.show();
     }
-    private void saveRecording(String title) {
-        long time = System.currentTimeMillis();
+
+    private boolean saveRecording(String title) {
+//        long time = System.currentTimeMillis();
 //        long duration = (time - startTime) / 1000;
         float min = Float.parseFloat(binding.tvMin.getText().toString());
         float max = Float.parseFloat(binding.tvMax.getText().toString());
@@ -186,12 +193,24 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         Bitmap chartBitmap = captureChartImage();
         byte[] image = getBytesFromBitmap(chartBitmap);
 
+
         // Save the data to SQLite
         SoundMeterDatabaseHelper dbHelper = new SoundMeterDatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String[] projection = {"title"};
+        String selection = "title = ?";
+        String[] selectionArgs = {title};
+        Cursor cursor = db.query("SoundItems", projection, selection, selectionArgs, null, null, null);
+
+        if (cursor.getCount() != 0) {
+            db.close();
+            cursor.close();
+            return false;
+        }
         ContentValues values = new ContentValues();
         values.put("title", title);
-        values.put("startTime", time);
+        values.put("startTime", startTime);
         values.put("duration", duration);
         values.put("min", min);
         values.put("max", max);
@@ -203,10 +222,13 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
 
         if (newRowId != -1) {
             Toast.makeText(this, getString(R.string.recording_saved), Toast.LENGTH_SHORT).show();
+            return true;
         } else {
-            Toast.makeText(this,  getString(R.string.error_saving_recording), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_saving_recording), Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
+
     private Bitmap captureChartImage() {
         mChart.invalidate();
         mChart.setDrawingCacheEnabled(true);
@@ -221,6 +243,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
     }
+
     private String getDescription(float avg) {
         if (avg >= 0 && avg < 20) {
             return getString(R.string.normal_breathing);
@@ -290,7 +313,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
 
     private static final int msgWhat = 0x1001;
     private static final int refreshTime = 100;
-    private float volume = 10000;
     private float totalSoundLevel = 0.0f;
     private int soundLevelCount = 0;
     private SoundMeterView soundView;
@@ -305,7 +327,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             if (isPause || this.hasMessages(msgWhat)) {
                 return;
             }
-            volume = recoder.getMax();
+            float volume = recoder.getMax();
             if (volume > 0 && volume < 10000) {
                 dbCount = World.setDbCount(20 * (float) (Math.log10(volume)));
                 totalSoundLevel += dbCount;
@@ -373,8 +395,6 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
 
     private LineChart mChart;
     private Typeface typeface;
-    private ArrayList<Entry> yVals;
-    private long startTime;
 
     private void initChart() {
 
@@ -419,7 +439,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         mChart.getAxisRight().setEnabled(false);
 
         // Thiết lập dữ liệu cho biểu đồ
-        yVals = new ArrayList<>();
+        ArrayList<Entry> yVals = new ArrayList<>();
         LineDataSet set1 = new LineDataSet(yVals, "Sound Level");
         set1.setMode(LineDataSet.Mode.LINEAR);
         set1.setCubicIntensity(0.2f);
@@ -444,6 +464,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         mChart.getLegend().setEnabled(false);
         mChart.invalidate();
     }
+
     private LineDataSet createSet() {
         LineDataSet set = new LineDataSet(null, "Sound Level");
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -462,6 +483,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
     }
 
     long duration;
+
     private void updateData(float dbCount) {
 
         LineData data = mChart.getData();
@@ -473,11 +495,9 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             }
             data.addEntry(new Entry(set.getEntryCount() * 0.1f, dbCount), 0);
             data.notifyDataChanged();
-            duration = (long) (set.getEntryCount()*0.1f);
+            duration = (long) (set.getEntryCount() * 0.1f);
             mChart.notifyDataSetChanged();
             mChart.moveViewToX(data.getEntryCount());
-//            Bitmap chartBitmap = captureChartImage();
-//            chartBitmaps.add(chartBitmap);
         }
     }
 
