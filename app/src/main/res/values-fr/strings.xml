@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">exe01</string>
+    <string name="app_name">Sound Meter 2</string>
     <string name="english" translatable="false">English</string>
     <string name="french" translatable="false">French</string>
     <string name="portuguese" translatable="false">Portuguese</string>
@@ -20,7 +20,7 @@
     <string name="not_now">Pas maintenant</string>
     <string name="this_action_may_contain_advertising">Cette action peut contenir de la publicité</string>
     <string name="your_opinion_matter_to_us">Votre avis compte pour nous</string>
-    <string name="if_you_enjoy_this_know_your_device_would_you_mind_rating_us_on_the_google_play_then">Si vous aimez ce BaseProduct, pourriez-vous nous évaluer sur Google Play ?</string>
+    <string name="if_you_enjoy_this_know_your_device_would_you_mind_rating_us_on_the_google_play_then">Si vous aimez ce Sound Meter 2, pourriez-vous nous évaluer sur Google Play ?</string>
 
     <string name="language">Langue</string>
     <string name="rate">Évaluer</string>

@@ -1,0 +1,33 @@
+package com.example.soundmeter2.ui.sound.sound_meter.ui;
+
+public class World {
+    public static float dbCount = 0.0f ;
+    public static float MIN = 140 ;
+    public static float MAX = 0 ;
+    public static float lastDB = dbCount;
+
+    public static float setDbCount(float mValue) {
+        float mindb = 0.5f;
+        float value = 0;
+        if (mValue > lastDB) {
+            value = Math.max(mValue - lastDB, mindb);
+        } else {
+            value = mValue - lastDB < -mindb ? mValue - lastDB : mindb;
+        }
+        dbCount = lastDB + value * 0.2f;
+        lastDB = dbCount;
+        if (dbCount < MIN) MIN = dbCount;
+        if (dbCount > MAX) MAX = dbCount;
+        return dbCount;
+    }
+    public static float getAvg() {
+        return (MAX + MIN) / 2;
+    }
+
+    public static void reset() {
+        dbCount = 0.0f;
+        MIN = 80;
+        MAX = 0;
+        lastDB = dbCount;
+    }
+}

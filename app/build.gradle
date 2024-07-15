@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.exe01'
+    namespace 'com.example.soundmeter2'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.exe01"
+        applicationId "com.example.soundmeter2"
         minSdk 21
         targetSdk 33
         versionCode 100

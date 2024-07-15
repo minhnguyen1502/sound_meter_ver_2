@@ -78,7 +78,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/iv_info" />
 
-            <com.example.exe01.ui.sound.metal_detector.MetalSensorView
+            <com.example.soundmeter2.ui.sound.metal_detector.MetalSensorView
                 android:id="@+id/metal_view"
                 android:layout_width="309dp"
                 android:layout_height="309dp"

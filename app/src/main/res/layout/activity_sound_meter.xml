@@ -111,7 +111,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_history" />
 
-            <com.example.exe01.ui.sound.sound_meter.ui.SoundMeterView
+            <com.example.soundmeter2.ui.sound.sound_meter.ui.SoundMeterView
                 android:id="@+id/sound_view"
                 android:layout_width="248dp"
                 android:layout_height="248dp"
