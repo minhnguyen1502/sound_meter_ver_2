@@ -103,7 +103,7 @@
     <string name="sorry_your_device_doesn_t_have_a_magnetic_field_sensor_so_you_can_t_use_this_function">对不起，您的设备没有磁场传感器，因此您不能使用此功能。</string>
     <string name="go_to_home">返回主页</string>
     <string name="permission">权限</string>
-    <string name="grant_these_permissions_to_use_sound_meter_2">授予这些权限以使用“分贝仪 2”</string>
+    <string name="grant_these_permissions_to_use_sound_meter_2">授予这些权限以使用“<b>分贝仪 2</b>”</string>
     <string name="stay">停留</string>
     <string name="agree">同意</string>
     <string name="please_grant_permissions_for_the_feature_to_be_used_normally">请授予权限以正常使用此功能</string>

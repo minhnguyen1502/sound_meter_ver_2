@@ -283,6 +283,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 dialog.dismiss();
             }
         });
@@ -346,13 +347,13 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
     }
 
     private boolean isShow = false;
-    private int threshold = 50;
+    private float threshold = 50;
 
     @SuppressLint("SetTextI18n")
     private void openDialog() {
         isShow = true;
         SharedPreferences preferences = getSharedPreferences("metal_prefs", Context.MODE_PRIVATE);
-        threshold = preferences.getInt("threshold", 50);
+        threshold = preferences.getFloat("threshold", 50);
         Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialog_threshold);
@@ -374,7 +375,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
             }
         });
 
-        input.setText("" + threshold);
+        input.setText(""+ (int)threshold);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -400,7 +401,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
                     editor.putFloat("threshold", threshold);
                     editor.apply();
 
-                    Toast.makeText(MetalSensorActivity.this, getString(R.string.threshold_set_to) + threshold, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MetalSensorActivity.this, getString(R.string.threshold_set_to)+" " +(int) threshold, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     isShow = false;
                 } catch (NumberFormatException e) {
@@ -446,7 +447,7 @@ public class MetalSensorActivity extends BaseActivity<ActivityMetalSensorBinding
             @SuppressLint("DefaultLocale")
             @Override
             public String getFormattedValue(float value) {
-                return String.format("%.0f s", value + 1);
+                return String.format("%.0f s", value );
             }
         });
 

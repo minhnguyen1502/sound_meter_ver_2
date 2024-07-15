@@ -64,7 +64,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
             public void onClick(View v) {
                 isMultipleSelectMode = !isMultipleSelectMode;
                 soundAdapter.setMultipleSelectMode(isMultipleSelectMode);
-                binding.btnDelete.setVisibility(isMultipleSelectMode ? View.VISIBLE : View.INVISIBLE);
+//                binding.btnDelete.setVisibility(isMultipleSelectMode ? View.VISIBLE : View.INVISIBLE);
                 if (!isMultipleSelectMode) {
                     soundAdapter.clearSelections();
                 }
@@ -108,6 +108,21 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
     protected void onResume() {
         super.onResume();
         loadData();
+        isMultipleSelectMode = false;
+        soundAdapter.clearSelections();
+//        binding.ivSingleSelect.setVisibility(View.VISIBLE);
+        binding.ivMultipleSelect.setVisibility(View.INVISIBLE);
+        binding.btnDelete.setVisibility(View.GONE);
+        soundAdapter.setMultipleSelectMode(false);
+        binding.tvHeader.setText(R.string.history);
+        if (soundItemList.isEmpty()) {
+            binding.noData.setVisibility(View.VISIBLE);
+            binding.ivSingleSelect.setVisibility(View.INVISIBLE);
+        } else {
+            binding.noData.setVisibility(View.INVISIBLE);
+            binding.ivSingleSelect.setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override
@@ -120,6 +135,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         soundItemList.clear();
         soundItemList.addAll(dao.getAllSoundItems());
         soundAdapter.notifyDataSetChanged();
+
     }
     private void deleteSelectedItems() {
         List<Integer> selectedIds = soundAdapter.getSelectedIds();
@@ -168,7 +184,7 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
             public void onClick(View v) {
                 deleteSelectedItems();
                 dialog.dismiss();
-
+                onResume();
             }
         });
 
@@ -181,9 +197,11 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         if (selectedCount >= 1) {
             binding.ivSingleSelect.setVisibility(View.INVISIBLE);
             binding.ivMultipleSelect.setVisibility(View.VISIBLE);
+            binding.btnDelete.setVisibility(View.VISIBLE);
         } else {
             binding.ivSingleSelect.setVisibility(View.VISIBLE);
             binding.ivMultipleSelect.setVisibility(View.INVISIBLE);
+            binding.btnDelete.setVisibility(View.GONE);
         }
     }
 }

@@ -13,6 +13,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -149,7 +151,25 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
         TextView btnSave = dialog.findViewById(R.id.btn_save);
         ImageView clear = dialog.findViewById(R.id.btn_clear);
+        edtName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Show clear button if there is text in the EditText, otherwise hide it
+                if (s.length() > 0) {
+                    clear.setVisibility(View.VISIBLE);
+                } else {
+                    clear.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +191,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
                     if (saveRecording(recordingName)) {
                         dialog.dismiss();
                     } else {
-                        Toast.makeText(SoundMeterActivity.this, getString(R.string.title_already_exists), Toast.LENGTH_SHORT).show();;
+                        Toast.makeText(SoundMeterActivity.this, getString(R.string.title_already_exists), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(SoundMeterActivity.this, getString(R.string.please_enter_name), Toast.LENGTH_SHORT).show();
@@ -190,7 +210,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         float avg = Float.parseFloat(binding.tvAvg.getText().toString());
         String description = getDescription(avg);
 
-        Bitmap chartBitmap = captureChartImage();
+        Bitmap chartBitmap = captureCombinedImage();
         byte[] image = getBytesFromBitmap(chartBitmap);
 
 
@@ -229,13 +249,28 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
         }
     }
 
-    private Bitmap captureChartImage() {
-        mChart.invalidate();
-        mChart.setDrawingCacheEnabled(true);
-        mChart.buildDrawingCache();
-        Bitmap chartBitmap = Bitmap.createBitmap(mChart.getDrawingCache());
-        mChart.setDrawingCacheEnabled(false);
-        return chartBitmap;
+    //    private Bitmap captureChartImage() {
+//        mChart.invalidate();
+//        mChart.setDrawingCacheEnabled(true);
+//        mChart.buildDrawingCache();
+//        Bitmap chartBitmap = Bitmap.createBitmap(mChart.getDrawingCache());
+//        mChart.setDrawingCacheEnabled(false);
+//        return chartBitmap;
+//    }
+    private Bitmap captureCombinedImage() {
+        View combinedView = findViewById(R.id.ll_chart);
+
+        combinedView.measure(
+                View.MeasureSpec.makeMeasureSpec(combinedView.getWidth(), View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(combinedView.getHeight(), View.MeasureSpec.EXACTLY));
+        combinedView.layout(combinedView.getLeft(), combinedView.getTop(), combinedView.getRight(), combinedView.getBottom());
+
+        combinedView.setDrawingCacheEnabled(true);
+        combinedView.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(combinedView.getDrawingCache());
+        combinedView.setDrawingCacheEnabled(false);
+
+        return bitmap;
     }
 
     private byte[] getBytesFromBitmap(Bitmap bitmap) {
@@ -360,10 +395,10 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             } else {
                 World.dbCount = 0;
                 binding.soundView.refresh();
-                Toast.makeText(this, "failed recoding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.failed_recoding), Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "something wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
             e.getStackTrace();
         }
     }
@@ -419,7 +454,10 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
             @SuppressLint("DefaultLocale")
             @Override
             public String getFormattedValue(float value) {
-                return String.format("%.0f s", value + 1);
+                if (value < 0) {
+                    value = 0;
+                }
+                return String.format("%.0f s", value);
             }
         });
 
@@ -494,7 +532,7 @@ public class SoundMeterActivity extends BaseActivity<ActivitySoundMeterBinding> 
                 data.addDataSet(set);
             }
             data.addEntry(new Entry(set.getEntryCount() * 0.1f, dbCount), 0);
-            duration = (long) (set.getEntryCount()*0.1f);
+            duration = (long) (set.getEntryCount() * 0.1f);
             data.notifyDataChanged();
             mChart.notifyDataSetChanged();
             mChart.moveViewToX(data.getEntryCount());

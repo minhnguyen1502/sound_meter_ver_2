@@ -102,7 +102,7 @@
     <string name="sorry_your_device_doesn_t_have_a_magnetic_field_sensor_so_you_can_t_use_this_function">Entschuldigung, Ihr Gerät hat keinen Magnetfeldsensor, daher können Sie diese Funktion nicht nutzen.</string>
     <string name="go_to_home">Zum Startbildschirm</string>
     <string name="permission">Berechtigung</string>
-    <string name="grant_these_permissions_to_use_sound_meter_2">Erteilen Sie diese Berechtigungen, um „Sound Meter 2“ zu verwenden</string>
+    <string name="grant_these_permissions_to_use_sound_meter_2">Erteilen Sie diese Berechtigungen, um „<b> Sound Meter 2</b>“ zu verwenden</string>
     <string name="stay">Bleiben</string>
     <string name="agree">Zustimmen</string>
     <string name="please_grant_permissions_for_the_feature_to_be_used_normally">Bitte erteilen Sie die Berechtigungen, damit die Funktion normal genutzt werden kann</string>

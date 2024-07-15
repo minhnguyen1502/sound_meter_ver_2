@@ -102,7 +102,7 @@
     <string name="sorry_your_device_doesn_t_have_a_magnetic_field_sensor_so_you_can_t_use_this_function">क्षमा करें, आपके डिवाइस में चुंबकीय क्षेत्र सेंसर नहीं है, इसलिए आप इस फ़ंक्शन का उपयोग नहीं कर सकते।</string>
     <string name="go_to_home">होम पर जाएं</string>
     <string name="permission">अनुमति</string>
-    <string name="grant_these_permissions_to_use_sound_meter_2">“साउंड मीटर 2” का उपयोग करने के लिए इन अनुमतियों को अनुदान दें</string>
+    <string name="grant_these_permissions_to_use_sound_meter_2">“<b>साउंड मीटर 2</b>” का उपयोग करने के लिए इन अनुमतियों को अनुदान दें</string>
     <string name="stay">रहें</string>
     <string name="agree">सहमत</string>
     <string name="please_grant_permissions_for_the_feature_to_be_used_normally">कृपया इस फीचर का सामान्य उपयोग करने के लिए अनुमतियां प्रदान करें</string>

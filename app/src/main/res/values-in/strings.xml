@@ -102,7 +102,7 @@
     <string name="sorry_your_device_doesn_t_have_a_magnetic_field_sensor_so_you_can_t_use_this_function">Maaf, perangkat Anda tidak memiliki sensor medan magnet, sehingga Anda tidak dapat menggunakan fungsi ini.</string>
     <string name="go_to_home">Kembali ke beranda</string>
     <string name="permission">Izin</string>
-    <string name="grant_these_permissions_to_use_sound_meter_2">Beri izin ini untuk menggunakan "Sound Meter 2"</string>
+    <string name="grant_these_permissions_to_use_sound_meter_2">Beri izin ini untuk menggunakan "<b>Sound Meter 2</b>"</string>
     <string name="stay">Tetap</string>
     <string name="agree">Setuju</string>
     <string name="please_grant_permissions_for_the_feature_to_be_used_normally">Harap berikan izin agar fitur dapat digunakan secara normal</string>

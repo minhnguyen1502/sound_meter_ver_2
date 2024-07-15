@@ -102,7 +102,7 @@
     <string name="sorry_your_device_doesn_t_have_a_magnetic_field_sensor_so_you_can_t_use_this_function">Desculpe, seu dispositivo não possui um sensor de campo magnético, então você não pode usar esta função.</string>
     <string name="go_to_home">Ir para a tela inicial</string>
     <string name="permission">Permissão</string>
-    <string name="grant_these_permissions_to_use_sound_meter_2">Conceda essas permissões para usar “Sound Meter 2”</string>
+    <string name="grant_these_permissions_to_use_sound_meter_2">Conceda essas permissões para usar “<b>Sound Meter 2</b>”</string>
     <string name="stay">Ficar</string>
     <string name="agree">Concordar</string>
     <string name="please_grant_permissions_for_the_feature_to_be_used_normally">Por favor, conceda permissões para que o recurso possa ser usado normalmente</string>

@@ -105,7 +105,7 @@
     <string name="sorry_your_device_doesn_t_have_a_magnetic_field_sensor_so_you_can_t_use_this_function">Sorry, your device doesn\'t have a magnetic field sensor so you can\'t use this function.</string>
     <string name="go_to_home">Go to home</string>
     <string name="permission">Permission</string>
-    <string name="grant_these_permissions_to_use_sound_meter_2">Grant these permissions to use “Sound Meter 2”</string>
+    <string name="grant_these_permissions_to_use_sound_meter_2">Grant these permissions to use “<b>Sound Meter 2</b>”</string>
     <string name="stay">Stay</string>
     <string name="agree">Agree</string>
     <string name="please_grant_permissions_for_the_feature_to_be_used_normally">Please grant permissions for the feature to be used normally</string>
@@ -129,8 +129,13 @@
     <string name="unknown">Unknown</string>
     <string name="input_cannot_be_empty">input cannot be empty</string>
     <string name="from_0_to_6000">from 0 to 6000</string>
-    <string name="threshold_set_to">Threshold set to</string>
+    <string name="threshold_set_to">Threshold set to </string>
     <string name="invalid_input">invalid input</string>
     <string name="title_already_exists">Title already exists.</string>
+    <string name="record_renamed_successfully">Record renamed successfully</string>
+    <string name="please_enter_a_name">Please enter a name</string>
+    <string name="sound_sensor">Sound Sensor</string>
+    <string name="failed_recoding">failed recoding</string>
+    <string name="something_wrong">something wrong</string>
 
 </resources>

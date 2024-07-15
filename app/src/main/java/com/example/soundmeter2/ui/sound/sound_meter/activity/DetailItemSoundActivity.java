@@ -139,7 +139,7 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
             @Override
             public void onClick(View v) {
                 dao.deleteSoundItem(id);
-                finish();
+                onBack();
             }
         });
 
@@ -201,7 +201,7 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
             public void onClick(View v) {
                 String newName = edtName.getText().toString().trim();
                 if (!newName.isEmpty()) {
-                    Toast.makeText(DetailItemSoundActivity.this, "Record renamed successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailItemSoundActivity.this,getString(R.string.record_renamed_successfully) , Toast.LENGTH_SHORT).show();
                     dao.updateTitle(id, newName);
 
                     // Update UI
@@ -210,7 +210,7 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
                     dialog.dismiss();
 
                 } else {
-                    Toast.makeText(DetailItemSoundActivity.this, "Please enter a name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailItemSoundActivity.this, getString(R.string.please_enter_a_name), Toast.LENGTH_SHORT).show();
                 }
             }
         });

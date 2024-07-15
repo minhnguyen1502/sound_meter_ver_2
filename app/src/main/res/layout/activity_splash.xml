@@ -21,6 +21,19 @@
         tools:ignore="HardcodedText" />
 
     <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/sound_meter"
+        android:fontFamily="@font/pro_700"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/accurately_measure_db_levels_and_manage_noise_exposure_to_protect_your_ears_and_preserve_a_healthy_auditory_environment"

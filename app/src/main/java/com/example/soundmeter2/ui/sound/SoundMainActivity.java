@@ -12,7 +12,9 @@ import android.os.Build;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -27,6 +29,8 @@ import com.example.soundmeter2.ui.sound.metal_detector.MetalSensorActivity;
 import com.example.soundmeter2.ui.sound.setting.SettingActivity;
 import com.example.soundmeter2.ui.sound.sound_meter.activity.SoundMeterActivity;
 
+import java.util.Objects;
+
 public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
     private final int REQUEST_CODE_STORAGE_PERMISSION = 124;
     private final int REQUEST_CODE_AUDIO_PERMISSION = 129;
@@ -36,6 +40,7 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
     private int countStorage = 0;
     private int countAudio = 0;
     private boolean isShowDialogGoToSetting = false;
+    private boolean isOpenApp = false;
     @Override
     public ActivitySoundMainBinding getBinding() {
         return ActivitySoundMainBinding.inflate(getLayoutInflater());
@@ -46,11 +51,12 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
         binding.btnSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkAudioPermission() && checkLFilePermission()) {
-                    startActivity(new Intent(SoundMainActivity.this, SoundMeterActivity.class));
-                } else {
-                    showDialogPermissionSoundSensor();
-                }
+                    if (checkAudioPermission() && checkLFilePermission()) {
+                        startActivity(new Intent(SoundMainActivity.this, SoundMeterActivity.class));
+                    } else {
+                        showDialogPermissionSoundSensor();
+                    }
+
             }
         });
 
@@ -125,7 +131,6 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
     }
     private void showDialogGotoSetting(int type) {
         Dialog dialog = new Dialog(this);
-//        SystemUtil.setLocale(this);
         DialogPermissionBinding bindingPer = DialogPermissionBinding.inflate(getLayoutInflater());
         dialog.setContentView(bindingPer.getRoot());
 
@@ -274,6 +279,43 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
 
     @Override
     public void onBack() {
+        if (!isShow) {
+            confirmQuitApp();
+        }
+    }
 
+    private boolean isShow = false;
+    private void confirmQuitApp() {
+        isShow = true;
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_exit_app);
+
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        RelativeLayout cancel = dialog.findViewById(R.id.btn_cancel_quit_app);
+        RelativeLayout quit = dialog.findViewById(R.id.btn_quit_app);
+        quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+                dialog.dismiss();
+                isShow = false;
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                isShow = false;
+            }
+        });
+
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 }

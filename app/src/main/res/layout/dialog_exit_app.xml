@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:gravity="center_vertical"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20sdp"
-        android:background="@drawable/bg_view_c15"
+        android:background="@drawable/bg_dialog"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/_12sdp"
@@ -24,7 +25,7 @@
             android:includeFontPadding="false"
             android:singleLine="true"
             android:text="@string/quit"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_16ssp" />
 
         <TextView
@@ -35,7 +36,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="@string/are_you_sure_want_to_quit_app"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11ssp" />
 
         <RelativeLayout
@@ -57,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@+id/view_center"
-                android:background="@drawable/bg_view_32">
+                android:background="@drawable/bg_button">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,8 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/view_center"
-                android:backgroundTint="#d82d25"
-                android:background="@drawable/bg_view_32">
+                android:background="@drawable/bg_button_yellow">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                     android:includeFontPadding="false"
                     android:singleLine="true"
                     android:text="@string/quit"
-                    android:textColor="#FCFCFC"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp" />
             </RelativeLayout>
         </RelativeLayout>
