@@ -51,31 +51,40 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
         binding.btnSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!isOpenApp){
+                    isOpenApp = true;
                     if (checkAudioPermission() && checkLFilePermission()) {
                         startActivity(new Intent(SoundMainActivity.this, SoundMeterActivity.class));
+                        isOpenApp = false;
                     } else {
                         showDialogPermissionSoundSensor();
+
                     }
+                }
+
 
             }
         });
 
-        binding.ivSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SoundMainActivity.this, SettingActivity.class));
-            }
-        });
         binding.btnMetal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SoundMainActivity.this, MetalSensorActivity.class));
+                if (!isOpenApp){
+                    isOpenApp = true;
+                    startActivity(new Intent(SoundMainActivity.this, MetalSensorActivity.class));
+                    isOpenApp = false;
+                }
             }
         });
-        binding.btnSetting.setOnClickListener(new View.OnClickListener() {
+        binding.ivSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SoundMainActivity.this, SettingActivity.class));
+                if (!isOpenApp){
+                    isOpenApp = true;
+
+                    startActivity(new Intent(SoundMainActivity.this, SettingActivity.class));
+                    isOpenApp = false;
+                }
             }
         });
     }
@@ -215,7 +224,13 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
             isShowDialog = false;
         });
 
-        bindingPer.tvOk.setOnClickListener(view -> dialogPerHome.dismiss());
+        bindingPer.tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogPerHome.dismiss();
+                isOpenApp = false;
+            }
+        });
 
         if (!isShowDialog) {
             dialogPerHome.show();

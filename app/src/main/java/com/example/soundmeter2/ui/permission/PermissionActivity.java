@@ -33,7 +33,6 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
 
     private int countAudio = 0;
     private int countStorage = 0;
-    private int currentSelected = 0;
     @Override
     public ActivityPermissionBinding getBinding() {
         return ActivityPermissionBinding.inflate(getLayoutInflater());
@@ -58,10 +57,8 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
                     showDialogGotoSetting(Build.VERSION.SDK_INT > 33 ? 4 : 5);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        currentSelected = 4;
                         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_AUDIO}, REQUEST_CODE_STORAGE_PERMISSION);
                     } else {
-                        currentSelected = 5;
                         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
                     }
@@ -69,7 +66,6 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
             }
         });
         binding.ivAudio.setOnClickListener(view -> {
-            currentSelected = 2;
             if (!checkAudioPermission()) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_CODE_AUDIO_PERMISSION);
             }
