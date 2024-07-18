@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +80,16 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
         });
 
         // Convert byte array to Bitmap and set to ImageView
+//        Bitmap bitmap = BitmapFactory.decodeByteArray(recording.getImage(), 0, recording.getImage().length-10);
+//        holder.chart.setImageBitmap(bitmap);
+
         Bitmap bitmap = BitmapFactory.decodeByteArray(recording.getImage(), 0, recording.getImage().length);
+
+        Matrix matrix = new Matrix();
+        matrix.postTranslate( 0, -400);
+
+        holder.chart.setScaleType(ImageView.ScaleType.MATRIX);
+        holder.chart.setImageMatrix(matrix);
         holder.chart.setImageBitmap(bitmap);
 
         holder.icShare.setOnClickListener(v -> shareRecording(recording));
@@ -122,14 +132,11 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
                 "Duration: " + recording.getDuration() + "\n" +
                 "Description: " + recording.getDescription() + "\n";
 
-        // Set text data to the intent
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
 
-        // Prepare image data to share (if available)
         if (recording.getImage() != null && recording.getImage().length > 0) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(recording.getImage(), 0, recording.getImage().length);
 
-            // Save bitmap to cache directory
             File cachePath = new File(context.getCacheDir(), "images");
             cachePath.mkdirs();
             File imageFile = new File(cachePath, "shared_image.png");
@@ -140,7 +147,6 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ViewHolder> 
                 e.printStackTrace();
             }
 
-            // Get URI for the image file using FileProvider
             Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", imageFile);
             shareIntent.setType("image/*");
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);

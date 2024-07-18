@@ -54,7 +54,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
 
             if (!checkLFilePermission()) {
                 if (countStorage > 1) {
-                    showDialogGotoSetting(Build.VERSION.SDK_INT > 33 ? 4 : 5);
+                    showDialogGotoSetting(Build.VERSION.SDK_INT > 33 ? 3 : 4);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_AUDIO}, REQUEST_CODE_STORAGE_PERMISSION);
@@ -109,7 +109,8 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
                         }
                     } else {
 //duoi android 13
-                        if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) && !shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                                !shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                             countStorage++;
                             if (countStorage > 1) {
                                 showDialogGotoSetting(3);
@@ -212,7 +213,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
     }
 
     private boolean checkLFilePermission() {
-        if (Build.VERSION.SDK_INT > 33) {
+        if (Build.VERSION.SDK_INT >= 33) {
             return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
                     == PackageManager.PERMISSION_GRANTED;
         } else {

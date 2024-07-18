@@ -129,5 +129,10 @@
     <string name="threshold_set_to">सीमा निर्धारित की गई</string>
     <string name="invalid_input">अवैध इनपुट</string>
     <string name="title_already_exists">शीर्षक पहले से ही मौजूद है।</string>
+    <string name="record_renamed_successfully">रिकॉर्ड सफलतापूर्वक पुनः नामित किया गया</string>
+    <string name="please_enter_a_name">कृपया एक नाम दर्ज करें</string>
+    <string name="sound_sensor">ध्वनि सेंसर</string>
+    <string name="failed_recoding">रिकॉर्डिंग विफल</string>
+    <string name="something_wrong">कुछ गलत हो गया</string>
 
 </resources>

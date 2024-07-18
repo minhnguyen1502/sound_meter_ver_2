@@ -129,5 +129,10 @@
     <string name="threshold_set_to">Seuil défini à</string>
     <string name="invalid_input">entrée invalide</string>
     <string name="title_already_exists">Le titre existe déjà.</string>
+    <string name="record_renamed_successfully">Enregistrement renommé avec succès</string>
+    <string name="please_enter_a_name">Veuillez entrer un nom</string>
+    <string name="sound_sensor">Capteur de son</string>
+    <string name="failed_recoding">Échec de l\'enregistrement</string>
+    <string name="something_wrong">Quelque chose ne va pas</string>
 
 </resources>

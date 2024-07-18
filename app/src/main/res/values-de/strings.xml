@@ -129,5 +129,10 @@
     <string name="threshold_set_to">Schwellenwert eingestellt auf</string>
     <string name="invalid_input">ungültige Eingabe</string>
     <string name="title_already_exists">Titel existiert bereits.</string>
+    <string name="record_renamed_successfully">Aufzeichnung erfolgreich umbenannt</string>
+    <string name="please_enter_a_name">Bitte geben Sie einen Namen ein</string>
+    <string name="sound_sensor">Schallsensor</string>
+    <string name="failed_recoding">Aufnahme fehlgeschlagen</string>
+    <string name="something_wrong">Etwas ist schief gelaufen</string>
 
 </resources>

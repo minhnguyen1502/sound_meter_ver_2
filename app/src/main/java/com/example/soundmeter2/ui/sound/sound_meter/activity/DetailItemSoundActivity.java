@@ -110,24 +110,17 @@ public class DetailItemSoundActivity extends BaseActivity<ActivityDetailItemSoun
     private void confirmDelete() {
         Dialog dialog = new Dialog(this);
 
-        dialog.setContentView(R.layout.dialog_set_name_record);
+        dialog.setContentView(R.layout.dialog_delete);
 
         Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtName = dialog.findViewById(R.id.edt_name);
         TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
         TextView btnSave = dialog.findViewById(R.id.btn_save);
-        ImageView clear = dialog.findViewById(R.id.btn_clear);
         TextView tv_title = dialog.findViewById(R.id.tv_title);
-        ImageView line = dialog.findViewById(R.id.iv_line);
 
-        line.setVisibility(View.INVISIBLE);
         tv_title.setText(getString(R.string.delete_the) + title + " ?");
-        edtName.setVisibility(View.GONE);
-        btnSave.setText(R.string.confirm);
-        clear.setVisibility(View.GONE);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

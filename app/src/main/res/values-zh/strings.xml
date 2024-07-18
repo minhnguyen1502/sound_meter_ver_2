@@ -130,5 +130,10 @@
     <string name="threshold_set_to">阈值设置为</string>
     <string name="invalid_input">无效输入</string>
     <string name="title_already_exists">标题已存在。</string>
+    <string name="record_renamed_successfully">记录重命名成功</string>
+    <string name="please_enter_a_name">请输入名称</string>
+    <string name="sound_sensor">声音传感器</string>
+    <string name="failed_recoding">录音失败</string>
+    <string name="something_wrong">出了些问题</string>
 
 </resources>

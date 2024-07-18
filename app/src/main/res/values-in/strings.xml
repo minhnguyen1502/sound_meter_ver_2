@@ -129,5 +129,10 @@
     <string name="threshold_set_to">Ambang batas diatur ke</string>
     <string name="invalid_input">input tidak valid</string>
     <string name="title_already_exists">Judul sudah ada.</string>
+    <string name="record_renamed_successfully">Rekaman berhasil diganti nama</string>
+    <string name="please_enter_a_name">Harap masukkan nama</string>
+    <string name="sound_sensor">Sensor Suara</string>
+    <string name="failed_recoding">Perekaman gagal</string>
+    <string name="something_wrong">Ada yang salah</string>
 
 </resources>

@@ -51,11 +51,12 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
         binding.btnSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!isOpenApp){
                     isOpenApp = true;
+
                     if (checkAudioPermission() && checkLFilePermission()) {
                         startActivity(new Intent(SoundMainActivity.this, SoundMeterActivity.class));
-                        isOpenApp = false;
                     } else {
                         showDialogPermissionSoundSensor();
 
@@ -69,21 +70,22 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
         binding.btnMetal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!isOpenApp){
                     isOpenApp = true;
+
                     startActivity(new Intent(SoundMainActivity.this, MetalSensorActivity.class));
-                    isOpenApp = false;
                 }
             }
         });
         binding.ivSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!isOpenApp){
                     isOpenApp = true;
 
                     startActivity(new Intent(SoundMainActivity.this, SettingActivity.class));
-                    isOpenApp = false;
                 }
             }
         });
@@ -248,7 +250,7 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
     }
 
     private boolean checkLFilePermission() {
-        if (Build.VERSION.SDK_INT > 33) {
+        if (Build.VERSION.SDK_INT >= 33) {
             return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
                     == PackageManager.PERMISSION_GRANTED;
         } else {
@@ -283,6 +285,8 @@ public class SoundMainActivity extends BaseActivity<ActivitySoundMainBinding> {
     protected void onResume() {
         super.onResume();
         checkAllPer();
+        isOpenApp = false;
+
     }
 
     @Override

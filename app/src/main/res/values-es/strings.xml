@@ -129,5 +129,10 @@
     <string name="threshold_set_to">Umbral establecido en</string>
     <string name="invalid_input">entrada no válida</string>
     <string name="title_already_exists">El título ya existe.</string>
+    <string name="record_renamed_successfully">Registro renombrado con éxito</string>
+    <string name="please_enter_a_name">Por favor, ingrese un nombre</string>
+    <string name="sound_sensor">Sensor de sonido</string>
+    <string name="failed_recoding">Error en la grabación</string>
+    <string name="something_wrong">Algo salió mal</string>
 
 </resources>
